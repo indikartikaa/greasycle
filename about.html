@@ -4,142 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tentang Kami - Greasycle</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #004030;
-            --secondary: #2d6a4f;
-            --accent: #d1e7e0;
-            --white: #ffffff;
-            --text: #333;
-            --muted: #666;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background-color: #f7faf9; color: var(--text); line-height: 1.6; }
-
-        /* Navbar */
-        .navbar {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 8%; background: var(--white);
-            position: sticky; top: 0; z-index: 1000;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-        }
-        .logo { font-size: 24px; font-weight: 700; color: var(--primary); }
-        .nav-menu { display: flex; list-style: none; gap: 25px; }
-        .nav-menu a { text-decoration: none; color: var(--muted); font-weight: 500; transition: 0.3s; }
-        .nav-menu a:hover { color: var(--primary); }
-
-        /* Hero */
-        .hero {
-            background: linear-gradient(rgba(0,64,48,0.8), rgba(0,64,48,0.8)), 
-                        url('https://images.unsplash.com/photo-1542601906990-b4d3fb773b09?auto=format&fit=crop&q=80');
-            background-size: cover; background-position: center;
-            color: var(--white); text-align: center; padding: 100px 20px;
-        }
-        .hero h1 { font-size: 36px; margin-bottom: 10px; }
-
-        /* Core Section Style */
-        .section-container { padding: 80px 8%; }
-        .section-title { text-align: center; margin-bottom: 40px; color: var(--primary); font-size: 28px; }
-        .section-title::after { content: ''; display: block; width: 60px; height: 4px; background: var(--secondary); margin: 10px auto; border-radius: 2px; }
-
-        /* About Section */
-        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
-        .about-text p { margin-bottom: 15px; text-align: justify; }
-
-        /* Visi Misi */
-        .visi-misi { background: var(--accent); border-radius: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        .box { padding: 40px; }
-        .box h3 { color: var(--primary); margin-bottom: 15px; font-size: 22px; }
-        .box ul { padding-left: 20px; }
-        .box ul li { margin-bottom: 10px; }
-
-        /* Cards (Impact) */
-        .impact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
-        .card { background: var(--white); padding: 35px; border-radius: 20px; text-align: center; transition: 0.3s; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .card:hover { transform: translateY(-10px); }
-        /* Ikon Perbaikan */
-        .card img { width: 65px; margin-bottom: 20px; }
-
-        /* Footer */
-        footer { background: var(--primary); color: var(--white); text-align: center; padding: 30px; font-size: 14px; }
-
-        @media (max-width: 768px) {
-            .about-grid, .visi-misi { grid-template-columns: 1fr; }
-        }
-    </style>
 </head>
 <body>
 
-<nav class="navbar">
-    <div class="logo">Greasycle</div>
-    <ul class="nav-menu">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html" style="color: var(--primary); font-weight: 600;">Tentang</a></li>
-        <li><a href="contact.html">Kontak</a></li>
-    </ul>
-</nav>
+    <header>
+        <h2>Greasycle</h2>
+        <nav>
+            <a href="index.html">Beranda</a> | 
+            <a href="about.html">Tentang</a> | 
+            <a href="contact.html">Kontak</a>
+        </nav>
+    </header>
 
-<section class="hero">
-    <h1>Tentang Kami</h1>
-    <p>Mengenal lebih jauh visi kami untuk lingkungan yang lebih bersih.</p>
-</section>
+    <hr>
 
-<section class="section-container">
-    <div class="about-grid">
-        <div class="about-img">
-            <img src="https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&q=80" alt="Eco Plant" style="width: 100%; border-radius: 20px; box-shadow: 10px 10px 0 var(--accent);">
-        </div>
-        <div class="about-text">
-            <h2 style="color: var(--primary); margin-bottom: 15px;">Apa itu Greasycle?</h2>
+    <main>
+        <section>
+            <h1>Tentang Kami</h1>
+            <p>Mengenal lebih jauh visi kami untuk lingkungan yang lebih bersih.</p>
+            
+            <img src="https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&q=80" alt="Tanaman ramah lingkungan" width="400">
+            
+            <h3>Apa itu Greasycle?</h3>
             <p>Greasycle adalah inisiatif berbasis platform digital yang berfokus pada pengelolaan limbah minyak goreng bekas (jelantah). Kami hadir sebagai jembatan antara rumah tangga dan industri biofuel untuk menciptakan ekosistem ekonomi sirkular.</p>
-            <p>Kami percaya bahwa perubahan besar dimulai dari dapur Anda. Dengan menyalurkan jelantah ke Greasycle, Anda berkontribusi langsung pada pengurangan emisi karbon dan pelestarian sumber daya air.</p>
-        </div>
-    </div>
-</section>
+        </section>
 
-<section class="section-container">
-    <div class="visi-misi">
-        <div class="box">
-            <h3>Visi Kami</h3>
-            <p>Menjadi pelopor dalam transformasi pengelolaan minyak jelantah di Indonesia melalui inovasi digital yang terintegrasi, guna menciptakan sistem ekonomi sirkular yang inklusif, meningkatkan kesejahteraan masyarakat, serta mendorong percepatan pemanfaatan energi terbarukan demi masa depan yang lebih berkelanjutan.</p>
-        </div>
-        <div class="box">
-            <h3>Misi Kami</h3>
+        <hr>
+
+        <section>
+            <h2>Visi dan Misi</h2>
+            <h3>Visi</h3>
+            <p>Menjadi pelopor dalam transformasi pengelolaan minyak jelantah di Indonesia melalui inovasi digital yang terintegrasi.</p>
+            
+            <h3>Misi</h3>
             <ul>
-                <li>Mengedukasi masyarakat tentang bahaya limbah jelantah bagi lingkungan.</li>
-                <li>Mempermudah akses pengumpulan jelantah melalui sistem digital yang terintegrasi.</li>
-                <li>Membangun kemitraan strategis dengan pengolah biofuel untuk kemandirian energi.</li>
+                <li>Mengedukasi masyarakat tentang bahaya limbah jelantah.</li>
+                <li>Mempermudah akses pengumpulan jelantah melalui sistem digital.</li>
+                <li>Membangun kemitraan strategis dengan pengolah biofuel.</li>
             </ul>
-        </div>
-    </div>
-</section>
+        </section>
 
-<section class="section-container">
-    <h2 class="section-title">Kenapa Greasycle?</h2>
-    <div class="impact-grid">
-        <div class="card">
-            <img src="https://cdn-icons-png.flaticon.com/128/2913/2913454.png" alt="Ecology Icon" />
-            <h3>Eco-Friendly</h3>
-            <p>Setiap liter jelantah yang Anda berikan mencegah ribuan liter air tercemar.</p>
-        </div>
-        <div class="card">
-            <img src="https://cdn-icons-png.flaticon.com/128/2966/2966327.png" alt="Health Icon" />
-            <h3>Sehat & Aman</h3>
-            <p>Mencegah peredaran minyak jelantah ilegal yang membahayakan kesehatan.</p>
-        </div>
-        <div class="card">
-            <img src="https://cdn-icons-png.flaticon.com/128/2454/2454282.png" alt="Economy Icon" />
-            <h3>Manfaat Ekonomi</h3>
-            <p>Dapatkan nilai ekonomi tambahan dari limbah dapur yang biasanya dibuang.</p>
-        </div>
-    </div>
-</section>
+        <hr>
 
-<footer>
-    &copy; 2026 Greasycle • Bersama Menjaga Bumi Indonesia
-</footer>
+        <section>
+            <h2>Kenapa Greasycle?</h2>
+            
+            <article>
+                <h4>Eco-Friendly</h4>
+                <p>Setiap liter jelantah yang Anda berikan mencegah ribuan liter air tercemar.</p>
+            </article>
+
+            <article>
+                <h4>Sehat & Aman</h4>
+                <p>Mencegah peredaran minyak jelantah ilegal yang membahayakan kesehatan.</p>
+            </article>
+
+            <article>
+                <h4>Manfaat Ekonomi</h4>
+                <p>Dapatkan nilai ekonomi tambahan dari limbah dapur Anda.</p>
+            </article>
+        </section>
+    </main>
+
+    <hr>
+
+    <footer>
+        <p>&copy; 2026 Greasycle • Bersama Menjaga Bumi Indonesia</p>
+    </footer>
 
 </body>
 </html>
