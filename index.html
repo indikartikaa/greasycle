@@ -1,49 +1,121 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Beranda - Greasycle</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hubungi Kami - GreaseCycle</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
 
-    <h1>Greasycle</h1>
-    <p>Solusi Pengelolaan Minyak Jelantah untuk Lingkungan Lebih Hijau</p>
+    <nav class="navbar">
+        <a href="index.html" class="logo">Greasycycle</a>
+        <a href="index.html" class="home-btn">Home</a>
+    </nav>
 
-    <hr>
+    <div class="header">
+        <h1>Mari Berdiskusi</h1>
+        <p>GreaseCycle hadir untuk memberikan solusi pengelolaan limbah minyak Anda. Kirimkan pesan atau kunjungi kantor kami.</p>
+    </div>
 
-    <h2>Menu</h2>
-    <ul>
-        <li><a href="index.html">Beranda</a></li>
-        <li><a href="about.html">Profil</a></li>
-        <li><a href="portfolio.html">Portofolio</a></li>
-        <li><a href="contact.html">Hubungi Kami</a></li>
-    </ul>
+    <div class="wrapper">
+        <div class="container">
+            <div class="form-section">
+                <h2><i class="fas fa-paper-plane"></i> Kirim Pesan</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label>Nama Lengkap</label>
+                        <input type="text" id="nama" placeholder="Contoh: Elvina Meisya">
+                    </div>
 
-    <hr>
+                    <div class="form-group">
+                        <label>Email Perusahaan/Pribadi</label>
+                        <input type="email" id="email" placeholder="email@contoh.com">
+                    </div>
 
-    <h2>Tentang Greasycle</h2>
-    <p>
-        Greasycle adalah platform digital yang membantu masyarakat 
-        mengelola limbah minyak jelantah menjadi sesuatu yang lebih bernilai.
-    </p>
+                    <div class="form-group">
+                        <label>Subjek</label>
+                        <input type="text" id="subjek" placeholder="Topik yang ingin dibahas">
+                    </div>
 
-    <p>
-        Kami percaya bahwa limbah bukan akhir dari sebuah produk, 
-        tetapi awal dari solusi yang lebih ramah lingkungan.
-    </p>
+                    <div class="form-group">
+                        <label>Pesan</label>
+                        <textarea id="pesan" rows="4" placeholder="Bagaimana kami bisa membantu Anda?"></textarea>
+                    </div>
 
-    <hr>
+                    <button type="submit" id="submitBtn">Kirim Sekarang</button>
+                    <div id="statusBox" class="status-msg"></div>
+                </form>
+            </div>
 
-    <h2>Layanan Kami</h2>
-    <ul>
-        <li>Pengumpulan minyak jelantah</li>
-        <li>Penukaran minyak menjadi uang digital</li>
-        <li>Edukasi pengelolaan limbah rumah tangga</li>
-    </ul>
+            <div class="info-section">
+                <div class="info-card">
+                    <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="info-content">
+                        <h4>Lokasi Kami</h4>
+                        <p>Jl. Semampir, Sukolilo,<br>Surabaya, Jawa Timur</p>
+                    </div>
+                </div>
 
-    <hr>
+                <div class="info-card">
+                    <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="info-content">
+                        <h4>Email Resmi</h4>
+                        <p>info@greasecycle.id</p>
+                    </div>
+                </div>
 
-    <h3>© 2026 Greasycle</h3>
+                <div class="info-card">
+                    <div class="info-icon"><i class="fas fa-phone-alt"></i></div>
+                    <div class="info-content">
+                        <h4>Telepon/WA</h4>
+                        <p>+62 812-3456-7890</p>
+                    </div>
+                </div>
 
+                <div class="info-card">
+                    <div class="info-icon"><i class="fas fa-clock"></i></div>
+                    <div class="info-content">
+                        <h4>Jam Kerja</h4>
+                        <p>Senin - Jumat: 08:00 - 16:00 WIB</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", function(e){
+            e.preventDefault();
+            const btn = document.getElementById("submitBtn");
+            const statusBox = document.getElementById("statusBox");
+            const fields = ["nama", "email", "subjek", "pesan"];
+            let isValid = true;
+
+            fields.forEach(f => {
+                if(document.getElementById(f).value.trim() === "") isValid = false;
+            });
+
+            statusBox.style.display = "block";
+
+            if(!isValid){
+                statusBox.className = "status-msg error";
+                statusBox.textContent = "Mohon lengkapi semua data sebelum mengirim.";
+            } else {
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+                btn.disabled = true;
+
+                setTimeout(() => {
+                    statusBox.className = "status-msg success";
+                    statusBox.innerHTML = '<i class="fas fa-check-circle"></i> Pesan Anda telah terkirim! Tim kami akan segera menghubungi.';
+                    document.getElementById("contactForm").reset();
+                    btn.innerHTML = 'Kirim Sekarang';
+                    btn.disabled = false;
+                }, 1500);
+            }
+        });
+    </script>
 </body>
 </html>
