@@ -1,29 +1,40 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portofolio - Greasycle</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portofolio - Greasycle</title>
 
-    <!-- Menghubungkan ke file CSS -->
-    <link rel="stylesheet" href="portofolio.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="portofolio.css">
+
 </head>
 <body>
 
-<header>
+<nav class="navbar">
+    <div class="logo">Greasycle</div>
+    <ul class="nav-menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">Tentang</a></li>
+        <li><a href="portofolio.html" style="color:var(--primary); font-weight:600;">Portofolio</a></li>
+        <li><a href="contact.html">Kontak</a></li>
+    </ul>
+</nav>
+
+<section class="hero">
     <h1>Portofolio Proyek</h1>
     <p>Website Pengelolaan Kembali Minyak Jelantah - Greasycle</p>
-</header>
+</section>
 
-<div class="container">
+<section class="container">
 
     <div class="card">
         <h2>Deskripsi Proyek</h2>
         <p>
-            Greasycle adalah platform berbasis web yang dirancang untuk membantu masyarakat 
-            dalam mengelola minyak jelantah secara ramah lingkungan. Sistem ini menyediakan 
-            fitur penjadwalan penjemputan minyak bekas serta edukasi mengenai proses daur ulang 
-            menjadi biodiesel dan produk ramah lingkungan lainnya.
+        Greasycle adalah platform berbasis web yang dirancang untuk membantu masyarakat 
+        dalam mengelola minyak jelantah secara ramah lingkungan. Sistem ini menyediakan 
+        fitur penjadwalan penjemputan minyak bekas serta edukasi mengenai proses daur ulang 
+        menjadi biodiesel dan produk ramah lingkungan lainnya.
         </p>
     </div>
 
@@ -52,22 +63,24 @@
     <div class="card">
         <h2>Tujuan Proyek</h2>
         <p>
-            Proyek ini bertujuan untuk mengurangi pencemaran lingkungan akibat pembuangan 
-            minyak jelantah sembarangan serta mendukung konsep ekonomi sirkular melalui 
-            pemanfaatan limbah menjadi energi terbarukan.
+        Proyek ini bertujuan untuk mengurangi pencemaran lingkungan akibat pembuangan 
+        minyak jelantah sembarangan serta mendukung konsep ekonomi sirkular melalui 
+        pemanfaatan limbah menjadi energi terbarukan.
         </p>
     </div>
 
-    <div class="card">
+    <div class="card center-card">
         <h2>Link Proyek</h2>
-        <a href="#" class="btn">Lihat Demo</a>
-        <a href="#" class="btn">Source Code</a>
+        <div class="btn-group">
+            <a href="#" class="btn">Lihat Demo</a>
+            <a href="#" class="btn-outline">Source Code</a>
+        </div>
     </div>
 
-</div>
+</section>
 
 <footer>
-    &copy; 2026 Greasycle Project
+    &copy; 2026 Greasycle • Dikembangkan oleh Elvina, Zahlul, dan Indi
 </footer>
 
 </body>
