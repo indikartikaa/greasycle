@@ -1,0 +1,125 @@
+/* PROFILE HERO STYLING */
+.hero-profile {
+    padding: 120px 8% 80px;
+    background: #fffafa; /* Warna krem lembut sesuai gambar */
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+}
+
+.profile-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.profile-text {
+    flex: 1;
+    min-width: 300px;
+}
+
+.greeting {
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    margin-bottom: 5px;
+}
+
+.profile-text h1 {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    margin-bottom: 10px;
+}
+
+.role {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.tagline {
+    color: #64748b;
+    margin: 15px 0 30px;
+    font-style: italic;
+}
+
+.view-work-btn {
+    text-decoration: none;
+    color: var(--primary-green);
+    font-weight: 700;
+    border-bottom: 2px solid var(--primary-green);
+    padding-bottom: 5px;
+}
+
+.profile-image-card {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.main-photo {
+    width: 320px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 30px;
+    box-shadow: 25px 25px 0px var(--primary-green); /* Efek bayangan kotak di gambar */
+}
+
+/* TECH & SKILLS STYLING */
+.about-tech {
+    padding: 80px 8%;
+    background: white;
+}
+
+.tech-grid {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 50px 0;
+    flex-wrap: wrap;
+}
+
+.tech-item {
+    text-align: center;
+    transition: 0.3s;
+}
+
+.tech-item i {
+    font-size: 3.5rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.tech-item span {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.capability-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 60px;
+}
+
+.cap-card {
+    padding: 40px;
+    border-radius: 20px;
+    background: var(--bg-light);
+    border: 1px solid #eee;
+    text-align: center;
+}
+
+.cap-card i {
+    font-size: 2.5rem;
+    color: var(--secondary-green);
+    margin-bottom: 20px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 850px) {
+    .profile-container { flex-direction: column-reverse; text-align: center; }
+    .profile-text h1 { font-size: 2.5rem; }
+    .main-photo { width: 250px; height: 320px; }
+}
