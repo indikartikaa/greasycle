@@ -1,7 +1,64 @@
+/* DEFINISI WARNA & DASAR */
+:root {
+    --primary-green: #335f4b;
+    --secondary-green: #00a878;
+    --text-dark: #1e293b;
+    --bg-light: #f8fafc;
+    --white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+/* NAVBAR STYLING */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 8%;
+    background: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--primary-green);
+    text-decoration: none;
+}
+
+.home-btn {
+    text-decoration: none;
+    color: #64748b;
+    font-weight: 600;
+    padding: 8px 15px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+}
+
+.home-btn:hover {
+    background: var(--primary-green);
+    color: white;
+}
+
 /* PROFILE HERO STYLING */
 .hero-profile {
     padding: 120px 8% 80px;
-    background: #fffafa; /* Warna krem lembut sesuai gambar */
+    background: #fffafa; /* Warna krem lembut */
     min-height: 80vh;
     display: flex;
     align-items: center;
@@ -29,8 +86,9 @@
 
 .profile-text h1 {
     font-size: 3.5rem;
-    line-height: 1.1;
+    line-height: 1.0;
     margin-bottom: 10px;
+    color: var(--primary-green);
 }
 
 .role {
@@ -38,13 +96,18 @@
     font-weight: 600;
 }
 
+.highlight {
+    color: var(--secondary-green);
+}
+
 .tagline {
     color: #64748b;
-    margin: 15px 0 30px;
+    margin: 20px 0 40px;
     font-style: italic;
 }
 
 .view-work-btn {
+    display: inline-block;
     text-decoration: none;
     color: var(--primary-green);
     font-weight: 700;
@@ -63,13 +126,24 @@
     height: 400px;
     object-fit: cover;
     border-radius: 30px;
-    box-shadow: 25px 25px 0px var(--primary-green); /* Efek bayangan kotak di gambar */
+    box-shadow: 25px 25px 0px var(--primary-green);
+    background-color: #ddd; /* Warna pengganti jika foto belum ada */
 }
 
 /* TECH & SKILLS STYLING */
 .about-tech {
     padding: 80px 8%;
     background: white;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title h2 {
+    font-size: 2rem;
+    color: var(--primary-green);
 }
 
 .tech-grid {
@@ -82,7 +156,6 @@
 
 .tech-item {
     text-align: center;
-    transition: 0.3s;
 }
 
 .tech-item i {
@@ -117,9 +190,17 @@
     margin-bottom: 20px;
 }
 
+/* FOOTER */
+.footer {
+    padding: 40px;
+    text-align: center;
+    background: #1a2e25;
+    color: white;
+}
+
 /* RESPONSIVE */
 @media (max-width: 850px) {
     .profile-container { flex-direction: column-reverse; text-align: center; }
     .profile-text h1 { font-size: 2.5rem; }
-    .main-photo { width: 250px; height: 320px; }
+    .main-photo { width: 250px; height: 320px; box-shadow: 15px 15px 0px var(--primary-green); }
 }
