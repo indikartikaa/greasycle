@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hubungi Kami - GreaseCycle</title>
+    <title>Beranda - Greasycycle</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="index.css">
@@ -12,110 +12,87 @@
 
     <nav class="navbar">
         <a href="index.html" class="logo">Greasycycle</a>
-        <a href="index.html" class="home-btn">Home</a>
+        <div class="nav-links">
+            <a href="index.html" class="active">Home</a>
+            <a href="about.html">Tentang</a>
+            <a href="contact.html">Kontak</a>
+        </div>
     </nav>
 
-    <div class="header">
-        <h1>Mari Berdiskusi</h1>
-        <p>GreaseCycle hadir untuk memberikan solusi pengelolaan limbah minyak Anda. Kirimkan pesan atau kunjungi kantor kami.</p>
-    </div>
-
-    <div class="wrapper">
-        <div class="container">
-            <div class="form-section">
-                <h2><i class="fas fa-paper-plane"></i> Kirim Pesan</h2>
-                <form id="contactForm">
-                    <div class="form-group">
-                        <label>Nama Lengkap</label>
-                        <input type="text" id="nama" placeholder="Contoh: Elvina Meisya">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Email Perusahaan/Pribadi</label>
-                        <input type="email" id="email" placeholder="email@contoh.com">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Subjek</label>
-                        <input type="text" id="subjek" placeholder="Topik yang ingin dibahas">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Pesan</label>
-                        <textarea id="pesan" rows="4" placeholder="Bagaimana kami bisa membantu Anda?"></textarea>
-                    </div>
-
-                    <button type="submit" id="submitBtn">Kirim Sekarang</button>
-                    <div id="statusBox" class="status-msg"></div>
-                </form>
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Ubah Limbah Jadi <span class="highlight">Energi Hijau</span></h1>
+            <p>Kelola minyak jelantah Anda secara cerdas bersama Greasycycle. Ciptakan lingkungan bersih dan dapatkan manfaat ekonominya.</p>
+            <div class="hero-btns">
+                <a href="contact.html" class="btn-primary">Mulai Sekarang</a>
+                <a href="about.html" class="btn-secondary">Pelajari Lebih Lanjut</a>
             </div>
+        </div>
+    </header>
 
-            <div class="info-section">
-                <div class="info-card">
-                    <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
-                    <div class="info-content">
-                        <h4>Lokasi Kami</h4>
-                        <p>Jl. Semampir, Sukolilo,<br>Surabaya, Jawa Timur</p>
-                    </div>
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Layanan Kami</h2>
+                <p>Memberikan solusi pengelolaan limbah yang mudah dan terintegrasi.</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <i class="fas fa-truck-loading"></i>
+                    <h3>Penjemputan Rutin</h3>
+                    <p>Kami menjemput minyak jelantah langsung dari dapur Anda secara terjadwal.</p>
                 </div>
-
-                <div class="info-card">
-                    <div class="info-icon"><i class="fas fa-envelope"></i></div>
-                    <div class="info-content">
-                        <h4>Email Resmi</h4>
-                        <p>info@greasecycle.id</p>
-                    </div>
+                <div class="feature-card">
+                    <i class="fas fa-seedling"></i>
+                    <h3>Ramah Lingkungan</h3>
+                    <p>Limbah yang dikumpulkan diolah menjadi biofuel untuk masa depan yang lebih hijau.</p>
                 </div>
-
-                <div class="info-card">
-                    <div class="info-icon"><i class="fas fa-phone-alt"></i></div>
-                    <div class="info-content">
-                        <h4>Telepon/WA</h4>
-                        <p>+62 812-3456-7890</p>
-                    </div>
-                </div>
-
-                <div class="info-card">
-                    <div class="info-icon"><i class="fas fa-clock"></i></div>
-                    <div class="info-content">
-                        <h4>Jam Kerja</h4>
-                        <p>Senin - Jumat: 08:00 - 16:00 WIB</p>
-                    </div>
+                <div class="feature-card">
+                    <i class="fas fa-wallet"></i>
+                    <h3>Insentif Ekonomi</h3>
+                    <p>Dapatkan nilai ekonomi atau poin untuk setiap liter jelantah yang Anda salurkan.</p>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <script>
-        document.getElementById("contactForm").addEventListener("submit", function(e){
-            e.preventDefault();
-            const btn = document.getElementById("submitBtn");
-            const statusBox = document.getElementById("statusBox");
-            const fields = ["nama", "email", "subjek", "pesan"];
-            let isValid = true;
+    <section class="founders">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Founders</h2>
+                <p>Kenali tim di balik layar Greasycycle.</p>
+            </div>
+            <div class="founder-grid">
+                <a href="profile-elvina.html" class="founder-card">
+                    <div class="founder-img">
+                        <i class="fas fa-user-circle"></i> 
+                    </div>
+                    <h3>Elvina Meisya Azzahra</h3>
+                    <span>UI/UX Designer</span>
+                </a>
 
-            fields.forEach(f => {
-                if(document.getElementById(f).value.trim() === "") isValid = false;
-            });
+                <a href="profile-zahlul.html" class="founder-card">
+                    <div class="founder-img">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h3>Zahlul Noer Laily</h3>
+                    <span>Lead Developer</span>
+                </a>
 
-            statusBox.style.display = "block";
+                <a href="profile-indi.html" class="founder-card">
+                    <div class="founder-img">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h3>Masyito Indi Kartika</h3>
+                    <span>System Analyst</span>
+                </a>
+            </div>
+        </div>
+    </section>
 
-            if(!isValid){
-                statusBox.className = "status-msg error";
-                statusBox.textContent = "Mohon lengkapi semua data sebelum mengirim.";
-            } else {
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
-                btn.disabled = true;
+    <footer class="footer">
+        <p>&copy; 2026 Greasycycle. Dikembangkan oleh Elvina, Zahlul, dan Indi.</p>
+    </footer>
 
-                setTimeout(() => {
-                    statusBox.className = "status-msg success";
-                    statusBox.innerHTML = '<i class="fas fa-check-circle"></i> Pesan Anda telah terkirim! Tim kami akan segera menghubungi.';
-                    document.getElementById("contactForm").reset();
-                    btn.innerHTML = 'Kirim Sekarang';
-                    btn.disabled = false;
-                }, 1500);
-            }
-        });
-    </script>
 </body>
 </html>
