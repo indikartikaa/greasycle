@@ -186,3 +186,78 @@ padding:30px;
 margin-top:50px;
 font-size:14px;
 }
+
+.portfolio-form{
+max-width:700px;
+margin:auto;
+background:white;
+padding:40px;
+border-radius:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.05);
+}
+
+.form-group{
+margin-bottom:20px;
+}
+
+.form-group label{
+font-weight:600;
+color:#004030;
+display:block;
+margin-bottom:6px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+width:100%;
+padding:12px;
+border-radius:10px;
+border:1px solid #ddd;
+font-family:'Poppins',sans-serif;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+outline:none;
+border-color:#2d6a4f;
+}
+
+.btn-submit{
+background:#004030;
+color:white;
+padding:12px;
+border:none;
+border-radius:10px;
+width:100%;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+}
+
+.btn-submit:hover{
+background:#2d6a4f;
+}
+
+.feedback-list{
+margin-top:40px;
+}
+
+.feedback-item{
+background:#f7faf9;
+padding:15px;
+border-left:4px solid #2d6a4f;
+border-radius:10px;
+margin-bottom:15px;
+}
+
+.feedback-item h4{
+color:#004030;
+margin-bottom:5px;
+}
+
+.feedback-item p{
+font-size:14px;
+color:#555;
+}
