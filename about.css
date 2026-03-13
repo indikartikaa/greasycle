@@ -1,7 +1,4 @@
-/* IMPORT GOOGLE FONTS */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-/* GLOBAL VARIABLES */
 :root {
     --primary-color: #004030;
     --secondary-color: #2d6a4f;
@@ -13,7 +10,6 @@
     --transition: all 0.3s ease;
 }
 
-/* GLOBAL RESET */
 * {
     margin: 0;
     padding: 0;
@@ -28,7 +24,6 @@ body {
     overflow-x: hidden;
 }
 
-/* NAVBAR */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -67,7 +62,6 @@ body {
     color: var(--primary-color);
 }
 
-/* HERO SECTION */
 .hero {
     text-align: center;
     padding: 120px 20px;
@@ -90,7 +84,6 @@ body {
     margin: 0 auto;
 }
 
-/* CARDS SECTION */
 .cards-section {
     display: grid; /* Menggunakan Grid lebih rapi dari Flex untuk kartu */
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -132,7 +125,6 @@ body {
     font-size: 14px;
 }
 
-/* CONTENT SECTION */
 .content-section {
     padding: 100px 10%;
     text-align: center;
@@ -146,7 +138,6 @@ body {
     display: inline-block;
 }
 
-/* Garis bawah hiasan di judul */
 .content-section h2::after {
     content: '';
     display: block;
@@ -165,7 +156,6 @@ body {
     margin: 0 auto;
 }
 
-/* FOOTER */
 footer {
     background: #f1f1f1;
     text-align: center;

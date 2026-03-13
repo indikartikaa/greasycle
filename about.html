@@ -13,13 +13,12 @@
             --white: #ffffff;
             --text: #333;
             --muted: #666;
+            --danger: #c62828;
         }
 
-        /* Reset & Global Style */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background-color: #f7faf9; color: var(--text); line-height: 1.6; }
+        body { background-color: #f7faf9; color: var(--text); line-height: 1.6; overflow-x: hidden; }
 
-        /* Navbar */
         .navbar {
             display: flex; justify-content: space-between; align-items: center;
             padding: 15px 8%; background: var(--white);
@@ -29,9 +28,8 @@
         .logo { font-size: 24px; font-weight: 700; color: var(--primary); }
         .nav-menu { display: flex; list-style: none; gap: 25px; }
         .nav-menu a { text-decoration: none; color: var(--muted); font-weight: 500; transition: 0.3s; }
-        .nav-menu a:hover { color: var(--primary); }
+        .nav-menu a:hover, .nav-menu a.active { color: var(--primary); font-weight: 600; }
 
-        /* Hero */
         .hero {
             background: linear-gradient(rgba(0,64,48,0.8), rgba(0,64,48,0.8)), 
                         url('https://images.unsplash.com/photo-1542601906990-b4d3fb773b09?auto=format&fit=crop&q=80');
@@ -40,36 +38,28 @@
         }
         .hero h1 { font-size: 36px; margin-bottom: 10px; }
 
-        /* Core Section Style */
         .section-container { padding: 80px 8%; }
         .section-title { text-align: center; margin-bottom: 40px; color: var(--primary); font-size: 28px; }
         .section-title::after { content: ''; display: block; width: 60px; height: 4px; background: var(--secondary); margin: 10px auto; border-radius: 2px; }
 
-        /* About Section */
         .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
         .about-text p { margin-bottom: 15px; text-align: justify; }
+        .about-img img { width: 100%; border-radius: 20px; box-shadow: 10px 10px 0 var(--accent); }
 
-        /* Visi Misi */
         .visi-misi { background: var(--accent); border-radius: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
         .box { padding: 40px; }
         .box h3 { color: var(--primary); margin-bottom: 15px; font-size: 22px; }
         .box ul { padding-left: 20px; }
         .box ul li { margin-bottom: 10px; }
 
-        /* Cards (Impact) */
         .impact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
         .card { background: var(--white); padding: 35px; border-radius: 20px; text-align: center; transition: 0.3s; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
         .card:hover { transform: translateY(-10px); }
         .card img { width: 65px; margin-bottom: 20px; }
 
-        /* === STYLE CRUD KOMENTAR === */
         .crud-container {
-            background: var(--white);
-            padding: 40px;
-            border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            max-width: 800px;
-            margin: 0 auto;
+            background: var(--white); padding: 40px; border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); max-width: 800px; margin: 0 auto;
         }
         .form-group { margin-bottom: 20px; text-align: left; }
         .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--primary); }
@@ -77,14 +67,15 @@
             width: 100%; padding: 12px; border: 1.5px solid #eee; border-radius: 12px;
             font-family: 'Poppins', sans-serif; transition: 0.3s;
         }
-        .form-group input:focus, .form-group textarea:focus { border-color: var(--secondary); outline: none; }
-        
+        .form-group input:focus { border-color: var(--secondary); outline: none; }
+
         .btn-submit {
             background: var(--primary); color: var(--white); padding: 12px 30px;
             border: none; border-radius: 12px; cursor: pointer; font-weight: 600;
-            width: 100%; transition: 0.3s;
+            width: 100%; transition: 0.3s; margin-bottom: 10px;
         }
         .btn-submit:hover { background: var(--secondary); transform: translateY(-3px); }
+        .btn-cancel { background: #95a5a6; display: none; }
 
         .review-list { margin-top: 50px; text-align: left; }
         .review-item {
@@ -94,18 +85,18 @@
         }
         .review-item h4 { color: var(--primary); margin-bottom: 5px; }
         .review-item p { color: var(--muted); font-size: 14px; }
-        .btn-delete {
-            position: absolute; right: 20px; top: 20px;
-            background: #ffebee; color: #c62828; border: none;
-            padding: 5px 12px; border-radius: 8px; cursor: pointer; font-size: 12px;
-        }
-        /* === END STYLE CRUD === */
+        
+        .action-btns { position: absolute; right: 20px; top: 20px; display: flex; gap: 8px; }
+        .btn-action { border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 600; transition: 0.2s; }
+        .edit-btn { background: #e3f2fd; color: #1565c0; }
+        .del-btn { background: #ffebee; color: var(--danger); }
+        .btn-action:hover { opacity: 0.8; }
 
-        /* Footer */
         footer { background: var(--primary); color: var(--white); text-align: center; padding: 30px; font-size: 14px; }
 
         @media (max-width: 768px) {
             .about-grid, .visi-misi { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 28px; }
         }
     </style>
 </head>
@@ -115,146 +106,188 @@
     <div class="logo">Greasycle</div>
     <ul class="nav-menu">
         <li><a href="index.html">Home</a></li>
-        <li><a href="about.html" style="color: var(--primary); font-weight: 600;">Tentang</a></li>
+        <li><a href="about.html" class="active">Tentang</a></li>
         <li><a href="contact.html">Kontak</a></li>
+        <li><a href="portofolio.html">Portofolio</a></li>
     </ul>
 </nav>
 
-<section class="hero">
-    <h1>Tentang Kami</h1>
-    <p>Mengenal lebih jauh visi kami untuk lingkungan yang lebih bersih.</p>
-</section>
+<main>
+    <section class="hero">
+        <h1>Tentang Kami</h1>
+        <p>Mengenal lebih jauh visi kami untuk lingkungan yang lebih bersih.</p>
+    </section>
 
-<section class="section-container">
-    <div class="about-grid">
-        <div class="about-img">
-            <img src="https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&q=80" alt="Eco Plant" style="width: 100%; border-radius: 20px; box-shadow: 10px 10px 0 var(--accent);">
-        </div>
-        <div class="about-text">
-            <h2 style="color: var(--primary); margin-bottom: 15px;">Apa itu Greasycle?</h2>
-            <p>Greasycle adalah inisiatif berbasis platform digital yang berfokus pada pengelolaan limbah minyak goreng bekas (jelantah). Kami hadir sebagai jembatan antara rumah tangga dan industri biofuel untuk menciptakan ekosistem ekonomi sirkular.</p>
-            <p>Kami percaya bahwa perubahan besar dimulai dari dapur Anda. Dengan menyalurkan jelantah ke Greasycle, Anda berkontribusi langsung pada pengurangan emisi karbon dan pelestarian sumber daya air.</p>
-        </div>
-    </div>
-</section>
-
-<section class="section-container">
-    <div class="visi-misi">
-        <div class="box">
-            <h3>Visi Kami</h3>
-            <p>Menjadi platform terdepan di Indonesia dalam transformasi limbah minyak jelantah menjadi energi terbarukan yang berkelanjutan dan bernilai ekonomi bagi masyarakat.</p>
-        </div>
-        <div class="box">
-            <h3>Misi Kami</h3>
-            <ul>
-                <li>Mengedukasi masyarakat tentang bahaya limbah jelantah bagi lingkungan.</li>
-                <li>Mempermudah akses pengumpulan jelantah melalui sistem digital yang terintegrasi.</li>
-                <li>Membangun kemitraan strategis dengan pengolah biofuel untuk kemandirian energi.</li>
-            </ul>
-        </div>
-    </div>
-</section>
-
-<section class="section-container" style="background-color: #f0f4f3;">
-    <h2 class="section-title">Review & Komentar</h2>
-    
-    <div class="crud-container">
-        <form id="reviewForm">
-            <div class="form-group">
-                <label>Nama Lengkap</label>
-                <input type="text" id="inputNama" placeholder="Contoh: Indi Kartika" required>
+    <section class="section-container">
+        <div class="about-grid">
+            <div class="about-img">
+                <img src="https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&q=80" alt="Eco Plant">
             </div>
-            <div class="form-group">
-                <label>Komentar / Pengalaman</label>
-                <textarea id="inputKomentar" rows="4" placeholder="Bagikan pendapatmu tentang layanan kami..." required></textarea>
+            <div class="about-text">
+                <h2 style="color: var(--primary); margin-bottom: 15px;">Apa itu Greasycle?</h2>
+                <p>Greasycle adalah inisiatif berbasis platform digital yang berfokus pada pengelolaan limbah minyak goreng bekas (jelantah). Kami hadir sebagai jembatan antara rumah tangga dan industri biofuel untuk menciptakan ekosistem ekonomi sirkular.</p>
+                <p>Kami percaya bahwa perubahan besar dimulai dari dapur Anda. Dengan menyalurkan jelantah ke Greasycle, Anda berkontribusi langsung pada pengurangan emisi karbon dan pelestarian sumber daya air.</p>
             </div>
-            <button type="submit" class="btn-submit">Kirim Komentar</button>
-        </form>
+        </div>
+    </section>
 
-        <div class="review-list" id="reviewContainer">
+    <section class="section-container">
+        <div class="visi-misi">
+            <div class="box">
+                <h3>Visi Kami</h3>
+                <p>Menjadi platform terdepan di Indonesia dalam transformasi limbah minyak jelantah menjadi energi terbarukan yang berkelanjutan.</p>
             </div>
-    </div>
-</section>
+            <div class="box">
+                <h3>Misi Kami</h3>
+                <ul>
+                    <li>Mengedukasi masyarakat tentang bahaya limbah jelantah.</li>
+                    <li>Mempermudah akses pengumpulan melalui sistem digital.</li>
+                    <li>Membangun kemitraan strategis dengan pengolah biofuel.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
-<section class="section-container">
-    <h2 class="section-title">Kenapa Greasycle?</h2>
-    <div class="impact-grid">
-        <div class="card">
-            <img src="https://cdn-icons-png.flaticon.com/128/2913/2913454.png" alt="Ecology Icon" />
-            <h3>Eco-Friendly</h3>
-            <p>Setiap liter jelantah yang Anda berikan mencegah ribuan liter air tercemar.</p>
+    <section class="section-container" style="background-color: #f0f4f3;">
+        <h2 class="section-title">Review & Komentar</h2>
+        
+        <div class="crud-container">
+            <input type="hidden" id="editIndex" value="-1">
+            
+            <form id="reviewForm">
+                <div class="form-group">
+                    <label>Nama Lengkap</label>
+                    <input type="text" id="inputNama" placeholder="Contoh: Indi Kartika" required>
+                </div>
+                <div class="form-group">
+                    <label>Komentar / Pengalaman</label>
+                    <textarea id="inputKomentar" rows="4" placeholder="Bagikan pendapatmu..." required></textarea>
+                </div>
+                <button type="submit" id="submitBtn" class="btn-submit">Kirim Komentar</button>
+                <button type="button" id="cancelBtn" class="btn-submit btn-cancel" onclick="resetForm()">Batal Edit</button>
+            </form>
+
+            <div class="review-list" id="reviewContainer"></div>
         </div>
-        <div class="card">
-            <img src="https://cdn-icons-png.flaticon.com/128/2966/2966327.png" alt="Health Icon" />
-            <h3>Sehat & Aman</h3>
-            <p>Mencegah peredaran minyak jelantah ilegal yang membahayakan kesehatan.</p>
+    </section>
+
+    <section class="section-container">
+        <h2 class="section-title">Kenapa Greasycle?</h2>
+        <div class="impact-grid">
+            <div class="card">
+                <img src="https://cdn-icons-png.flaticon.com/128/2913/2913454.png" alt="Eco" />
+                <h3>Eco-Friendly</h3>
+                <p>Mencegah ribuan liter air tercemar dari limbah rumah tangga.</p>
+            </div>
+            <div class="card">
+                <img src="https://cdn-icons-png.flaticon.com/128/2966/2966327.png" alt="Health" />
+                <h3>Sehat & Aman</h3>
+                <p>Mencegah peredaran minyak jelantah ilegal di masyarakat.</p>
+            </div>
+            <div class="card">
+                <img src="https://cdn-icons-png.flaticon.com/128/2454/2454282.png" alt="Economy" />
+                <h3>Manfaat Ekonomi</h3>
+                <p>Dapatkan nilai ekonomi tambahan dari limbah dapur Anda.</p>
+            </div>
         </div>
-        <div class="card">
-            <img src="https://cdn-icons-png.flaticon.com/128/2454/2454282.png" alt="Economy Icon" />
-            <h3>Manfaat Ekonomi</h3>
-            <p>Dapatkan nilai ekonomi tambahan dari limbah dapur yang biasanya dibuang.</p>
-        </div>
-    </div>
-</section>
+    </section>
+</main>
 
 <footer>
-    &copy; 2026 Greasycle • Bersama Menjaga Bumi Indonesia
+    <div class="footer-content">
+        <p>&copy; 2026 <strong>Greasycycle</strong> • Crafted with Care for a Greener Future.)</p>
+        <p style="font-size: 12px; opacity: 0.8; margin-top: 5px;">Tugas Pemrograman Web - UPNVJT</p>
+    </div>
 </footer>
 
 <script>
     const reviewForm = document.getElementById('reviewForm');
     const reviewContainer = document.getElementById('reviewContainer');
+    const editIndexInput = document.getElementById('editIndex');
+    const submitBtn = document.getElementById('submitBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
 
-    // Fungsi READ: Menampilkan data dari LocalStorage
     function loadReviews() {
         const reviews = JSON.parse(localStorage.getItem('greasycle_reviews')) || [];
         reviewContainer.innerHTML = '';
         
         reviews.forEach((item, index) => {
-            reviewContainer.innerHTML += `
-                <div class="review-item">
-                    <h4>${item.nama}</h4>
-                    <p>"${item.komentar}"</p>
-                    <button class="btn-delete" onclick="deleteReview(${index})">Hapus</button>
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'review-item';
+            
+            itemDiv.innerHTML = `
+                <h4>${escapeHtml(item.nama)}</h4>
+                <p>"${escapeHtml(item.komentar)}"</p>
+                <div class="action-btns">
+                    <button class="btn-action edit-btn" onclick="prepareEdit(${index})">Edit</button>
+                    <button class="btn-action del-btn" onclick="deleteReview(${index})">Hapus</button>
                 </div>
             `;
+            reviewContainer.appendChild(itemDiv);
         });
     }
 
-    // Fungsi CREATE: Menambah data baru
     reviewForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
         const nama = document.getElementById('inputNama').value;
         const komentar = document.getElementById('inputKomentar').value;
+        const editIndex = parseInt(editIndexInput.value);
 
-        // Validasi Sederhana: Hanya boleh huruf dan spasi (sesuai modul)
-        const regexNama = /^[a-zA-Z\s]+$/;
-        if (!regexNama.test(nama)) {
+        if (!/^[a-zA-Z\s]+$/.test(nama)) {
             alert("Nama hanya boleh berisi huruf!");
             return;
         }
 
-        const reviews = JSON.parse(localStorage.getItem('greasycle_reviews')) || [];
-        reviews.push({ nama, komentar });
-        localStorage.setItem('greasycle_reviews', JSON.stringify(reviews));
+        let reviews = JSON.parse(localStorage.getItem('greasycle_reviews')) || [];
 
-        reviewForm.reset();
+        if (editIndex === -1) {
+            reviews.push({ nama, komentar });
+            alert("Komentar berhasil ditambahkan!");
+        } else {
+            reviews[editIndex] = { nama, komentar };
+            alert("Komentar berhasil diperbarui!");
+        }
+
+        localStorage.setItem('greasycle_reviews', JSON.stringify(reviews));
+        resetForm();
         loadReviews();
-        alert("Komentar berhasil dikirim!");
     });
 
-    // Fungsi DELETE: Menghapus data
+    window.prepareEdit = function(index) {
+        const reviews = JSON.parse(localStorage.getItem('greasycle_reviews'));
+        const item = reviews[index];
+
+        document.getElementById('inputNama').value = item.nama;
+        document.getElementById('inputKomentar').value = item.komentar;
+        editIndexInput.value = index;
+
+        submitBtn.textContent = "Simpan Perubahan";
+        cancelBtn.style.display = "block";
+        window.scrollTo({ top: reviewForm.offsetTop - 100, behavior: 'smooth' });
+    };
+
     window.deleteReview = function(index) {
-        if(confirm("Apakah Anda yakin ingin menghapus komentar ini?")) {
+        if(confirm("Hapus komentar ini?")) {
             const reviews = JSON.parse(localStorage.getItem('greasycle_reviews'));
             reviews.splice(index, 1);
             localStorage.setItem('greasycle_reviews', JSON.stringify(reviews));
             loadReviews();
         }
+    };
+
+    function resetForm() {
+        reviewForm.reset();
+        editIndexInput.value = "-1";
+        submitBtn.textContent = "Kirim Komentar";
+        cancelBtn.style.display = "none";
+    }
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
     }
 
-    // Load data pertama kali saat halaman dibuka
     loadReviews();
 </script>
 
