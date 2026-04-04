@@ -129,7 +129,8 @@
     <!-- 4. Alur Kerja (Our Process) -->
     <section class="py-20 px-[8%] bg-[#f0f7f4]">
         <div class="max-w-6xl mx-auto">
-            <h2 class="text-center text-3xl font-bold text-primary mb-12">Langkah Mudah Berkontribusi</h2>
+            <h2 class="text-center
+             text-3xl font-bold text-primary mb-12">Langkah Mudah Berkontribusi</h2>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <!-- Step items... (Kumpulkan, Jadwalkan, Dijemput, Saldo) -->
                 <div class="relative text-center group">
@@ -294,30 +295,6 @@
     </div>
 </section>
 
-    <!-- 8. Review & Komentar (Terakhir sebelum Footer) -->
-    <section class="py-24 px-[8%] bg-[#f0f4f3]">
-        <div class="container mx-auto max-w-4xl">
-            <h2 class="text-center text-3xl font-bold text-primary mb-12 relative after:content-[''] after:block after:w-16 after:h-1 after:bg-secondary after:mx-auto after:mt-2">Review & Komentar</h2>
-            <div class="bg-white p-10 rounded-[30px] shadow-lg">
-                <input type="hidden" id="editIndex" value="-1">
-                <form id="reviewForm" class="space-y-5 text-left">
-                    <div class="flex flex-col">
-                        <label class="font-bold mb-2 text-primary">Nama Lengkap</label>
-                        <input type="text" id="inputNama" class="p-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-secondary transition" placeholder="Contoh: Indi Kartika" required>
-                    </div>
-                    <div class="flex flex-col">
-                        <label class="font-bold mb-2 text-primary">Komentar / Pengalaman</label>
-                        <textarea id="inputKomentar" rows="4" class="p-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-secondary transition" placeholder="Bagikan pendapatmu..." required></textarea>
-                    </div>
-                    <button type="submit" id="submitBtn" class="w-full bg-primary text-white py-4 rounded-2xl font-bold hover:bg-secondary transition duration-300 shadow-md">Kirim Komentar</button>
-                    <button type="button" id="cancelBtn" class="w-full bg-gray-400 text-white py-4 rounded-2xl font-bold hidden mt-2" onclick="resetForm()">Batal Edit</button>
-                </form>
-                <div class="mt-10 space-y-4" id="reviewContainer"></div>
-            </div>
-        </div>
-    </section>
-</main>
-
 <!-- Footer -->
 <footer class="bg-primary pt-24 pb-12 mt-20">
     <div class="container mx-auto px-4">
@@ -327,8 +304,8 @@
                 <div class="space-y-3">
                     <p class="text-white font-semibold text-lg">PT Greasycle Indonesia</p>
                     <p class="text-accent opacity-80 leading-relaxed text-sm">
-                        JL. Berbek 3A GG. KH Dahlan No 22, Kel. Berbek,<br>
-                        Kec. Waru, Kab. Sidoarjo, Prov. Jawa Timur 61256
+                        JL. Semapir Tengah VIII Blok B No 18 RT. 10 RW. 01,<br>
+                        Kec. Sukolilo, Kota Surabaya, Prov. Jawa Timur 60119
                     </p>
                     <p class="text-accent opacity-80 text-sm">info@greasycle.id</p>
                     <p class="text-accent opacity-80 text-sm">+62 812-3456-7890</p>
@@ -378,76 +355,6 @@
             else item.classList.remove('active');
         });
     }
-
-    // Tetap gunakan review logic yang sudah kamu punya sebelumnya
-    const reviewForm = document.getElementById('reviewForm');
-    const reviewContainer = document.getElementById('reviewContainer');
-    const editIndexInput = document.getElementById('editIndex');
-    const submitBtn = document.getElementById('submitBtn');
-    const cancelBtn = document.getElementById('cancelBtn');
-
-    function loadReviews() {
-        const reviews = JSON.parse(localStorage.getItem('greasycle_reviews')) || [];
-        reviewContainer.innerHTML = '';
-        reviews.forEach((item, index) => {
-            const itemDiv = document.createElement('div');
-            itemDiv.className = 'bg-[#fcfdfd] p-5 rounded-2xl border-l-4 border-secondary relative shadow-sm mb-4';
-            itemDiv.innerHTML = `
-                <h4 class="text-primary font-bold mb-1 text-left">${escapeHtml(item.nama)}</h4>
-                <p class="text-gray-500 text-sm italic text-left">"${escapeHtml(item.komentar)}"</p>
-                <div class="absolute right-4 top-4 flex gap-2">
-                    <button class="text-blue-500 font-bold text-xs" onclick="prepareEdit(${index})">Edit</button>
-                    <button class="text-red-500 font-bold text-xs" onclick="deleteReview(${index})">Hapus</button>
-                </div>`;
-            reviewContainer.appendChild(itemDiv);
-        });
-    }
-
-    reviewForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const nama = document.getElementById('inputNama').value;
-        const komentar = document.getElementById('inputKomentar').value;
-        const editIndex = parseInt(editIndexInput.value);
-        let reviews = JSON.parse(localStorage.getItem('greasycle_reviews')) || [];
-        if (editIndex === -1) reviews.push({ nama, komentar });
-        else reviews[editIndex] = { nama, komentar };
-        localStorage.setItem('greasycle_reviews', JSON.stringify(reviews));
-        resetForm();
-        loadReviews();
-    });
-
-    window.prepareEdit = function(index) {
-        const reviews = JSON.parse(localStorage.getItem('greasycle_reviews'));
-        const item = reviews[index];
-        document.getElementById('inputNama').value = item.nama;
-        document.getElementById('inputKomentar').value = item.komentar;
-        editIndexInput.value = index;
-        submitBtn.textContent = "Simpan Perubahan";
-        cancelBtn.classList.remove('hidden');
-    };
-
-    window.deleteReview = function(index) {
-        if(confirm("Hapus komentar ini?")) {
-            const reviews = JSON.parse(localStorage.getItem('greasycle_reviews'));
-            reviews.splice(index, 1);
-            localStorage.setItem('greasycle_reviews', JSON.stringify(reviews));
-            loadReviews();
-        }
-    };
-
-    function resetForm() {
-        reviewForm.reset();
-        editIndexInput.value = "-1";
-        submitBtn.textContent = "Kirim Komentar";
-        cancelBtn.classList.add('hidden');
-    }
-
-    function escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
-    loadReviews();
 </script>
 
 </body>
