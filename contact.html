@@ -45,10 +45,22 @@
                     <i class="fas fa-paper-plane text-xl"></i> Kirim Pesan
                 </h2>
                 <form id="contactForm" class="space-y-5">
-                    <div>
-                        <label class="block font-semibold text-xs text-slate-500 mb-2">Nama Lengkap</label>
-                        <input type="text" id="nama" placeholder="Contoh: Elvina Meisya" 
-                               class="w-full px-4 py-3 border-2 border-slate-100 rounded-xl focus:outline-none focus:border-secondary-green focus:bg-white bg-slate-50 transition-all">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block font-semibold text-xs text-slate-500 mb-2">Nama Lengkap</label>
+                            <input type="text" id="nama" placeholder="Contoh: Elvina Meisya" 
+                                   class="w-full px-4 py-3 border-2 border-slate-100 rounded-xl focus:outline-none focus:border-secondary-green focus:bg-white bg-slate-50 transition-all">
+                        </div>
+                        
+                        <div>
+                            <label class="block font-semibold text-xs text-slate-500 mb-2">Saya Menghubungi Sebagai</label>
+                            <select id="peran" class="w-full px-4 py-3 border-2 border-slate-100 rounded-xl focus:outline-none focus:border-secondary-green focus:bg-white bg-slate-50 transition-all cursor-pointer">
+                                <option value="" disabled selected>Pilih kategori...</option>
+                                <option value="pelanggan">Pelanggan Rumah Tangga</option>
+                                <option value="mitra">Mitra Bisnis (Restoran/UMKM)</option>
+                                <option value="lainnya">Lainnya</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div>
@@ -78,7 +90,7 @@
                 </form>
             </section>
 
-            <aside class="flex-1 bg-accent-green p-8 md:p-12 flex flex-col justify-center gap-8">
+            <aside class="flex-1 bg-accent-green p-8 md:p-12 flex flex-col justify-center gap-8 border-t lg:border-t-0 lg:border-l border-slate-100">
                 <div class="flex items-start gap-5">
                     <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-primary-green shadow-md flex-shrink-0">
                         <i class="fas fa-map-marker-alt"></i>
@@ -131,18 +143,20 @@
             e.preventDefault();
             const btn = document.getElementById("submitBtn");
             const statusBox = document.getElementById("statusBox");
-            const fields = ["nama", "email", "subjek", "pesan"];
+            // Tambahkan 'peran' ke dalam validasi
+            const fields = ["nama", "peran", "email", "subjek", "pesan"];
             let isValid = true;
 
             fields.forEach(f => {
-                if(document.getElementById(f).value.trim() === "") isValid = false;
+                const element = document.getElementById(f);
+                if(element.value.trim() === "") isValid = false;
             });
 
             statusBox.classList.remove("hidden");
 
             if(!isValid){
                 statusBox.className = "mt-5 p-4 rounded-xl text-center text-sm bg-red-100 text-red-600 border border-red-200";
-                statusBox.textContent = "Mohon lengkapi semua data sebelum mengirim.";
+                statusBox.textContent = "Mohon lengkapi semua data dan pilih peran Anda.";
             } else {
                 btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Mengirim...';
                 btn.disabled = true;
