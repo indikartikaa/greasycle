@@ -187,16 +187,44 @@
         margin-bottom: 15px;
     }
 
-    /* ICON PROFILE */
+.nav-links {
+    display: flex;
+    align-items: center; /* bikin sejajar horizontal */
+}
+
+/* PROFILE WRAPPER */
+.profile-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 25px;
+    cursor: pointer;
+    position: relative;
+    top: 2px; /* biar sejajar sempurna */
+}
+
+/* ICON */
 .profile-icon {
     font-size: 22px;
-    margin-left: 20px;
-    cursor: pointer;
     color: #64748b;
     transition: 0.3s;
 }
 
-.profile-icon:hover {
+/* TEXT */
+.profile-text {
+    font-size: 11px;
+    color: var(--secondary-green);
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+/* HOVER */
+.profile-wrapper:hover .profile-icon {
+    color: var(--primary-green);
+}
+
+.profile-wrapper:hover .profile-text {
     color: var(--primary-green);
 }
 
@@ -346,8 +374,11 @@
         <a href="portofolio.html">Portofolio</a>
 
         <!-- ICON PROFILE -->
-    <i class="fas fa-user-circle profile-icon" onclick="openModal()"></i>
+    <div class="profile-wrapper" onclick="openModal()">
+    <i class="fas fa-user-circle profile-icon"></i>
+    <span class="profile-text">Login</span>
     </div>
+</div>
 </nav>
 
 <!-- HERO -->
@@ -500,7 +531,7 @@ function switchForm() {
             <h3>HUBUNGI KAMI</h3>
             <p><strong>PT Greasycle Indonesia</strong></p>
             <p>
-                JL. Semapir Tengah VIII Blok B No 18 RT. 10 RW. 01<br>
+                JL. Semampir Tengah VIII Blok B No 18 RT. 10 RW. 01<br>
                 Kec. Sukolilo, Kota Surabaya, Prov. Jawa Timur 60119
             </p>
             <p>info@greasycle.id</p>
