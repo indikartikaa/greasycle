@@ -3,122 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hubungi Kami - GreaseCycle</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Kritik & Saran - Greasycle</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="contact.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#004030',
+                        secondary: '#2d6a4f',
+                        accent: '#d1e7e0',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+    </style>
 </head>
-<body>
+<body class="bg-[#f7faf9] text-[#333] leading-relaxed overflow-x-hidden">
 
-    <nav class="navbar">
-        <a href="index.html" class="logo">Greasycycle</a>
-        <a href="index.html" class="home-btn">Home</a>
-    </nav>
+<!-- Navbar -->
+<nav class="bg-white flex justify-between items-center py-4 px-[8%] sticky top-0 z-[1000] shadow-md">
+    <div class="text-2xl font-bold text-primary">Greasycle</div>
+    <ul class="flex list-none gap-6">
+        <li><a href="index.html" class="text-[#666] font-medium transition duration-300 hover:text-primary">Beranda</a></li>
+        <li><a href="about.html" class="text-[#666] font-medium transition duration-300 hover:text-primary">Tentang</a></li>
+        <li><a href="contact.html" class="text-primary font-bold border-b-2 border-primary">Kontak</a></li>
+        <li><a href="portofolio.html" class="text-[#666] font-medium transition duration-300 hover:text-primary">Portofolio</a></li>
+    </ul>
+</nav>
 
-    <div class="header">
-        <h1>Mari Berdiskusi</h1>
-        <p>GreaseCycle hadir untuk memberikan solusi pengelolaan limbah minyak Anda. Kirimkan pesan atau kunjungi kantor kami.</p>
-    </div>
+<main>
+    <!-- Hero Section -->
+    <section class="relative bg-cover bg-center text-white text-center py-24 px-5"
+             style="background-image: linear-gradient(rgba(0,64,48,0.8), rgba(0,64,48,0.8)), url('https://images.unsplash.com/photo-1577563908411-5077b6dc7624?auto=format&fit=crop&q=80')">
+        <h1 class="text-4xl font-bold mb-3 md:text-5xl text-white">Kritik & Saran</h1>
+        <p class="text-lg opacity-90 text-white">Pendapatmu sangat berarti untuk membuat Greasycle lebih baik.</p>
+    </section>
 
-    <div class="wrapper">
-        <div class="container">
-            <div class="form-section">
-                <h2><i class="fas fa-paper-plane"></i> Kirim Pesan</h2>
-                <form id="contactForm">
-                    <div class="form-group">
-                        <label>Nama Lengkap</label>
-                        <input type="text" id="nama" placeholder="Contoh: Elvina Meisya">
+    <!-- Konten Utama -->
+    <section class="py-20 px-[8%] bg-white">
+        <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-start">
+
+            <!-- Kolom Kiri: Ilustrasi & Info -->
+            <div class="space-y-6">
+                <div>
+                    <h2 class="text-3xl font-bold text-primary mb-3">Suaramu, Perubahan Nyata</h2>
+                    <p class="text-gray-500 text-sm leading-relaxed">Kami percaya bahwa platform yang baik lahir dari masukan yang jujur. Bagikan pengalamanmu baik pujian, kritik, maupun ide segar dan tim kami akan mempertimbangkannya dengan serius.</p>
+                </div>
+
+                <img src="https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&q=80"
+                     class="w-full rounded-[20px] shadow-[8px_8px_0px_0px_#d1e7e0]" alt="Feedback">
+
+                <div class="space-y-3 pt-2">
+                    <div class="flex items-center gap-3 text-sm text-gray-500">
+                        <div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center shrink-0">
+                            <i class="fas fa-envelope text-white text-xs"></i>
+                        </div>
+                        info@greasycle.id
                     </div>
-
-                    <div class="form-group">
-                        <label>Email Perusahaan/Pribadi</label>
-                        <input type="email" id="email" placeholder="email@contoh.com">
+                    <div class="flex items-center gap-3 text-sm text-gray-500">
+                        <div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center shrink-0">
+                            <i class="fas fa-phone-alt text-white text-xs"></i>
+                        </div>
+                        +62 812-3456-7890
                     </div>
-
-                    <div class="form-group">
-                        <label>Subjek</label>
-                        <input type="text" id="subjek" placeholder="Topik yang ingin dibahas">
+                    <div class="flex items-center gap-3 text-sm text-gray-500">
+                        <div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center shrink-0">
+                            <i class="fas fa-clock text-white text-xs"></i>
+                        </div>
+                        Senin – Jumat, 08.00 – 16.00 WIB
                     </div>
-
-                    <div class="form-group">
-                        <label>Pesan</label>
-                        <textarea id="pesan" rows="4" placeholder="Bagaimana kami bisa membantu Anda?"></textarea>
-                    </div>
-
-                    <button type="submit" id="submitBtn">Kirim Sekarang</button>
-                    <div id="statusBox" class="status-msg"></div>
-                </form>
+                </div>
             </div>
 
-            <div class="info-section">
-                <div class="info-card">
-                    <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
-                    <div class="info-content">
-                        <h4>Lokasi Kami</h4>
-                        <p>Jl. Semampir, Sukolilo,<br>Surabaya, Jawa Timur</p>
-                    </div>
+            <!-- Kolom Kanan: Form -->
+            <div class="bg-white p-8 rounded-[25px] shadow-md border border-gray-100 space-y-5">
+                <div class="mb-2">
+                    <h3 class="text-xl font-bold text-primary">Formulir Kritik & Saran</h3>
+                    <p class="text-xs text-gray-400 mt-1">Semua masukan akan dijaga kerahasiaannya.</p>
                 </div>
 
-                <div class="info-card">
-                    <div class="info-icon"><i class="fas fa-envelope"></i></div>
-                    <div class="info-content">
-                        <h4>Email Resmi</h4>
-                        <p>info@greasycle.id</p>
-                    </div>
+                <div class="flex flex-col gap-1">
+                    <label class="font-semibold text-primary text-sm">Nama Lengkap</label>
+                    <input type="text" id="nama" placeholder="Contoh: Siti Rahayu"
+                        class="p-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-secondary transition text-sm">
                 </div>
 
-                <div class="info-card">
-                    <div class="info-icon"><i class="fas fa-phone-alt"></i></div>
-                    <div class="info-content">
-                        <h4>Telepon/WA</h4>
-                        <p>+62 812-3456-7890</p>
-                    </div>
+                <div class="flex flex-col gap-1">
+                    <label class="font-semibold text-primary text-sm">Email</label>
+                    <input type="email" id="email" placeholder="email@contoh.com"
+                        class="p-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-secondary transition text-sm">
                 </div>
 
-                <div class="info-card">
-                    <div class="info-icon"><i class="fas fa-clock"></i></div>
-                    <div class="info-content">
-                        <h4>Jam Kerja</h4>
-                        <p>Senin - Jumat: 08:00 - 16:00 WIB</p>
-                    </div>
+                <div class="flex flex-col gap-1">
+                    <label class="font-semibold text-primary text-sm">Kategori</label>
+                    <select id="kategori"
+                        class="p-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-secondary transition text-sm text-gray-500">
+                        <option value="" disabled selected>Pilih kategori masukan</option>
+                        <option value="layanan">Layanan Penjemputan</option>
+                        <option value="aplikasi">Tampilan & Fitur Website</option>
+                        <option value="mitra">Kinerja Mitra</option>
+                        <option value="saldo">Sistem Saldo & Insentif</option>
+                        <option value="lainnya">Lainnya</option>
+                    </select>
                 </div>
+
+                <div class="flex flex-col gap-2">
+                    <label class="font-semibold text-primary text-sm">Penilaian Umum</label>
+                    <div class="flex gap-1" id="ratingStars">
+                        <span class="star text-3xl cursor-pointer text-gray-300 transition duration-150" data-val="1">★</span>
+                        <span class="star text-3xl cursor-pointer text-gray-300 transition duration-150" data-val="2">★</span>
+                        <span class="star text-3xl cursor-pointer text-gray-300 transition duration-150" data-val="3">★</span>
+                        <span class="star text-3xl cursor-pointer text-gray-300 transition duration-150" data-val="4">★</span>
+                        <span class="star text-3xl cursor-pointer text-gray-300 transition duration-150" data-val="5">★</span>
+                    </div>
+                    <input type="hidden" id="rating" value="0">
+                    <p id="ratingLabel" class="text-xs text-gray-400 italic"></p>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <label class="font-semibold text-primary text-sm">Pesan / Masukan</label>
+                    <textarea id="pesan" rows="4" placeholder="Tuliskan kritik, saran, atau ide kamu di sini..."
+                        class="p-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-secondary transition text-sm resize-none"></textarea>
+                </div>
+
+                <button onclick="submitForm()" id="submitBtn"
+                    class="w-full bg-primary text-white py-4 rounded-2xl font-bold hover:bg-secondary transition duration-300 shadow-md text-sm">
+                    Kirim Masukan
+                </button>
+
+                <div id="statusBox" class="hidden text-sm font-medium text-center py-3 px-4 rounded-2xl"></div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <script>
-        document.getElementById("contactForm").addEventListener("submit", function(e){
-            e.preventDefault();
-            const btn = document.getElementById("submitBtn");
-            const statusBox = document.getElementById("statusBox");
-            const fields = ["nama", "email", "subjek", "pesan"];
-            let isValid = true;
+    <!-- Riwayat Masukan -->
+    <section class="py-16 px-[8%] bg-[#f0f7f4]">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-2xl font-bold text-primary mb-2 text-center">Masukan yang Sudah Dikirim</h2>
+            <p class="text-center text-gray-400 text-xs mb-8 italic">Terima kasih telah meluangkan waktu untuk memberi masukan 🌿</p>
+            <div id="feedbackContainer" class="space-y-4"></div>
+            <p id="emptyMsg" class="text-center text-gray-400 text-sm italic">Belum ada masukan yang dikirim.</p>
+        </div>
+    </section>
+</main>
 
-            fields.forEach(f => {
-                if(document.getElementById(f).value.trim() === "") isValid = false;
-            });
-
-            statusBox.style.display = "block";
-
-            if(!isValid){
-                statusBox.className = "status-msg error";
-                statusBox.textContent = "Mohon lengkapi semua data sebelum mengirim.";
-            } else {
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
-                btn.disabled = true;
-
-                setTimeout(() => {
-                    statusBox.className = "status-msg success";
-                    statusBox.innerHTML = '<i class="fas fa-check-circle"></i> Pesan Anda telah terkirim! Tim kami akan segera menghubungi.';
-                    document.getElementById("contactForm").reset();
-                    btn.innerHTML = 'Kirim Sekarang';
-                    btn.disabled = false;
-                }, 1500);
-            }
-        });
-    </script>
-
-    <!-- Footer -->
+<!-- Footer -->
 <footer class="bg-primary pt-24 pb-12 mt-20">
     <div class="container mx-auto px-4">
         <div class="flex flex-wrap">
@@ -127,15 +162,14 @@
                 <div class="space-y-3">
                     <p class="text-white font-semibold text-lg">PT Greasycle Indonesia</p>
                     <p class="text-accent opacity-80 leading-relaxed text-sm">
-                        JL. Berbek 3A GG. KH Dahlan No 22, Kel. Berbek,<br>
-                        Kec. Waru, Kab. Sidoarjo, Prov. Jawa Timur 61256
+                        JL. Semapir Tengah VIII Blok B No 18 RT. 10 RW. 01,<br>
+                        Kec. Sukolilo, Kota Surabaya, Prov. Jawa Timur 60119
                     </p>
                     <p class="text-accent opacity-80 text-sm">info@greasycle.id</p>
                     <p class="text-accent opacity-80 text-sm">+62 812-3456-7890</p>
                     <p class="text-accent opacity-80 text-sm">Senin-Jumat: 08.00 - 16.00 WIB</p>
                 </div>
             </div>
-            
             <div class="w-full px-4 mb-12 md:w-1/3">
                 <h3 class="font-semibold text-xl text-white mb-8 uppercase tracking-wider">Layanan Kami</h3>
                 <ul class="text-accent opacity-80 space-y-4">
@@ -145,18 +179,16 @@
                     <li><a href="#" class="text-base hover:text-white transition duration-300">Insentif Ekonomi</a></li>
                 </ul>
             </div>
-
             <div class="w-full px-4 mb-12 md:w-1/3">
                 <h3 class="font-semibold text-xl text-white mb-8 uppercase tracking-wider">Tautan</h3>
                 <ul class="text-accent opacity-80 space-y-4">
                     <li><a href="index.html" class="text-base hover:text-white transition duration-300">Beranda</a></li>
-                    <li><a href="about.html" class="text-base hover:text-white transition duration-300 underline">Tentang Kami</a></li>
-                    <li><a href="contact.html" class="text-base hover:text-white transition duration-300">Kontak</a></li>
+                    <li><a href="about.html" class="text-base hover:text-white transition duration-300">Tentang Kami</a></li>
+                    <li><a href="contact.html" class="text-base hover:text-white transition duration-300 underline">Kontak</a></li>
                     <li><a href="portofolio.html" class="text-base hover:text-white transition duration-300">Portofolio</a></li>
                 </ul>
             </div>
         </div>
-
         <div class="w-full pt-10 border-t border-white/10 mt-10 text-center px-4">
             <div class="flex flex-col items-center">
                 <p class="font-medium text-[11px] sm:text-xs text-white uppercase tracking-[0.25em] mb-2 leading-relaxed">
@@ -169,6 +201,5 @@
         </div>
     </div>
 </footer>
-
 </body>
 </html>
