@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pelanggan - Admin Greasycle</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Kelola Pelanggan - Admin Greasycle</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script>
         tailwind.config = {
             theme: { extend: { colors: { primary: '#004030', secondary: '#2d6a4f', accent: '#d1e7e0' } } }
@@ -14,252 +14,164 @@
     </script>
     <style> body { font-family: 'Poppins', sans-serif; } </style>
 </head>
-<body class="bg-[#f4f7f6] text-[#333]">
+<body class="bg-gray-50 flex">
 
-<!-- Sidebar -->
-<aside class="fixed top-0 left-0 h-screen w-64 bg-primary flex flex-col z-50">
-    <div class="px-6 py-5 border-b border-white/10">
-        <div class="flex items-center gap-3">
-            <div class="w-9 h-9 bg-white/20 rounded-xl flex items-center justify-center">
-                <i class="fas fa-recycle text-white text-sm"></i>
+    <aside class="w-64 bg-primary min-h-screen p-6 text-white hidden md:block sticky top-0">
+        <h2 class="text-2xl font-bold mb-10 flex items-center gap-2"><i class="fas fa-recycle"></i> Greasycle</h2>
+        <nav class="space-y-4">
+            <a href="dashboard.html" class="block p-3 hover:bg-white/10 rounded-lg text-white/60"><i class="fas fa-th-large mr-2"></i> Dashboard</a>
+            <a href="pelanggan.html" class="block bg-white/10 p-3 rounded-lg text-white"><i class="fas fa-users mr-2"></i> Pelanggan</a>
+            <a href="mitra.html" class="block p-3 hover:bg-white/10 rounded-lg text-white/60"><i class="fas fa-truck mr-2"></i> Mitra</a>
+            <a href="penjemputan.html" class="block p-3 hover:bg-white/10 rounded-lg text-white/60"><i class="fas fa-box mr-2"></i> Penjemputan</a>
+        </nav>
+    </aside>
+
+    <main class="flex-1 p-8">
+        <div class="flex justify-between items-center mb-8">
+            <div>
+                <h2 class="text-2xl font-bold text-primary">Data Pelanggan</h2>
+                <p class="text-sm text-gray-400">Kelola informasi masyarakat dan pelaku usaha.</p>
             </div>
-            <span class="text-white font-bold text-lg">Greasycle</span>
+            <button onclick="openModal()" class="bg-primary text-white px-5 py-2 rounded-xl text-sm font-bold shadow-md hover:bg-secondary transition">
+                <i class="fas fa-plus mr-2"></i>Tambah Pelanggan
+            </button>
         </div>
-        <p class="text-white/40 text-[10px] mt-1 ml-12 uppercase tracking-widest">Admin Panel</p>
-    </div>
-    <nav class="flex-1 px-4 py-6 space-y-1">
-        <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:bg-white/10 hover:text-white transition duration-200 text-sm font-medium">
-            <i class="fas fa-th-large w-5 text-center"></i> Dashboard
-        </a>
-        <a href="pelanggan.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/15 text-white transition duration-200 text-sm font-medium">
-            <i class="fas fa-users w-5 text-center"></i> Pelanggan
-        </a>
-        <a href="mitra.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:bg-white/10 hover:text-white transition duration-200 text-sm font-medium">
-            <i class="fas fa-truck w-5 text-center"></i> Mitra
-        </a>
-        <a href="penjemputan.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:bg-white/10 hover:text-white transition duration-200 text-sm font-medium">
-            <i class="fas fa-box w-5 text-center"></i> Penjemputan
-        </a>
-        <a href="laporan.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:bg-white/10 hover:text-white transition duration-200 text-sm font-medium">
-            <i class="fas fa-chart-bar w-5 text-center"></i> Laporan
-        </a>
-    </nav>
-    <div class="px-4 py-4 border-t border-white/10">
-        <div class="flex items-center gap-3 px-3 py-3 rounded-xl bg-white/10">
-            <div class="w-9 h-9 bg-secondary rounded-full flex items-center justify-center shrink-0">
-                <i class="fas fa-user-shield text-white text-sm"></i>
-            </div>
-            <div class="flex-1 min-w-0">
-                <p class="text-white text-xs font-semibold truncate">Admin Greasycle</p>
-                <p class="text-white/40 text-[10px]">Super Admin</p>
-            </div>
-        </div>
-        <a href="../login.html" class="mt-3 flex items-center gap-2 px-4 py-2 text-white/50 hover:text-red-300 transition text-xs">
-            <i class="fas fa-sign-out-alt"></i> Keluar
-        </a>
-    </div>
-</aside>
 
-<!-- Main Content -->
-<div class="ml-64 min-h-screen">
-    <header class="bg-white border-b border-gray-100 px-8 py-4 flex justify-between items-center sticky top-0 z-40">
-        <div>
-            <h1 class="text-xl font-bold text-primary">Pelanggan</h1>
-            <p class="text-xs text-gray-400">Kelola data pengguna terdaftar</p>
-        </div>
-        <button onclick="openModal()" class="bg-primary text-white text-sm px-4 py-2 rounded-xl font-medium hover:bg-secondary transition flex items-center gap-2">
-            <i class="fas fa-plus"></i> Tambah Pelanggan
-        </button>
-    </header>
-
-    <main class="p-8 space-y-6">
-
-        <!-- Filter & Search -->
-        <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex flex-wrap gap-4 items-center">
+        <div class="bg-white p-4 rounded-xl shadow-sm mb-6 flex flex-wrap gap-4">
             <div class="relative flex-1 min-w-[200px]">
                 <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 text-sm"></i>
-                <input type="text" id="searchInput" placeholder="Cari nama, email, atau lokasi..." oninput="filterTable()"
-                    class="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-secondary transition">
+                <input type="text" id="search" placeholder="Cari nama atau lokasi..." class="w-full pl-10 pr-4 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-primary" onkeyup="applyFilter()">
             </div>
-            <select id="filterJenis" onchange="filterTable()" class="border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-secondary text-gray-500">
+            <select id="filterJenis" class="p-2 border rounded-lg text-sm text-gray-500 outline-none" onchange="applyFilter()">
                 <option value="">Semua Jenis</option>
                 <option value="Masyarakat">Masyarakat</option>
                 <option value="Pelaku Usaha">Pelaku Usaha</option>
             </select>
-            <select id="filterStatus" onchange="filterTable()" class="border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-secondary text-gray-500">
-                <option value="">Semua Status</option>
-                <option value="Aktif">Aktif</option>
-                <option value="Tidak Aktif">Tidak Aktif</option>
-            </select>
-            <span id="jumlahData" class="text-xs text-gray-400 ml-auto"></span>
         </div>
 
-        <!-- Table -->
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm" id="pelangganTable">
-                    <thead class="bg-gray-50 border-b border-gray-100">
-                        <tr>
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Pelanggan</th>
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Jenis</th>
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Lokasi</th>
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Total Setor</th>
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody" class="divide-y divide-gray-50"></tbody>
-                </table>
-            </div>
+        <div class="bg-white rounded-xl shadow-md border overflow-hidden">
+            <table class="w-full text-left text-sm">
+                <thead class="bg-gray-50 text-gray-400 uppercase text-[10px] font-bold tracking-widest">
+                    <tr>
+                        <th class="p-4 border-b">Nama / Email</th>
+                        <th class="p-4 border-b">Jenis</th>
+                        <th class="p-4 border-b">Lokasi</th>
+                        <th class="p-4 border-b text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    </tbody>
+            </table>
         </div>
     </main>
-</div>
 
-<!-- Modal Tambah/Edit -->
-<div id="modal" class="fixed inset-0 bg-black/40 z-[100] hidden items-center justify-center">
-    <div class="bg-white rounded-2xl p-8 w-full max-w-md mx-4 shadow-2xl">
-        <div class="flex justify-between items-center mb-6">
-            <h3 class="text-lg font-bold text-primary" id="modalTitle">Tambah Pelanggan</h3>
-            <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="space-y-4">
-            <div>
-                <label class="text-xs font-semibold text-primary mb-1 block">Nama Lengkap</label>
-                <input type="text" id="mNama" class="w-full p-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-secondary" placeholder="Nama pelanggan">
-            </div>
-            <div>
-                <label class="text-xs font-semibold text-primary mb-1 block">Email</label>
-                <input type="email" id="mEmail" class="w-full p-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-secondary" placeholder="email@contoh.com">
-            </div>
-            <div>
-                <label class="text-xs font-semibold text-primary mb-1 block">Jenis</label>
-                <select id="mJenis" class="w-full p-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-secondary">
+    <div id="modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-[100]">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-96">
+            <h3 class="text-lg font-bold text-primary mb-4" id="modalTitle">Tambah Pelanggan</h3>
+            <div class="space-y-4">
+                <input type="text" id="mNama" placeholder="Nama Lengkap" class="w-full p-2 border rounded-lg outline-none focus:ring-2 focus:ring-primary">
+                <input type="email" id="mEmail" placeholder="Email" class="w-full p-2 border rounded-lg outline-none focus:ring-2 focus:ring-primary">
+                <select id="mJenis" class="w-full p-2 border rounded-lg outline-none">
                     <option value="Masyarakat">Masyarakat</option>
                     <option value="Pelaku Usaha">Pelaku Usaha</option>
                 </select>
+                <input type="text" id="mLokasi" placeholder="Lokasi (Kecamatan)" class="w-full p-2 border rounded-lg outline-none focus:ring-2 focus:ring-primary">
+                <div class="flex gap-2 pt-4">
+                    <button onclick="closeModal()" class="flex-1 py-2 border rounded-lg text-sm">Batal</button>
+                    <button onclick="saveData()" class="flex-1 py-2 bg-primary text-white rounded-lg text-sm font-bold">Simpan</button>
+                </div>
             </div>
-            <div>
-                <label class="text-xs font-semibold text-primary mb-1 block">Lokasi</label>
-                <input type="text" id="mLokasi" class="w-full p-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-secondary" placeholder="Kecamatan / Area">
-            </div>
-            <div>
-                <label class="text-xs font-semibold text-primary mb-1 block">Status</label>
-                <select id="mStatus" class="w-full p-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-secondary">
-                    <option value="Aktif">Aktif</option>
-                    <option value="Tidak Aktif">Tidak Aktif</option>
-                </select>
-            </div>
-        </div>
-        <div class="flex gap-3 mt-6">
-            <button onclick="closeModal()" class="flex-1 py-3 border border-gray-200 rounded-xl text-sm text-gray-500 hover:bg-gray-50 transition">Batal</button>
-            <button onclick="savePelanggan()" class="flex-1 py-3 bg-primary text-white rounded-xl text-sm font-semibold hover:bg-secondary transition">Simpan</button>
         </div>
     </div>
-</div>
 
-<script>
-    let data = [
-        { nama: 'Siti Rahayu', email: 'siti@gmail.com', jenis: 'Masyarakat', lokasi: 'Sukolilo', setor: '7.5 L', status: 'Aktif' },
-        { nama: 'KFC Manyar', email: 'kfc.manyar@kfc.co.id', jenis: 'Pelaku Usaha', lokasi: 'Manyar', setor: '120 L', status: 'Aktif' },
-        { nama: 'Budi Santoso', email: 'budi.s@gmail.com', jenis: 'Masyarakat', lokasi: 'Gubeng', setor: '4 L', status: 'Aktif' },
-        { nama: "McDonald's MERR", email: 'mcds.merr@mcd.co.id', jenis: 'Pelaku Usaha', lokasi: 'Rungkut', setor: '210 L', status: 'Aktif' },
-        { nama: 'Warung Bu Eni', email: 'bueni@gmail.com', jenis: 'Pelaku Usaha', lokasi: 'Wonokromo', setor: '18 L', status: 'Aktif' },
-        { nama: 'Ahmad Fauzi', email: 'afauzi@yahoo.com', jenis: 'Masyarakat', lokasi: 'Tambaksari', setor: '2 L', status: 'Tidak Aktif' },
-        { nama: 'Indomaret Semampir', email: 'indomaret.smp@indomaret.co.id', jenis: 'Pelaku Usaha', lokasi: 'Semampir', setor: '55 L', status: 'Aktif' },
-        { nama: 'Dewi Lestari', email: 'dewi.les@gmail.com', jenis: 'Masyarakat', lokasi: 'Kenjeran', setor: '3.5 L', status: 'Aktif' },
-    ];
-    let editIndex = -1;
+    <script>
+        let data = [
+            { nama: 'Siti Rahayu', email: 'siti@gmail.com', jenis: 'Masyarakat', lokasi: 'Sukolilo' },
+            { nama: 'KFC Manyar', email: 'kfc.manyar@kfc.co.id', jenis: 'Pelaku Usaha', lokasi: 'Manyar' }
+        ];
+        let editIdx = -1;
 
-    function renderTable(filtered) {
-        const tbody = document.getElementById('tableBody');
-        const d = filtered !== undefined ? filtered : data;
-        document.getElementById('jumlahData').textContent = `Menampilkan ${d.length} dari ${data.length} pelanggan`;
-        tbody.innerHTML = d.length === 0 ? `<tr><td colspan="6" class="px-6 py-10 text-center text-gray-400 text-sm">Tidak ada data ditemukan</td></tr>` :
-        d.map((p, i) => {
-            const realIdx = data.indexOf(p);
-            const isUsaha = p.jenis === 'Pelaku Usaha';
-            const isAktif = p.status === 'Aktif';
-            return `
-            <tr class="hover:bg-gray-50 transition">
-                <td class="px-6 py-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 ${isUsaha ? 'bg-orange-100' : 'bg-accent'} rounded-full flex items-center justify-center text-sm font-bold ${isUsaha ? 'text-orange-600' : 'text-primary'}">${p.nama.charAt(0)}</div>
-                        <div>
-                            <p class="font-semibold text-gray-700 text-sm">${p.nama}</p>
-                            <p class="text-xs text-gray-400">${p.email}</p>
-                        </div>
-                    </div>
-                </td>
-                <td class="px-6 py-4">
-                    <span class="text-xs px-2 py-1 rounded-full font-medium ${isUsaha ? 'bg-orange-100 text-orange-600' : 'bg-accent text-primary'}">${p.jenis}</span>
-                </td>
-                <td class="px-6 py-4 text-xs text-gray-500">${p.lokasi}</td>
-                <td class="px-6 py-4 text-xs font-semibold text-primary">${p.setor}</td>
-                <td class="px-6 py-4">
-                    <span class="text-xs px-2 py-1 rounded-full font-medium ${isAktif ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}">${p.status}</span>
-                </td>
-                <td class="px-6 py-4">
-                    <div class="flex gap-2">
-                        <button onclick="editPelanggan(${realIdx})" class="text-xs text-blue-500 hover:text-blue-700 font-medium px-2 py-1 rounded-lg hover:bg-blue-50 transition"><i class="fas fa-edit mr-1"></i>Edit</button>
-                        <button onclick="deletePelanggan(${realIdx})" class="text-xs text-red-400 hover:text-red-600 font-medium px-2 py-1 rounded-lg hover:bg-red-50 transition"><i class="fas fa-trash mr-1"></i>Hapus</button>
-                    </div>
-                </td>
-            </tr>`;
-        }).join('');
-    }
-
-    function filterTable() {
-        const q = document.getElementById('searchInput').value.toLowerCase();
-        const jenis = document.getElementById('filterJenis').value;
-        const status = document.getElementById('filterStatus').value;
-        const filtered = data.filter(p =>
-            (p.nama.toLowerCase().includes(q) || p.email.toLowerCase().includes(q) || p.lokasi.toLowerCase().includes(q)) &&
-            (!jenis || p.jenis === jenis) &&
-            (!status || p.status === status)
-        );
-        renderTable(filtered);
-    }
-
-    function openModal(idx = -1) {
-        editIndex = idx;
-        document.getElementById('modalTitle').textContent = idx === -1 ? 'Tambah Pelanggan' : 'Edit Pelanggan';
-        if (idx !== -1) {
-            const p = data[idx];
-            document.getElementById('mNama').value = p.nama;
-            document.getElementById('mEmail').value = p.email;
-            document.getElementById('mJenis').value = p.jenis;
-            document.getElementById('mLokasi').value = p.lokasi;
-            document.getElementById('mStatus').value = p.status;
-        } else {
-            ['mNama','mEmail','mLokasi'].forEach(id => document.getElementById(id).value = '');
-            document.getElementById('mJenis').value = 'Masyarakat';
-            document.getElementById('mStatus').value = 'Aktif';
+        function renderTable(items) {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = items.map((p, idx) => `
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="p-4">
+                        <div class="font-semibold text-gray-700">${p.nama}</div>
+                        <div class="text-[10px] text-gray-400">${p.email}</div>
+                    </td>
+                    <td class="p-4">
+                        <span class="px-2 py-1 rounded text-[10px] font-bold ${p.jenis === 'Masyarakat' ? 'bg-accent text-primary' : 'bg-orange-100 text-orange-700'} uppercase">${p.jenis}</span>
+                    </td>
+                    <td class="p-4 text-gray-500">${p.lokasi}</td>
+                    <td class="p-4 text-center space-x-3">
+                        <button onclick="editData(${idx})" class="text-blue-500 hover:underline text-xs"><i class="fas fa-edit"></i></button>
+                        <button onclick="deleteData(${idx})" class="text-red-400 hover:underline text-xs"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
         }
-        document.getElementById('modal').classList.replace('hidden','flex');
-    }
 
-    function closeModal() { document.getElementById('modal').classList.replace('flex','hidden'); }
+        function applyFilter() {
+            const q = document.getElementById('search').value.toLowerCase();
+            const j = document.getElementById('filterJenis').value;
+            const filtered = data.filter(d => 
+                (d.nama.toLowerCase().includes(q) || d.lokasi.toLowerCase().includes(q)) &&
+                (!j || d.jenis === j)
+            );
+            renderTable(filtered);
+        }
 
-    function savePelanggan() {
-        const p = {
-            nama: document.getElementById('mNama').value,
-            email: document.getElementById('mEmail').value,
-            jenis: document.getElementById('mJenis').value,
-            lokasi: document.getElementById('mLokasi').value,
-            setor: editIndex === -1 ? '0 L' : data[editIndex].setor,
-            status: document.getElementById('mStatus').value
-        };
-        if (!p.nama || !p.email) return alert('Nama dan email wajib diisi!');
-        if (editIndex === -1) data.unshift(p);
-        else data[editIndex] = p;
-        closeModal();
-        renderTable();
-    }
+        function openModal(idx = -1) {
+            editIdx = idx;
+            document.getElementById('modalTitle').innerText = idx === -1 ? 'Tambah Pelanggan' : 'Edit Pelanggan';
+            if (idx !== -1) {
+                document.getElementById('mNama').value = data[idx].nama;
+                document.getElementById('mEmail').value = data[idx].email;
+                document.getElementById('mJenis').value = data[idx].jenis;
+                document.getElementById('mLokasi').value = data[idx].lokasi;
+            } else {
+                document.getElementById('mNama').value = '';
+                document.getElementById('mEmail').value = '';
+                document.getElementById('mLokasi').value = '';
+            }
+            document.getElementById('modal').classList.replace('hidden', 'flex');
+        }
 
-    window.editPelanggan = (i) => openModal(i);
-    window.deletePelanggan = (i) => { if (confirm(`Hapus pelanggan "${data[i].nama}"?`)) { data.splice(i,1); renderTable(); } };
+        function closeModal() { document.getElementById('modal').classList.replace('flex', 'hidden'); }
 
-    renderTable();
-</script>
+        function saveData() {
+            // Requirement: Validasi JavaScript (Poin 2 UTS)
+            const nama = document.getElementById('mNama').value;
+            if (!nama) { alert("Nama wajib diisi!"); return; }
+
+            if (editIdx === -1) {
+                data.push({
+                    nama: nama,
+                    email: document.getElementById('mEmail').value,
+                    jenis: document.getElementById('mJenis').value,
+                    lokasi: document.getElementById('mLokasi').value
+                });
+            } else {
+                data[editIdx] = {
+                    nama: nama,
+                    email: document.getElementById('mEmail').value,
+                    jenis: document.getElementById('mJenis').value,
+                    lokasi: document.getElementById('mLokasi').value
+                };
+            }
+            closeModal();
+            renderTable(data);
+        }
+
+        function deleteData(idx) {
+            // Requirement: Konfirmasi JS (Poin 4 UTS)
+            if (confirm("Hapus pelanggan " + data[idx].nama + "?")) {
+                data.splice(idx, 1);
+                renderTable(data);
+            }
+        }
+
+        renderTable(data);
+    </script>
 </body>
 </html>

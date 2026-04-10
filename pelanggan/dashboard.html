@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Greasycle</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Dashboard Pelanggan - Greasycle</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script>
         tailwind.config = {
             theme: {
@@ -16,6 +15,7 @@
                         primary: '#004030',
                         secondary: '#2d6a4f',
                         accent: '#d1e7e0',
+                        lightGreen: '#f0f7f4',
                     }
                 }
             }
@@ -23,510 +23,124 @@
     </script>
     <style>
         body { font-family: 'Poppins', sans-serif; }
-        .nav-link { transition: all 0.2s; }
-        .nav-active { color: #004030 !important; font-weight: 600; border-bottom: 2px solid #004030; }
-        .status-menunggu { background: #fef9c3; color: #a16207; }
-        .status-dijemput  { background: #dbeafe; color: #1d4ed8; }
-        .status-selesai   { background: #dcfce7; color: #15803d; }
-        @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-        .fade-in { animation: fadeIn 0.4s ease forwards; }
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="bg-[#f4f7f6] text-[#333]">
+<body class="bg-[#fcfdfd] text-[#333]">
 
-<!-- ══════════════════════════════════════════
-     NAVBAR MEMBER (bukan navbar publik)
-══════════════════════════════════════════ -->
-<nav class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100">
-    <div class="px-8 py-0 flex justify-between items-center max-w-screen-xl mx-auto">
-        <!-- Logo -->
-        <a href="dashboard.html" class="flex items-center gap-2 py-4">
+    <nav class="bg-white shadow-sm py-4 px-[8%] flex justify-between items-center sticky top-0 z-50 border-b border-gray-100">
+        <div class="flex items-center gap-2">
             <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <i class="fas fa-recycle text-white text-sm"></i>
+                <i class="fas fa-recycle text-white text-xs"></i>
             </div>
-            <span class="text-primary font-bold text-lg">Greasycle</span>
-        </a>
-
-        <!-- Menu -->
-        <ul class="hidden md:flex items-center gap-1 h-full">
-            <li>
-                <a href="dashboard.html" class="nav-link nav-active flex items-center gap-2 px-4 py-5 text-sm text-gray-500 hover:text-primary">
-                    <i class="fas fa-th-large text-xs"></i> Dashboard
-                </a>
-            </li>
-            <li>
-                <a href="setor.html" class="nav-link flex items-center gap-2 px-4 py-5 text-sm text-gray-500 hover:text-primary">
-                    <i class="fas fa-plus-circle text-xs"></i> Setor Limbah
-                </a>
-            </li>
-            <li>
-                <a href="riwayat.html" class="nav-link flex items-center gap-2 px-4 py-5 text-sm text-gray-500 hover:text-primary">
-                    <i class="fas fa-history text-xs"></i> Riwayat
-                </a>
-            </li>
-            <li>
-                <a href="saldo.html" class="nav-link flex items-center gap-2 px-4 py-5 text-sm text-gray-500 hover:text-primary">
-                    <i class="fas fa-wallet text-xs"></i> Saldo
-                </a>
-            </li>
-        </ul>
-
-        <!-- Profil + Notif -->
-        <div class="flex items-center gap-4">
-            <!-- Notifikasi -->
-            <div class="relative cursor-pointer" onclick="toggleNotif()">
-                <i class="fas fa-bell text-gray-400 text-lg"></i>
-                <span id="notifBadge" class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-[9px] flex items-center justify-center">1</span>
-            </div>
-
-            <!-- Avatar + nama -->
-            <div class="flex items-center gap-2 cursor-pointer group relative" onclick="toggleProfil()">
-                <div class="w-9 h-9 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm" id="avatarInisial">S</div>
-                <div class="hidden sm:block">
-                    <p class="text-xs font-semibold text-gray-700 leading-none" id="namaUser">Siti Rahayu</p>
-                    <p class="text-[10px] text-gray-400 mt-0.5" id="jenisUser">Masyarakat</p>
-                </div>
-                <i class="fas fa-chevron-down text-gray-400 text-xs"></i>
-
-                <!-- Dropdown profil -->
-                <div id="profilDropdown" class="hidden absolute right-0 top-12 w-48 bg-white rounded-2xl shadow-xl border border-gray-100 z-50 overflow-hidden">
-                    <a href="profil.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-600 hover:bg-gray-50 transition">
-                        <i class="fas fa-user-circle w-4 text-primary"></i> Profil Saya
-                    </a>
-                    <a href="pengaturan.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-600 hover:bg-gray-50 transition">
-                        <i class="fas fa-cog w-4 text-primary"></i> Pengaturan
-                    </a>
-                    <div class="border-t border-gray-100"></div>
-                    <a href="../login.html" class="flex items-center gap-3 px-4 py-3 text-sm text-red-400 hover:bg-red-50 transition">
-                        <i class="fas fa-sign-out-alt w-4"></i> Keluar
-                    </a>
-                </div>
-            </div>
+            <h1 class="text-xl font-bold text-primary tracking-tight">Greasycle</h1>
         </div>
-    </div>
-
-    <!-- Notif dropdown -->
-    <div id="notifDropdown" class="hidden absolute right-8 top-16 w-72 bg-white rounded-2xl shadow-xl border border-gray-100 z-50 overflow-hidden">
-        <div class="px-5 py-3 border-b border-gray-50 flex justify-between items-center">
-            <h4 class="text-sm font-bold text-primary">Notifikasi</h4>
-            <span class="text-[10px] text-gray-400">1 baru</span>
-        </div>
-        <div class="px-5 py-4 hover:bg-gray-50 transition">
-            <p class="text-xs font-semibold text-gray-700">Mitra dalam perjalanan! 🚛</p>
-            <p class="text-[11px] text-gray-400 mt-0.5">Penjemputan kamu dijadwalkan hari ini</p>
-            <p class="text-[10px] text-gray-300 mt-1">1 jam yang lalu</p>
-        </div>
-        <div class="px-5 py-3 border-t border-gray-50 text-center">
-            <a href="riwayat.html" class="text-xs text-secondary font-medium hover:underline">Lihat riwayat →</a>
-        </div>
-    </div>
-</nav>
-
-<!-- ══════════════════════════════════════════
-     KONTEN UTAMA
-══════════════════════════════════════════ -->
-<main class="max-w-screen-xl mx-auto px-8 py-8 space-y-8">
-
-    <!-- ── HERO GREETING ── -->
-    <div class="bg-primary rounded-3xl p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 fade-in">
-        <div>
-            <p class="text-accent text-sm mb-1" id="sapaanTeks">Selamat pagi,</p>
-            <h2 class="text-2xl font-bold text-white" id="greetingNama">Siti Rahayu 👋</h2>
-            <p class="text-white/60 text-sm mt-1">Yuk mulai hari ini dengan menyetor minyak jelantahmu!</p>
-        </div>
-        <button onclick="window.location.href='setor.html'"
-            class="shrink-0 bg-white text-primary font-bold px-6 py-3 rounded-2xl text-sm hover:bg-accent transition flex items-center gap-2 shadow-md">
-            <i class="fas fa-plus-circle"></i> Setor Limbah Sekarang
-        </button>
-    </div>
-
-    <!-- ── STAT CARDS ── -->
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 fade-in">
-        <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:-translate-y-1 transition duration-300">
-            <div class="flex justify-between items-start">
-                <div>
-                    <p class="text-xs text-gray-400 uppercase tracking-wider">Total Setor</p>
-                    <h3 class="text-3xl font-bold text-primary mt-1">7</h3>
-                    <p class="text-xs text-green-500 mt-1"><i class="fas fa-arrow-up mr-1"></i>+2 bulan ini</p>
-                </div>
-                <div class="w-11 h-11 bg-[#e8f5f0] rounded-xl flex items-center justify-center">
-                    <i class="fas fa-recycle text-primary"></i>
-                </div>
+        <div class="flex items-center gap-6 text-sm">
+            <div class="hidden md:flex items-center gap-2 border-r pr-6 border-gray-200">
+                <div class="w-8 h-8 bg-accent rounded-full flex items-center justify-center text-primary font-bold">I</div>
+                <span class="font-semibold text-gray-700 italic">Indi Kartika</span>
             </div>
+            <a href="logout.php" class="text-red-500 font-bold hover:text-red-700 transition">Keluar</a>
         </div>
+    </nav>
 
-        <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:-translate-y-1 transition duration-300">
-            <div class="flex justify-between items-start">
-                <div>
-                    <p class="text-xs text-gray-400 uppercase tracking-wider">Total Liter</p>
-                    <h3 class="text-3xl font-bold text-primary mt-1">14.5</h3>
-                    <p class="text-xs text-gray-400 mt-1">Liter terkumpul</p>
-                </div>
-                <div class="w-11 h-11 bg-[#e8f5f0] rounded-xl flex items-center justify-center">
-                    <i class="fas fa-tint text-primary"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:-translate-y-1 transition duration-300">
-            <div class="flex justify-between items-start">
-                <div>
-                    <p class="text-xs text-gray-400 uppercase tracking-wider">Saldo Digital</p>
-                    <h3 class="text-2xl font-bold text-primary mt-1">Rp 14.500</h3>
-                    <p class="text-xs text-green-500 mt-1"><i class="fas fa-plus mr-1"></i>Rp 3.500 baru</p>
-                </div>
-                <div class="w-11 h-11 bg-[#e8f5f0] rounded-xl flex items-center justify-center">
-                    <i class="fas fa-wallet text-primary"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:-translate-y-1 transition duration-300">
-            <div class="flex justify-between items-start">
-                <div>
-                    <p class="text-xs text-gray-400 uppercase tracking-wider">Air Terjaga</p>
-                    <h3 class="text-2xl font-bold text-primary mt-1">17.400 L</h3>
-                    <p class="text-xs text-accent mt-1 text-secondary font-medium">Dampak lingkunganmu 🌿</p>
-                </div>
-                <div class="w-11 h-11 bg-[#e8f5f0] rounded-xl flex items-center justify-center">
-                    <i class="fas fa-leaf text-primary"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ── STATUS TERKINI + CHART ── -->
-    <div class="grid lg:grid-cols-3 gap-6 fade-in">
-
-        <!-- Status Penjemputan Terkini (2/3) -->
-        <div class="lg:col-span-2 space-y-4">
-            <div class="flex justify-between items-center">
-                <h3 class="font-bold text-primary">Status Penjemputan Terkini</h3>
-                <a href="riwayat.html" class="text-xs text-secondary hover:underline font-medium">Lihat semua →</a>
-            </div>
-
-            <!-- Card status aktif -->
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden" id="statusAktifCard">
-                <!-- Diisi JS -->
-            </div>
-
-            <!-- Riwayat singkat -->
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                <div class="px-6 py-4 border-b border-gray-50">
-                    <h4 class="font-semibold text-primary text-sm">3 Setor Terakhir</h4>
-                </div>
-                <div class="divide-y divide-gray-50" id="riwayatSingkat"></div>
-            </div>
-        </div>
-
-        <!-- Chart Kontribusi (1/3) -->
-        <div class="space-y-4">
-            <h3 class="font-bold text-primary">Kontribusi Bulanan</h3>
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                <p class="text-xs text-gray-400 mb-4">Volume setor per bulan (liter)</p>
-                <canvas id="kontribusiChart" height="220"></canvas>
-            </div>
-
-            <!-- Eco Tips -->
-            <div class="bg-[#f0f7f4] rounded-2xl p-5 border border-accent">
-                <div class="flex items-start gap-3">
-                    <div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center shrink-0">
-                        <i class="fas fa-lightbulb text-accent text-sm"></i>
-                    </div>
-                    <div>
-                        <p class="text-xs font-bold text-primary mb-1">Eco Tips 🌱</p>
-                        <p class="text-xs text-gray-500 leading-relaxed" id="ecoTip">
-                            Saring minyak jelantah sebelum disimpan agar kualitasnya terjaga dan mudah diolah menjadi biodiesel.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ── PANEL KHUSUS PELAKU USAHA (tersembunyi untuk masyarakat) ── -->
-    <div id="panelUsaha" class="hidden fade-in">
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-            <div class="px-6 py-4 border-b border-gray-50 flex justify-between items-center">
-                <div>
-                    <h3 class="font-bold text-primary text-sm">Jadwal Penjemputan Rutin</h3>
-                    <p class="text-xs text-gray-400">Penjemputan otomatis 1x seminggu untuk pelaku usaha</p>
-                </div>
-                <span class="text-xs bg-orange-100 text-orange-600 px-3 py-1 rounded-full font-medium">Pelaku Usaha</span>
-            </div>
-            <div class="p-6 grid md:grid-cols-3 gap-5">
-                <div class="bg-[#f0f7f4] rounded-2xl p-5 text-center">
-                    <i class="fas fa-calendar-week text-primary text-2xl mb-2"></i>
-                    <p class="font-bold text-primary text-sm">Setiap Senin</p>
-                    <p class="text-xs text-gray-400 mt-1">Jadwal rutin penjemputan</p>
-                </div>
-                <div class="bg-[#f0f7f4] rounded-2xl p-5 text-center">
-                    <i class="fas fa-clock text-primary text-2xl mb-2"></i>
-                    <p class="font-bold text-primary text-sm">08.00 – 16.00 WIB</p>
-                    <p class="text-xs text-gray-400 mt-1">Estimasi waktu kedatangan</p>
-                </div>
-                <div class="bg-[#f0f7f4] rounded-2xl p-5 text-center">
-                    <i class="fas fa-truck text-primary text-2xl mb-2"></i>
-                    <p class="font-bold text-primary text-sm" id="namaMintraUsaha">Rizal Aditya</p>
-                    <p class="text-xs text-gray-400 mt-1">Mitra yang bertugas</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ── FORM SETOR CEPAT ── -->
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden fade-in">
-        <div class="px-6 py-4 border-b border-gray-50 flex justify-between items-center">
+    <div class="max-w-6xl mx-auto mt-10 px-4 pb-20">
+        <div class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6 fade-in">
             <div>
-                <h3 class="font-bold text-primary text-sm">Form Setor Limbah</h3>
-                <p class="text-xs text-gray-400">Isi form di bawah untuk request penjemputan</p>
+                <h2 class="text-3xl font-bold text-primary">Aktivitas Setoran</h2>
+                <p class="text-sm text-gray-500 mt-1">Kelola dan pantau kontribusi lingkungan Anda.</p>
             </div>
-            <button onclick="toggleFormSetor()" id="btnToggleForm"
-                class="text-xs bg-primary text-white px-4 py-2 rounded-xl hover:bg-secondary transition font-medium flex items-center gap-2">
-                <i class="fas fa-plus" id="iconToggleForm"></i>
-                <span id="labelToggleForm">Buat Request</span>
-            </button>
+            
+            <div class="flex flex-wrap gap-3">
+                <select id="filterKategori" onchange="filterData()" class="border-gray-200 border rounded-xl px-4 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-secondary transition-all">
+                    <option value="semua">Semua Status</option>
+                    <option value="menunggu">Menunggu</option>
+                    <option value="dijemput">Dijemput</option>
+                    <option value="selesai">Selesai</option>
+                </select>
+                <a href="form_tambah.php" class="bg-primary text-white px-6 py-2 rounded-xl text-sm font-bold hover:bg-secondary transition-all shadow-lg shadow-primary/20 flex items-center gap-2">
+                    <i class="fas fa-plus-circle"></i> Tambah Setoran
+                </a>
+            </div>
         </div>
 
-        <div id="formSetorWrapper" class="hidden">
-            <div class="p-6">
-                <div class="grid md:grid-cols-2 gap-5">
-                    <div class="flex flex-col gap-1">
-                        <label class="text-xs font-semibold text-primary">Estimasi Volume (Liter)</label>
-                        <input type="number" id="fsVolume" step="0.5" min="0.5" placeholder="Contoh: 3.5"
-                            class="p-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:outline-none focus:border-secondary transition">
-                    </div>
-                    <div class="flex flex-col gap-1">
-                        <label class="text-xs font-semibold text-primary">Alamat Penjemputan</label>
-                        <input type="text" id="fsAlamat" placeholder="Jl. Contoh No. 12, Kelurahan"
-                            class="p-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:outline-none focus:border-secondary transition">
-                    </div>
-                    <div class="flex flex-col gap-1 md:col-span-2">
-                        <label class="text-xs font-semibold text-primary">Catatan untuk Mitra (opsional)</label>
-                        <textarea id="fsCatatan" rows="2" placeholder="Contoh: Hubungi 30 menit sebelum datang, minyak ada di depan pintu..."
-                            class="p-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:outline-none focus:border-secondary transition resize-none"></textarea>
-                    </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 fade-in">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-secondary transition-colors group">
+                <div class="flex justify-between items-center mb-4">
+                    <p class="text-gray-400 text-[10px] font-bold uppercase tracking-[0.2em]">Volume Terkumpul</p>
+                    <i class="fas fa-tint text-accent group-hover:text-secondary transition-colors"></i>
                 </div>
+                <h3 class="text-3xl font-bold text-primary">0 <span class="text-sm font-normal text-gray-400">Liter</span></h3>
+            </div>
+            
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-secondary transition-colors group">
+                <div class="flex justify-between items-center mb-4">
+                    <p class="text-gray-400 text-[10px] font-bold uppercase tracking-[0.2em]">Saldo Digital</p>
+                    <i class="fas fa-wallet text-accent group-hover:text-secondary transition-colors"></i>
+                </div>
+                <h3 class="text-3xl font-bold text-primary">Rp 0</h3>
+            </div>
 
-                <!-- Info batas jemput -->
-                <div class="mt-4 bg-[#f0f7f4] rounded-xl px-4 py-3 text-xs text-gray-500 flex items-start gap-2">
-                    <i class="fas fa-info-circle text-primary mt-0.5"></i>
-                    <span id="infoBatasJemput">Mitra akan menjemput maksimal <b>3 hari</b> setelah form ini dikirim.</span>
+            <div class="bg-primary p-6 rounded-2xl shadow-lg shadow-primary/10 text-white">
+                <div class="flex justify-between items-center mb-4">
+                    <p class="text-accent/60 text-[10px] font-bold uppercase tracking-[0.2em]">Status Terkini</p>
+                    <i class="fas fa-info-circle text-accent"></i>
                 </div>
+                <h3 class="text-lg font-bold">Tidak Ada Penjemputan</h3>
+            </div>
+        </div>
 
-                <div id="fsError" class="hidden mt-3 text-xs text-red-500 bg-red-50 border border-red-200 rounded-xl px-4 py-2.5">
-                    <i class="fas fa-exclamation-circle mr-1"></i><span id="fsErrorMsg"></span>
-                </div>
-                <div id="fsSuccess" class="hidden mt-3 text-xs text-green-600 bg-green-50 border border-green-200 rounded-xl px-4 py-2.5">
-                    <i class="fas fa-check-circle mr-1"></i>Request penjemputan berhasil dikirim! Mitra akan segera menghubungimu.
-                </div>
-
-                <div class="flex gap-3 mt-5">
-                    <button onclick="toggleFormSetor()" class="px-5 py-3 border border-gray-200 rounded-2xl text-sm text-gray-500 hover:bg-gray-50 transition">Batal</button>
-                    <button onclick="kirimSetor()" class="flex-1 bg-primary text-white py-3 rounded-2xl text-sm font-bold hover:bg-secondary transition flex items-center justify-center gap-2">
-                        <i class="fas fa-paper-plane"></i> Kirim Request
-                    </button>
-                </div>
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden fade-in">
+            <div class="px-6 py-5 border-b border-gray-50 flex justify-between items-center bg-lightGreen/30">
+                <h4 class="font-bold text-primary text-sm tracking-wide">RIWAYAT TRANSAKSI</h4>
+                <span class="text-[10px] bg-white px-3 py-1 rounded-full border border-gray-100 text-gray-400">Update: <?php echo date('d M Y'); ?></span>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-gray-50/50 text-gray-500 text-[10px] uppercase font-bold tracking-widest">
+                        <tr>
+                            <th class="p-5 border-b">ID</th>
+                            <th class="p-5 border-b">Tgl Request</th>
+                            <th class="p-5 border-b">Estimasi (L)</th>
+                            <th class="p-5 border-b">Status</th>
+                            <th class="p-5 border-b text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm text-gray-600">
+                        <tr>
+                            <td colspan="5" class="p-20 text-center">
+                                <div class="max-w-xs mx-auto">
+                                    <div class="w-16 h-16 bg-lightGreen rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <i class="fas fa-database text-accent text-xl"></i>
+                                    </div>
+                                    <p class="font-bold text-primary text-base">Belum ada data</p>
+                                    <p class="text-xs text-gray-400 mt-2">Database Anda masih kosong. Silakan tambahkan riwayat setoran pertama Anda.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 
-</main>
+    <script>
+        // Filter Data Berdasarkan Kategori (Poin 1 UTS)
+        function filterData() {
+            const status = document.getElementById('filterKategori').value;
+            // Ini akan memicu pencarian pada tabel jika sudah ada datanya
+            alert("Menyaring data dengan status: " + status.toUpperCase());
+        }
 
-<!-- ══════════════════════════════════════════
-     SCRIPT
-══════════════════════════════════════════ -->
-<script>
-    // ── Simulasi data user login (nanti dari PHP session) ──
-    // Ganti 'jenis' ke 'pelaku_usaha' untuk lihat tampilan pelaku usaha
-    const userSession = {
-        nama: 'Siti Rahayu',
-        jenis: 'masyarakat',   // 'masyarakat' | 'pelaku_usaha'
-        saldo: 14500,
-        mitra: 'Rizal Aditya'
-    };
-
-    // ── Data dummy riwayat ──
-    const riwayatData = [
-        { id: 3, tanggal: '2026-04-04', volume: 3.5, status: 'Dijemput',  alamat: 'Jl. Semolowaru No.12' },
-        { id: 2, tanggal: '2026-03-20', volume: 2.0, status: 'Selesai',   alamat: 'Jl. Semolowaru No.12' },
-        { id: 1, tanggal: '2026-03-05', volume: 4.0, status: 'Selesai',   alamat: 'Jl. Semolowaru No.12' },
-    ];
-
-    const ecoTips = [
-        'Saring minyak jelantah sebelum disimpan agar kualitasnya terjaga dan mudah diolah menjadi biodiesel.',
-        'Simpan minyak jelantah dalam wadah tertutup rapat dan jauh dari sinar matahari langsung.',
-        '1 liter minyak jelantah yang dibuang ke saluran air bisa mencemari hingga 1.200 liter air bersih!',
-        'Minyak jelantah bisa diolah menjadi sabun, biodiesel, hingga lilin ramah lingkungan.',
-        'Usahakan tidak menggoreng dengan minyak yang sudah lebih dari 3-4 kali pemakaian.'
-    ];
-
-    // ── Init tampilan ──
-    const jam = new Date().getHours();
-    const sapaan = jam < 11 ? 'Selamat pagi' : jam < 15 ? 'Selamat siang' : jam < 18 ? 'Selamat sore' : 'Selamat malam';
-    document.getElementById('sapaanTeks').textContent = sapaan + ',';
-    document.getElementById('greetingNama').textContent = userSession.nama + ' 👋';
-    document.getElementById('namaUser').textContent = userSession.nama;
-    document.getElementById('jenisUser').textContent = userSession.jenis === 'pelaku_usaha' ? 'Pelaku Usaha' : 'Masyarakat';
-    document.getElementById('avatarInisial').textContent = userSession.nama.charAt(0);
-    document.getElementById('ecoTip').textContent = ecoTips[Math.floor(Math.random() * ecoTips.length)];
-
-    // Tampilkan panel usaha kalau pelaku usaha
-    if (userSession.jenis === 'pelaku_usaha') {
-        document.getElementById('panelUsaha').classList.remove('hidden');
-        document.getElementById('namaMintraUsaha').textContent = userSession.mitra;
-        document.getElementById('infoBatasJemput').innerHTML = 'Sebagai pelaku usaha, penjemputan rutin dilakukan <b>1x seminggu</b>. Kamu tetap bisa request manual kapan saja.';
-    }
-
-    // ── Status Aktif Card ──
-    const aktif = riwayatData.find(r => r.status !== 'Selesai');
-    const statusAktifEl = document.getElementById('statusAktifCard');
-
-    if (aktif) {
-        const cfg = {
-            'Menunggu': { kelas: 'status-menunggu', icon: 'fa-clock', teks: 'Menunggu konfirmasi mitra', subjudul: 'Request kamu sudah diterima admin. Mitra akan segera dihubungi.' },
-            'Dijemput': { kelas: 'status-dijemput', icon: 'fa-truck', teks: 'Mitra dalam perjalanan!', subjudul: 'Siapkan minyak jelantahmu ya. Mitra sudah di jalan menuju lokasimu.' },
-        };
-        const c = cfg[aktif.status] || cfg['Menunggu'];
-        statusAktifEl.innerHTML = `
-            <div class="px-6 py-5 flex items-start gap-4">
-                <div class="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${aktif.status === 'Dijemput' ? 'bg-blue-100' : 'bg-yellow-100'}">
-                    <i class="fas ${c.icon} ${aktif.status === 'Dijemput' ? 'text-blue-500' : 'text-yellow-500'} text-lg"></i>
-                </div>
-                <div class="flex-1">
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <span class="text-sm font-bold text-gray-700">${c.teks}</span>
-                        <span class="text-[10px] px-2 py-0.5 rounded-full font-medium ${c.kelas}">${aktif.status}</span>
-                    </div>
-                    <p class="text-xs text-gray-400 mt-1">${c.subjudul}</p>
-                    <div class="flex items-center gap-4 mt-3 text-xs text-gray-500 flex-wrap">
-                        <span><i class="fas fa-tint text-primary mr-1"></i>Est. <b>${aktif.volume} L</b></span>
-                        <span><i class="fas fa-calendar text-primary mr-1"></i>${aktif.tanggal}</span>
-                        <span><i class="fas fa-map-marker-alt text-primary mr-1"></i>${aktif.alamat}</span>
-                    </div>
-                </div>
-            </div>
-        `;
-    } else {
-        statusAktifEl.innerHTML = `
-            <div class="px-6 py-8 text-center">
-                <i class="fas fa-check-circle text-green-400 text-3xl mb-3 block"></i>
-                <p class="text-sm font-semibold text-gray-700">Tidak ada penjemputan aktif</p>
-                <p class="text-xs text-gray-400 mt-1">Klik <b>"Setor Limbah Sekarang"</b> untuk membuat request baru</p>
-            </div>
-        `;
-    }
-
-    // ── Riwayat Singkat ──
-    document.getElementById('riwayatSingkat').innerHTML = riwayatData.slice(0, 3).map(r => {
-        const sc = { 'Menunggu': 'status-menunggu', 'Dijemput': 'status-dijemput', 'Selesai': 'status-selesai' };
-        return `
-        <div class="px-6 py-4 flex items-center gap-4 hover:bg-gray-50 transition">
-            <div class="w-9 h-9 bg-accent rounded-xl flex items-center justify-center shrink-0">
-                <i class="fas fa-tint text-primary text-sm"></i>
-            </div>
-            <div class="flex-1 min-w-0">
-                <p class="text-sm font-medium text-gray-700">${r.volume} Liter</p>
-                <p class="text-xs text-gray-400">${r.tanggal} · ${r.alamat}</p>
-            </div>
-            <span class="text-[10px] px-2 py-1 rounded-full font-medium ${sc[r.status]}">${r.status}</span>
-        </div>`;
-    }).join('');
-
-    // ── Chart Kontribusi ──
-    new Chart(document.getElementById('kontribusiChart'), {
-        type: 'bar',
-        data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr'],
-            datasets: [{
-                label: 'Liter',
-                data: [2, 4, 5, 3.5],
-                backgroundColor: ['#d1e7e0', '#d1e7e0', '#004030', '#2d6a4f'],
-                borderRadius: 8,
-            }]
-        },
-        options: {
-            plugins: { legend: { display: false } },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: { color: '#f0f0f0' },
-                    ticks: { font: { size: 10, family: 'Poppins' } }
-                },
-                x: {
-                    grid: { display: false },
-                    ticks: { font: { size: 10, family: 'Poppins' } }
-                }
+        // Konfirmasi Penghapusan dengan Modal/Alert (Poin 4 UTS)
+        function konfirmasiHapus(id) {
+            if (confirm("Apakah Anda yakin ingin menghapus data setoran #" + id + "? Tindakan ini tidak dapat dibatalkan.")) {
+                // Link ke PHP hapus nantinya
+                alert("Data #" + id + " berhasil dihapus secara permanen.");
             }
         }
-    });
-
-    // ── Form Setor Toggle ──
-    function toggleFormSetor() {
-        const wrapper = document.getElementById('formSetorWrapper');
-        const icon = document.getElementById('iconToggleForm');
-        const label = document.getElementById('labelToggleForm');
-        const isHidden = wrapper.classList.contains('hidden');
-        wrapper.classList.toggle('hidden');
-        icon.className = isHidden ? 'fas fa-times' : 'fas fa-plus';
-        label.textContent = isHidden ? 'Tutup' : 'Buat Request';
-        document.getElementById('fsError').classList.add('hidden');
-        document.getElementById('fsSuccess').classList.add('hidden');
-    }
-
-    // ── Kirim Form Setor ──
-    function kirimSetor() {
-        const volume = parseFloat(document.getElementById('fsVolume').value);
-        const alamat = document.getElementById('fsAlamat').value.trim();
-        const errEl = document.getElementById('fsError');
-        const errMsg = document.getElementById('fsErrorMsg');
-
-        errEl.classList.add('hidden');
-        document.getElementById('fsSuccess').classList.add('hidden');
-
-        if (!volume || volume <= 0) {
-            errEl.classList.remove('hidden');
-            errMsg.textContent = 'Estimasi volume wajib diisi dan harus lebih dari 0 liter.';
-            return;
-        }
-        if (!alamat) {
-            errEl.classList.remove('hidden');
-            errMsg.textContent = 'Alamat penjemputan wajib diisi.';
-            return;
-        }
-
-        // Hitung batas jemput
-        const batas = new Date();
-        batas.setDate(batas.getDate() + (userSession.jenis === 'pelaku_usaha' ? 7 : 3));
-        const batasStr = batas.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
-
-        document.getElementById('fsSuccess').classList.remove('hidden');
-        document.getElementById('fsSuccess').innerHTML = `
-            <i class="fas fa-check-circle mr-1"></i>
-            Request berhasil dikirim! Batas penjemputan: <b>${batasStr}</b>. Mitra akan segera menghubungimu.
-        `;
-
-        document.getElementById('fsVolume').value = '';
-        document.getElementById('fsAlamat').value = '';
-        document.getElementById('fsCatatan').value = '';
-    }
-
-    // ── Dropdown ──
-    function toggleNotif() {
-        document.getElementById('notifDropdown').classList.toggle('hidden');
-        document.getElementById('profilDropdown').classList.add('hidden');
-        document.getElementById('notifBadge').classList.add('hidden');
-    }
-    function toggleProfil() {
-        document.getElementById('profilDropdown').classList.toggle('hidden');
-        document.getElementById('notifDropdown').classList.add('hidden');
-    }
-    document.addEventListener('click', e => {
-        if (!e.target.closest('[onclick*="toggleNotif"]') && !e.target.closest('#notifDropdown'))
-            document.getElementById('notifDropdown').classList.add('hidden');
-        if (!e.target.closest('[onclick*="toggleProfil"]') && !e.target.closest('#profilDropdown'))
-            document.getElementById('profilDropdown').classList.add('hidden');
-    });
-</script>
+    </script>
 </body>
 </html>
