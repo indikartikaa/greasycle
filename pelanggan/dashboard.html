@@ -126,21 +126,202 @@
         </div>
     </div>
 
-    <script>
-        // Filter Data Berdasarkan Kategori (Poin 1 UTS)
-        function filterData() {
-            const status = document.getElementById('filterKategori').value;
-            // Ini akan memicu pencarian pada tabel jika sudah ada datanya
-            alert("Menyaring data dengan status: " + status.toUpperCase());
-        }
+</main>
 
-        // Konfirmasi Penghapusan dengan Modal/Alert (Poin 4 UTS)
-        function konfirmasiHapus(id) {
-            if (confirm("Apakah Anda yakin ingin menghapus data setoran #" + id + "? Tindakan ini tidak dapat dibatalkan.")) {
-                // Link ke PHP hapus nantinya
-                alert("Data #" + id + " berhasil dihapus secara permanen.");
+<!-- ══════════════════════════════════════════
+     SCRIPT
+══════════════════════════════════════════ -->
+<script>
+    // ── Simulasi data user login (nanti dari PHP session) ──
+    // Ganti 'jenis' ke 'pelaku_usaha' untuk lihat tampilan pelaku usaha
+    const userSession = {
+        nama: 'Siti Rahayu',
+        jenis: 'masyarakat',   // 'masyarakat' | 'pelaku_usaha'
+        saldo: 14500,
+        mitra: 'Rizal Aditya'
+    };
+
+    // ── Data dummy riwayat ──
+    const riwayatData = [
+        { id: 3, tanggal: '2026-04-04', volume: 3.5, status: 'Dijemput',  alamat: 'Jl. Semolowaru No.12' },
+        { id: 2, tanggal: '2026-03-20', volume: 2.0, status: 'Selesai',   alamat: 'Jl. Semolowaru No.12' },
+        { id: 1, tanggal: '2026-03-05', volume: 4.0, status: 'Selesai',   alamat: 'Jl. Semolowaru No.12' },
+    ];
+
+    const ecoTips = [
+        'Saring minyak jelantah sebelum disimpan agar kualitasnya terjaga dan mudah diolah menjadi biodiesel.',
+        'Simpan minyak jelantah dalam wadah tertutup rapat dan jauh dari sinar matahari langsung.',
+        '1 liter minyak jelantah yang dibuang ke saluran air bisa mencemari hingga 1.200 liter air bersih!',
+        'Minyak jelantah bisa diolah menjadi sabun, biodiesel, hingga lilin ramah lingkungan.',
+        'Usahakan tidak menggoreng dengan minyak yang sudah lebih dari 3-4 kali pemakaian.'
+    ];
+
+    // ── Init tampilan ──
+    const jam = new Date().getHours();
+    const sapaan = jam < 11 ? 'Selamat pagi' : jam < 15 ? 'Selamat siang' : jam < 18 ? 'Selamat sore' : 'Selamat malam';
+    document.getElementById('sapaanTeks').textContent = sapaan + ',';
+    document.getElementById('greetingNama').textContent = userSession.nama + ' 👋';
+    document.getElementById('namaUser').textContent = userSession.nama;
+    document.getElementById('jenisUser').textContent = userSession.jenis === 'pelaku_usaha' ? 'Pelaku Usaha' : 'Masyarakat';
+    document.getElementById('avatarInisial').textContent = userSession.nama.charAt(0);
+    document.getElementById('ecoTip').textContent = ecoTips[Math.floor(Math.random() * ecoTips.length)];
+
+    // Tampilkan panel usaha kalau pelaku usaha
+    if (userSession.jenis === 'pelaku_usaha') {
+        document.getElementById('panelUsaha').classList.remove('hidden');
+        document.getElementById('namaMintraUsaha').textContent = userSession.mitra;
+        document.getElementById('infoBatasJemput').innerHTML = 'Sebagai pelaku usaha, penjemputan rutin dilakukan <b>1x seminggu</b>. Kamu tetap bisa request manual kapan saja.';
+    }
+
+    // ── Status Aktif Card ──
+    const aktif = riwayatData.find(r => r.status !== 'Selesai');
+    const statusAktifEl = document.getElementById('statusAktifCard');
+
+    if (aktif) {
+        const cfg = {
+            'Menunggu': { kelas: 'status-menunggu', icon: 'fa-clock', teks: 'Menunggu konfirmasi mitra', subjudul: 'Request kamu sudah diterima admin. Mitra akan segera dihubungi.' },
+            'Dijemput': { kelas: 'status-dijemput', icon: 'fa-truck', teks: 'Mitra dalam perjalanan!', subjudul: 'Siapkan minyak jelantahmu ya. Mitra sudah di jalan menuju lokasimu.' },
+        };
+        const c = cfg[aktif.status] || cfg['Menunggu'];
+        statusAktifEl.innerHTML = `
+            <div class="px-6 py-5 flex items-start gap-4">
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${aktif.status === 'Dijemput' ? 'bg-blue-100' : 'bg-yellow-100'}">
+                    <i class="fas ${c.icon} ${aktif.status === 'Dijemput' ? 'text-blue-500' : 'text-yellow-500'} text-lg"></i>
+                </div>
+                <div class="flex-1">
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="text-sm font-bold text-gray-700">${c.teks}</span>
+                        <span class="text-[10px] px-2 py-0.5 rounded-full font-medium ${c.kelas}">${aktif.status}</span>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-1">${c.subjudul}</p>
+                    <div class="flex items-center gap-4 mt-3 text-xs text-gray-500 flex-wrap">
+                        <span><i class="fas fa-tint text-primary mr-1"></i>Est. <b>${aktif.volume} L</b></span>
+                        <span><i class="fas fa-calendar text-primary mr-1"></i>${aktif.tanggal}</span>
+                        <span><i class="fas fa-map-marker-alt text-primary mr-1"></i>${aktif.alamat}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    } else {
+        statusAktifEl.innerHTML = `
+            <div class="px-6 py-8 text-center">
+                <i class="fas fa-check-circle text-green-400 text-3xl mb-3 block"></i>
+                <p class="text-sm font-semibold text-gray-700">Tidak ada penjemputan aktif</p>
+                <p class="text-xs text-gray-400 mt-1">Klik <b>"Setor Limbah Sekarang"</b> untuk membuat request baru</p>
+            </div>
+        `;
+    }
+
+    // ── Riwayat Singkat ──
+    document.getElementById('riwayatSingkat').innerHTML = riwayatData.slice(0, 3).map(r => {
+        const sc = { 'Menunggu': 'status-menunggu', 'Dijemput': 'status-dijemput', 'Selesai': 'status-selesai' };
+        return `
+        <div class="px-6 py-4 flex items-center gap-4 hover:bg-gray-50 transition">
+            <div class="w-9 h-9 bg-accent rounded-xl flex items-center justify-center shrink-0">
+                <i class="fas fa-tint text-primary text-sm"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-gray-700">${r.volume} Liter</p>
+                <p class="text-xs text-gray-400">${r.tanggal} · ${r.alamat}</p>
+            </div>
+            <span class="text-[10px] px-2 py-1 rounded-full font-medium ${sc[r.status]}">${r.status}</span>
+        </div>`;
+    }).join('');
+
+    // ── Chart Kontribusi ──
+    new Chart(document.getElementById('kontribusiChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr'],
+            datasets: [{
+                label: 'Liter',
+                data: [2, 4, 5, 3.5],
+                backgroundColor: ['#d1e7e0', '#d1e7e0', '#004030', '#2d6a4f'],
+                borderRadius: 8,
+            }]
+        },
+        options: {
+            plugins: { legend: { display: false } },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: '#f0f0f0' },
+                    ticks: { font: { size: 10, family: 'Poppins' } }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { font: { size: 10, family: 'Poppins' } }
+                }
             }
         }
-    </script>
+    });
+
+    // ── Form Setor Toggle ──
+    function toggleFormSetor() {
+        const wrapper = document.getElementById('formSetorWrapper');
+        const icon = document.getElementById('iconToggleForm');
+        const label = document.getElementById('labelToggleForm');
+        const isHidden = wrapper.classList.contains('hidden');
+        wrapper.classList.toggle('hidden');
+        icon.className = isHidden ? 'fas fa-times' : 'fas fa-plus';
+        label.textContent = isHidden ? 'Tutup' : 'Buat Request';
+        document.getElementById('fsError').classList.add('hidden');
+        document.getElementById('fsSuccess').classList.add('hidden');
+    }
+
+    // ── Kirim Form Setor ──
+    function kirimSetor() {
+        const volume = parseFloat(document.getElementById('fsVolume').value);
+        const alamat = document.getElementById('fsAlamat').value.trim();
+        const errEl = document.getElementById('fsError');
+        const errMsg = document.getElementById('fsErrorMsg');
+
+        errEl.classList.add('hidden');
+        document.getElementById('fsSuccess').classList.add('hidden');
+
+        if (!volume || volume <= 0) {
+            errEl.classList.remove('hidden');
+            errMsg.textContent = 'Estimasi volume wajib diisi dan harus lebih dari 0 liter.';
+            return;
+        }
+        if (!alamat) {
+            errEl.classList.remove('hidden');
+            errMsg.textContent = 'Alamat penjemputan wajib diisi.';
+            return;
+        }
+
+        // Hitung batas jemput
+        const batas = new Date();
+        batas.setDate(batas.getDate() + (userSession.jenis === 'pelaku_usaha' ? 7 : 3));
+        const batasStr = batas.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
+        document.getElementById('fsSuccess').classList.remove('hidden');
+        document.getElementById('fsSuccess').innerHTML = `
+            <i class="fas fa-check-circle mr-1"></i>
+            Request berhasil dikirim! Batas penjemputan: <b>${batasStr}</b>. Mitra akan segera menghubungimu.
+        `;
+
+        document.getElementById('fsVolume').value = '';
+        document.getElementById('fsAlamat').value = '';
+        document.getElementById('fsCatatan').value = '';
+    }
+
+    // ── Dropdown ──
+    function toggleNotif() {
+        document.getElementById('notifDropdown').classList.toggle('hidden');
+        document.getElementById('profilDropdown').classList.add('hidden');
+        document.getElementById('notifBadge').classList.add('hidden');
+    }
+    function toggleProfil() {
+        document.getElementById('profilDropdown').classList.toggle('hidden');
+        document.getElementById('notifDropdown').classList.add('hidden');
+    }
+    document.addEventListener('click', e => {
+        if (!e.target.closest('[onclick*="toggleNotif"]') && !e.target.closest('#notifDropdown'))
+            document.getElementById('notifDropdown').classList.add('hidden');
+        if (!e.target.closest('[onclick*="toggleProfil"]') && !e.target.closest('#profilDropdown'))
+            document.getElementById('profilDropdown').classList.add('hidden');
+    });
+</script>
 </body>
 </html>
