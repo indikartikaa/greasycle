@@ -37,12 +37,26 @@ include 'koneksi.php';
 
 <nav class="bg-white flex justify-between items-center py-4 px-[8%] sticky top-0 z-[1000] shadow-md">
     <div class="text-2xl font-bold text-primary">Greasycle</div>
-    <ul class="flex list-none gap-6 items-center">
-        <li><a href="index.html" class="text-primary font-bold border-b-2 border-primary">Beranda</a></li>
-        <li><a href="about.html" class="text-[#666] font-medium transition duration-300 hover:text-primary">Tentang</a></li>
-        <li><a href="contact.html" class="text-[#666] font-medium transition duration-300 hover:text-primary">Kontak</a></li>
-        <li><a href="portofolio.html" class="text-[#666] font-medium transition duration-300 hover:text-primary">Portfolio</a></li>
-        <li><button onclick="openAuth()" class="bg-primary text-white px-6 py-2 rounded-full font-bold hover:bg-secondary transition ml-4 shadow-md">Login</button></li>
+    
+    <ul class="flex list-none gap-8 items-center">
+        <li><a href="index.php" class="text-primary font-bold border-b-2 border-primary pb-1">Beranda</a></li>
+        <li><a href="about.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Tentang</a></li>
+        <li><a href="contact.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Kontak</a></li>
+        <li><a href="portofolio.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Portfolio</a></li>
+        
+        <?php if(isset($_SESSION['nama'])): ?>
+            <li class="flex items-center gap-4 bg-accent/30 px-4 py-2 rounded-full border border-accent">
+                <span class="text-primary font-bold text-sm italic">Halo, <?= $_SESSION['nama']; ?></span>
+                <div class="w-px h-4 bg-primary/20"></div>
+                <a href="logout.php" class="text-red-500 text-[10px] font-extrabold uppercase tracking-widest hover:text-red-700 transition">Keluar</a>
+            </li>
+        <?php else: ?>
+            <li>
+                <button onclick="openAuth()" class="bg-primary text-white px-8 py-2.5 rounded-full font-bold hover:bg-secondary transition shadow-lg shadow-primary/20 transform hover:scale-105 active:scale-95">
+                    Login
+                </button>
+            </li>
+        <?php endif; ?>
     </ul>
 </nav>
 
@@ -133,8 +147,9 @@ include 'koneksi.php';
                 <h2 class="text-2xl font-bold text-primary">Masuk Akun</h2>
                 <button onclick="closeAuth()" class="text-gray-400 hover:text-red-500 transition"><i class="fas fa-times text-xl"></i></button>
             </div>
-            <form action="proses_login.php" method="POST" class="space-y-5">
-                <input type="email" name="email" placeholder="Email" class="w-full p-4 bg-gray-50 border rounded-2xl focus:outline-secondary text-sm" required>
+            <form action="login.php" method="POST" class="space-y-5">
+                <input type="email" name="email" placeholder="Email" autocomplete="off" class="w-full p-4 bg-gray-50 border rounded-2xl focus:outline-secondary text-sm" required>
+                
                 <input type="password" name="password" placeholder="Password" class="w-full p-4 bg-gray-50 border rounded-2xl focus:outline-secondary text-sm" required>
                 <button type="submit" name="login" class="w-full bg-primary text-white py-4 rounded-2xl font-bold hover:bg-secondary transition shadow-lg">Masuk Sekarang</button>
             </form>
@@ -143,15 +158,25 @@ include 'koneksi.php';
 
         <div id="registerArea" class="hidden-form">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold text-primary">Daftar Pelanggan</h2>
+                <h2 class="text-2xl font-bold text-primary">Daftar Akun</h2>
                 <button onclick="closeAuth()" class="text-gray-400 hover:text-red-500 transition"><i class="fas fa-times text-xl"></i></button>
             </div>
-            <form id="regForm" action="proses_register.php" method="POST" onsubmit="return validateReg(event)" class="space-y-4">
+            <form id="regForm" action="register.php" method="POST" onsubmit="return validateReg(event)" class="space-y-4">
                 <input type="text" id="regNama" name="nama" placeholder="Nama Lengkap" class="w-full p-3 bg-gray-50 border rounded-2xl text-sm" required>
                 <input type="text" id="regTelp" name="no_telp" placeholder="No. Telepon" class="w-full p-3 bg-gray-50 border rounded-2xl text-sm" required>
-                <input type="email" name="email" placeholder="Email" class="w-full p-3 bg-gray-50 border rounded-2xl text-sm" required>
+                <input type="email" name="email" placeholder="Email" autocomplete="off" class="w-full p-3 bg-gray-50 border rounded-2xl text-sm" required>
                 <input type="password" id="regPass" name="password" placeholder="Password" class="w-full p-3 bg-gray-50 border rounded-2xl text-sm" required>
-                <button type="submit" name="register" class="w-full bg-secondary text-white py-4 rounded-2xl font-bold shadow-lg">Daftar Sekarang</button>
+                
+                <div class="flex flex-col">
+                    <label class="text-[10px] font-bold text-primary uppercase mb-1 ml-2 tracking-widest">Daftar Sebagai</label>
+                    <select name="role" class="w-full p-3 bg-gray-50 border rounded-2xl text-sm focus:outline-secondary" required>
+                        <option value="pelanggan">Ibu Rumah Tangga</option>
+                        <option value="usaha">Pelaku Usaha (Resto/Cafe)</option>
+                        <option value="mitra">Mitra (Pengepul Minyak)</option>
+                    </select>
+                </div>
+
+                <button type="submit" name="register" class="w-full bg-secondary text-white py-4 rounded-2xl font-bold shadow-lg mt-2">Daftar Sekarang</button>
             </form>
             <p class="text-center text-sm mt-6 text-gray-500">Sudah punya akun? <a href="javascript:void(0)" onclick="switchForm('login')" class="text-primary font-bold hover:underline">Masuk</a></p>
         </div>
@@ -189,10 +214,10 @@ include 'koneksi.php';
             <div class="w-full px-4 mb-12 md:w-1/3">
                 <h3 class="font-semibold text-xl text-white mb-8 uppercase tracking-wider">Tautan</h3>
                 <ul class="text-accent opacity-80 space-y-4">
-                    <li><a href="index.html" class="text-base hover:text-white transition duration-300 underline">Beranda</a></li>
-                    <li><a href="about.html" class="text-base hover:text-white transition duration-300">Tentang Kami</a></li>
-                    <li><a href="contact.html" class="text-base hover:text-white transition duration-300">Kontak</a></li>
-                    <li><a href="portofolio.html" class="text-base hover:text-white transition duration-300">Portofolio</a></li>
+                    <li><a href="index.php" class="text-base hover:text-white transition duration-300 underline">Beranda</a></li>
+                    <li><a href="about.php" class="text-base hover:text-white transition duration-300">Tentang Kami</a></li>
+                    <li><a href="contact.php" class="text-base hover:text-white transition duration-300">Kontak</a></li>
+                    <li><a href="portofolio.php" class="text-base hover:text-white transition duration-300">Portofolio</a></li>
                 </ul>
             </div>
         </div>
@@ -211,7 +236,6 @@ include 'koneksi.php';
 </footer>
 
 <script>
-    // JS Interaktivitas Modal [cite: 16, 29]
     function openAuth() { 
         document.getElementById('authModal').style.display = 'block'; 
         switchForm('login'); 
@@ -223,7 +247,6 @@ include 'koneksi.php';
         document.getElementById('registerArea').style.display = (type === 'register') ? 'block' : 'none';
     }
 
-    // Validasi Client-Side JS (Requirement UTS Dosen) 
     function validateReg(e) {
         const nama = document.getElementById('regNama').value;
         const telp = document.getElementById('regTelp').value;
@@ -235,7 +258,7 @@ include 'koneksi.php';
             return false;
         }
         if (isNaN(telp) || telp.length < 10) {
-            alert("Nomor telepon tidak valid!");
+            alert("Nomor telepon tidak valid (minimal 10 angka)!");
             e.preventDefault();
             return false;
         }
