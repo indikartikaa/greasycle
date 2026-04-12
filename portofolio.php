@@ -7,7 +7,7 @@ include 'koneksi.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Greasycle</title>
+    <title>Portofolio - Greasycle</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -26,26 +26,33 @@ include 'koneksi.php';
     </script>
     <style>
         body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
-        .modal-login { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); }
-        .modal-content { background: white; padding: 40px; width: 90%; max-width: 400px; border-radius: 30px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .fade-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="bg-[#f7faf9] text-[#333] leading-relaxed overflow-x-hidden">
 
 <nav class="bg-white flex justify-between items-center py-4 px-[8%] sticky top-0 z-[1000] shadow-md">
     <div class="text-2xl font-bold text-primary tracking-tight">Greasycle</div>
-    <ul class="flex list-none gap-6 items-center">
+    <ul class="flex list-none gap-8 items-center">
         <li><a href="index.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Beranda</a></li>
         <li><a href="about.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Tentang</a></li>
         <li><a href="contact.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Kontak</a></li>
-        <li><a href="portofolio.php" class="text-primary font-bold border-b-2 border-primary">Portfolio</a></li>
-        <li><button onclick="openLogin()" class="bg-primary text-white px-6 py-2 rounded-full font-bold hover:bg-secondary transition ml-4 shadow-md text-sm">Login</button></li>
+        <li><a href="portofolio.php" class="text-primary font-bold border-b-2 border-primary pb-1">Portofolio</a></li>
+        
+        <?php if(isset($_SESSION['nama'])): ?>
+            <li class="flex items-center gap-4 bg-accent/30 px-4 py-2 rounded-full border border-accent">
+                <span class="text-primary font-bold text-sm italic">Halo, <?= $_SESSION['nama']; ?></span>
+                <div class="w-px h-4 bg-primary/20"></div>
+                <a href="logout.php" class="text-red-500 text-[10px] font-extrabold uppercase tracking-widest hover:text-red-700 transition">Keluar</a>
+            </li>
+        <?php endif; ?>
     </ul>
 </nav>
 
 <main>
     <header class="relative bg-cover bg-center text-white py-20 px-[8%] text-center overflow-hidden"
-            style="background-image: linear-gradient(rgba(0,64,48,0.85), rgba(0,64,48,0.85)), url('assets/foto-2.jpeg')">
+            style="background-image: linear-gradient(rgba(0,64,48,0.85), rgba(0,64,48,0.85))">
         <div class="max-w-4xl mx-auto relative z-10">
             <h1 class="text-3xl md:text-4xl font-bold mb-3 tracking-tight">Portofolio Proyek</h1>
             <p class="text-base md:text-lg opacity-90 font-light">Website Pengelolaan Kembali Minyak Jelantah — Greasycle</p>
@@ -71,25 +78,24 @@ include 'koneksi.php';
                     <i class="fas fa-star text-xl"></i>
                 </div>
                 <h2 class="text-xl font-bold text-primary mb-4">Fitur Utama</h2>
-                <ul class="space-y-3">
-                    <li class="flex items-center gap-3 text-sm text-gray-600"><i class="fas fa-check-circle text-secondary"></i> Registrasi & Login</li>
-                    <li class="flex items-center gap-3 text-sm text-gray-600"><i class="fas fa-check-circle text-secondary"></i> Penjadwalan Penjemputan</li>
-                    <li class="flex items-center gap-3 text-sm text-gray-600"><i class="fas fa-check-circle text-secondary"></i> Dashboard Admin Monitoring</li>
-                    <li class="flex items-center gap-3 text-sm text-gray-600"><i class="fas fa-check-circle text-secondary"></i> Edukasi Lingkungan</li>
+                <ul class="space-y-3 text-sm text-gray-600">
+                    <li class="flex items-center gap-3"><i class="fas fa-check-circle text-secondary"></i> Registrasi & Login Multilevel</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check-circle text-secondary"></i> Sistem Transaksi & Riwayat</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check-circle text-secondary"></i> Dashboard Pelanggan & Mitra</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check-circle text-secondary"></i> Filter Data Real-time</li>
                 </ul>
             </div>
-
+            
             <div class="bg-white p-8 shadow-sm rounded-[30px] border border-gray-100 hover:-translate-y-2 transition duration-300">
                 <div class="w-12 h-12 bg-accent rounded-2xl flex items-center justify-center mb-6 text-primary">
                     <i class="fas fa-laptop-code text-xl"></i>
                 </div>
-                <h2 class="text-xl font-bold text-primary mb-4">Teknologi</h2>
+                <h2 class="text-xl font-bold text-primary mb-4">Teknologi & Tools</h2>
                 <div class="flex flex-wrap gap-2">
-                    <span class="bg-gray-100 px-4 py-2 rounded-xl text-xs font-bold text-primary border border-gray-200">HTML5</span>
+                    <span class="bg-gray-100 px-4 py-2 rounded-xl text-xs font-bold text-primary border border-gray-200">PHP 8.2</span>
                     <span class="bg-gray-100 px-4 py-2 rounded-xl text-xs font-bold text-primary border border-gray-200">Tailwind CSS</span>
-                    <span class="bg-gray-100 px-4 py-2 rounded-xl text-xs font-bold text-primary border border-gray-200">JavaScript</span>
-                    <span class="bg-gray-100 px-4 py-2 rounded-xl text-xs font-bold text-primary border border-gray-200">PHP</span>
                     <span class="bg-gray-100 px-4 py-2 rounded-xl text-xs font-bold text-primary border border-gray-200">MySQL</span>
+                    <span class="bg-gray-100 px-4 py-2 rounded-xl text-xs font-bold text-primary border border-gray-200">XAMPP</span>
                 </div>
             </div>
 
@@ -100,7 +106,7 @@ include 'koneksi.php';
                 <h2 class="text-xl font-bold text-primary mb-4">Tujuan Proyek</h2>
                 <p class="text-gray-600 text-sm leading-relaxed text-justify">
                     Proyek ini bertujuan untuk mengurangi pencemaran lingkungan akibat pembuangan 
-                    minyak jelantah sembarangan serta mendukung konsep ekonomi sirkular.
+                    minyak jelantah sembarangan serta mendukung konsep ekonomi sirkular melalui konversi limbah menjadi saldo digital.
                 </p>
             </div>
         </div>
@@ -112,17 +118,17 @@ include 'koneksi.php';
             <form id="feedbackForm" class="space-y-5">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div class="flex flex-col">
-                        <label class="text-xs font-bold text-primary uppercase tracking-widest mb-2 ml-1">Nama</label>
-                        <input type="text" id="nama" placeholder="Masukkan nama" class="p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-secondary transition text-sm" required>
+                        <label class="text-xs font-bold text-primary uppercase tracking-widest mb-2">Nama</label>
+                        <input type="text" id="nama" placeholder="Nama Anda" class="p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-secondary transition text-sm" required>
                     </div>
                     <div class="flex flex-col">
-                        <label class="text-xs font-bold text-primary uppercase tracking-widest mb-2 ml-1">Email</label>
-                        <input type="email" id="email" placeholder="Masukkan email" class="p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-secondary transition text-sm" required>
+                        <label class="text-xs font-bold text-primary uppercase tracking-widest mb-2">Email</label>
+                        <input type="email" id="email" placeholder="Email Anda" class="p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-secondary transition text-sm" required>
                     </div>
                 </div>
                 <div class="flex flex-col">
-                    <label class="text-xs font-bold text-primary uppercase tracking-widest mb-2 ml-1">Jenis Feedback</label>
-                    <select id="jenis" class="p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-secondary transition text-sm appearance-none" required>
+                    <label class="text-xs font-bold text-primary uppercase tracking-widest mb-2">Jenis Feedback</label>
+                    <select id="jenis" class="p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-secondary transition text-sm" required>
                         <option value="">Pilih Kategori</option>
                         <option value="review">Review Proyek</option>
                         <option value="saran">Saran Pengembangan</option>
@@ -130,8 +136,8 @@ include 'koneksi.php';
                     </select>
                 </div>
                 <div class="flex flex-col">
-                    <label class="text-xs font-bold text-primary uppercase tracking-widest mb-2 ml-1">Pesan</label>
-                    <textarea id="pesan" rows="4" placeholder="Tulis pesan anda..." class="p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-secondary transition text-sm" required></textarea>
+                    <label class="text-xs font-bold text-primary uppercase tracking-widest mb-2">Pesan</label>
+                    <textarea id="pesan" rows="4" placeholder="Tulis masukan..." class="p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-secondary transition text-sm" required></textarea>
                 </div>
                 <button type="submit" class="w-full bg-primary text-white font-bold py-4 rounded-2xl hover:bg-secondary transition shadow-lg">Kirim Feedback</button>
             </form>
@@ -139,20 +145,6 @@ include 'koneksi.php';
         </div>
     </section>
 </main>
-
-<div id="loginModal" class="modal-login">
-    <div class="modal-content shadow-2xl border border-gray-100">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-2xl font-bold text-primary">Masuk Akun</h2>
-            <button onclick="closeLogin()" class="text-gray-400 hover:text-red-500 transition"><i class="fas fa-times text-xl"></i></button>
-        </div>
-        <form action="proses_login.php" method="POST" class="space-y-5">
-            <input type="email" name="email" placeholder="Email" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-primary transition text-sm" required>
-            <input type="password" name="password" placeholder="Password" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-primary transition text-sm" required>
-            <button type="submit" name="login" class="w-full bg-primary text-white py-4 rounded-2xl font-bold hover:bg-secondary transition shadow-lg">Masuk Sekarang</button>
-        </form>
-    </div>
-</div>
 
 <footer class="bg-primary pt-24 pb-12 mt-20">
     <div class="container mx-auto px-4">
@@ -185,9 +177,9 @@ include 'koneksi.php';
                 <h3 class="font-semibold text-xl text-white mb-8 uppercase tracking-wider">Tautan</h3>
                 <ul class="text-accent opacity-80 space-y-4">
                     <li><a href="index.php" class="text-base hover:text-white transition duration-300">Beranda</a></li>
-                    <li><a href="about.php" class="text-base hover:text-white transition duration-300 underline">Tentang Kami</a></li>
+                    <li><a href="about.php" class="text-base hover:text-white transition duration-300">Tentang Kami</a></li>
                     <li><a href="contact.php" class="text-base hover:text-white transition duration-300">Kontak</a></li>
-                    <li><a href="portofolio.php" class="text-base hover:text-white transition duration-300">Portofolio</a></li>
+                    <li><a href="portofolio.php" class="text-base hover:text-white transition duration-300 underline">Portofolio</a></li>
                 </ul>
             </div>
         </div>
@@ -206,10 +198,7 @@ include 'koneksi.php';
 </footer>
 
 <script>
-    function openLogin() { document.getElementById('loginModal').style.display = 'block'; }
-    function closeLogin() { document.getElementById('loginModal').style.display = 'none'; }
-    window.onclick = function(e) { if(e.target == document.getElementById('loginModal')) closeLogin(); }
-
+    // JS Feedback List
     const form = document.getElementById("feedbackForm");
     const list = document.getElementById("feedbackList");
 
@@ -220,7 +209,7 @@ include 'koneksi.php';
         let pesan = document.getElementById("pesan").value;
 
         const data = `
-        <div class="bg-[#fcfdfd] p-6 rounded-2xl shadow-sm border border-gray-100 border-l-4 border-primary">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-l-4 border-primary fade-in">
             <h4 class="font-bold text-primary text-sm">${nama} <span class="text-[10px] font-normal text-gray-400 uppercase tracking-widest ml-2">${jenis}</span></h4>
             <p class="text-gray-600 mt-2 text-sm italic">"${pesan}"</p>
         </div>`;

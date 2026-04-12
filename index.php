@@ -42,7 +42,7 @@ include 'koneksi.php';
         <li><a href="index.php" class="text-primary font-bold border-b-2 border-primary pb-1">Beranda</a></li>
         <li><a href="about.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Tentang</a></li>
         <li><a href="contact.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Kontak</a></li>
-        <li><a href="portofolio.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Portfolio</a></li>
+        <li><a href="portofolio.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Portofolio</a></li>
         
         <?php if(isset($_SESSION['nama'])): ?>
             <li class="flex items-center gap-4 bg-accent/30 px-4 py-2 rounded-full border border-accent">
@@ -71,7 +71,7 @@ include 'koneksi.php';
         </p>
         <div class="flex flex-wrap justify-center gap-4">
             <button onclick="openAuth()" class="bg-white text-primary px-8 py-3 rounded-full font-bold hover:bg-accent transition shadow-xl text-sm">Mulai Sekarang</button>
-            <a href="about.html" class="border-2 border-white text-white px-8 py-3 rounded-full font-bold hover:bg-white/10 transition text-sm">Pelajari Lebih Lanjut</a>
+            <a href="about.php" class="border-2 border-white text-white px-8 py-3 rounded-full font-bold hover:bg-white/10 transition text-sm">Pelajari Lebih Lanjut</a>
         </div>
     </div>
 </header>
@@ -115,21 +115,21 @@ include 'koneksi.php';
             <p class="text-gray-500 max-w-2xl mx-auto">Kenali tim mahasiswa Sistem Informasi di balik layar Greasycle.</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <a href="profile-elvina.html" class="bg-white p-8 rounded-[40px] shadow-sm hover:shadow-2xl transition duration-500 group overflow-hidden block">
+            <a href="profile-elvina.php" class="bg-white p-8 rounded-[40px] shadow-sm hover:shadow-2xl transition duration-500 group overflow-hidden block">
                 <div class="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 text-primary group-hover:scale-110 transition duration-500">
                     <i class="fas fa-user-circle text-5xl"></i> 
                 </div>
                 <h3 class="text-lg font-bold text-primary">Elvina Meisya Azzahra</h3>
                 <span class="text-xs text-secondary font-semibold tracking-widest uppercase">UI/UX Designer</span>
             </a>
-            <a href="profile-zahlul.html" class="bg-white p-8 rounded-[40px] shadow-sm hover:shadow-2xl transition duration-500 group overflow-hidden block">
+            <a href="profile-zahlul.php" class="bg-white p-8 rounded-[40px] shadow-sm hover:shadow-2xl transition duration-500 group overflow-hidden block">
                 <div class="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 text-primary group-hover:scale-110 transition duration-500">
                     <i class="fas fa-user-circle text-5xl"></i>
                 </div>
                 <h3 class="text-lg font-bold text-primary">Zahlul Noer Laily</h3>
                 <span class="text-xs text-secondary font-semibold tracking-widest uppercase">Lead Developer</span>
             </a>
-            <a href="profile-indi.html" class="bg-white p-8 rounded-[40px] shadow-sm hover:shadow-2xl transition duration-500 group overflow-hidden block">
+            <a href="profile-indi.php" class="bg-white p-8 rounded-[40px] shadow-sm hover:shadow-2xl transition duration-500 group overflow-hidden block">
                 <div class="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 text-primary group-hover:scale-110 transition duration-500">
                     <i class="fas fa-user-circle text-5xl"></i>
                 </div>

@@ -1,3 +1,10 @@
+<?php 
+session_start(); 
+// Kita tidak wajib include koneksi di sini jika hanya menampilkan data statis profil, 
+// tapi tetap disarankan jika nanti ingin mengambil data dari database.
+include 'koneksi.php'; 
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -30,7 +37,6 @@
     </script>
 
     <style>
-        /* Menggunakan sintaks CSS standar untuk menghilangkan galat "colon expected" */
         .custom-profile-shadow { 
             box-shadow: 15px 15px 0px 0px #d1e7e0; 
         }
@@ -40,11 +46,16 @@
 <body class="bg-[#f7faf9] text-gray-800 leading-relaxed font-sans">
 
     <nav class="bg-white shadow-md py-4 px-[8%] sticky top-0 z-[1000] flex justify-between items-center border-b border-gray-100">
-        <a href="index.html" class="text-2xl font-bold text-primary tracking-tight">Greasycycle</a>
-        <div class="flex gap-8">
-            <a href="index.html" class="text-gray-500 font-medium hover:text-primary transition duration-300">Home</a>
-            <a href="about.html" class="text-gray-500 font-medium hover:text-primary transition duration-300">Tentang</a>
-            <a href="contact.html" class="text-gray-500 font-medium hover:text-primary transition duration-300">Kontak</a>
+        <a href="index.php" class="text-2xl font-bold text-primary tracking-tight">Greasycle</a>
+        <div class="flex gap-8 items-center">
+            <a href="index.php" class="text-gray-500 font-medium hover:text-primary transition duration-300">Home</a>
+            <a href="about.php" class="text-gray-500 font-medium hover:text-primary transition duration-300">Tentang</a>
+            <a href="contact.php" class="text-gray-500 font-medium hover:text-primary transition duration-300">Kontak</a>
+            <a href="portofolio.php" class="text-gray-500 font-medium hover:text-primary transition duration-300">Portofolio</a>
+   
+            <?php if(isset($_SESSION['nama'])): ?>
+                <span class="text-primary font-bold text-sm italic border-l pl-4 border-gray-200">Halo, <?= $_SESSION['nama']; ?></span>
+            <?php endif; ?>
         </div>
     </nav>
 
@@ -144,7 +155,7 @@
         </section>
 
         <div class="text-center pt-8 border-t border-gray-200">
-            <a href="index.html" class="inline-flex items-center gap-2 text-secondary font-bold hover:gap-4 transition-all group">
+            <a href="index.php" class="inline-flex items-center gap-2 text-secondary font-bold hover:gap-4 transition-all group">
                 Kembali ke Beranda <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
             </a>
         </div>
@@ -152,7 +163,7 @@
 
     <footer class="bg-white border-t border-gray-100 py-8 text-center mt-20">
         <p class="text-[10px] text-gray-400 uppercase tracking-widest">
-            &copy; 2026 Greasycle. Profile page by <span class="font-bold text-primary italic">Masyito Indi Kartika</span>.
+            &copy; <?= date('Y'); ?> Greasycle. Profile page by <span class="font-bold text-primary italic">Masyito Indi Kartika</span>.
         </p>
     </footer>
 

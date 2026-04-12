@@ -13,15 +13,12 @@ $id_user = $_SESSION['id_user'];
 $nama_user = $_SESSION['nama'];
 
 // 3. HITUNG RINGKASAN DATA
-// Perbaikan: Pakai 'selesai' huruf kecil sesuai database
 $query_vol = mysqli_query($conn, "SELECT SUM(volume) as total FROM transaksi WHERE id_user = '$id_user' AND status = 'selesai'");
 $data_vol = mysqli_fetch_assoc($query_vol);
 $total_volume = $data_vol['total'] ?? 0;
 
-// Hitung Saldo
 $saldo = $total_volume * 5000;
 
-// Cek Penjemputan Aktif (status selain 'selesai')
 $query_aktif = mysqli_query($conn, "SELECT status FROM transaksi WHERE id_user = '$id_user' AND status != 'selesai' LIMIT 1");
 $status_aktif = mysqli_num_rows($query_aktif) > 0 ? "Ada Penjemputan" : "Tidak Ada Penjemputan";
 ?>
@@ -94,7 +91,6 @@ $status_aktif = mysqli_num_rows($query_aktif) > 0 ? "Ada Penjemputan" : "Tidak A
                 </div>
                 <h3 class="text-3xl font-bold text-primary"><?= $total_volume; ?> <span class="text-sm font-normal text-gray-400">Liter</span></h3>
             </div>
-            
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 group">
                 <div class="flex justify-between items-center mb-4">
                     <p class="text-gray-400 text-[10px] font-bold uppercase tracking-[0.2em]">Saldo Digital</p>
@@ -102,7 +98,6 @@ $status_aktif = mysqli_num_rows($query_aktif) > 0 ? "Ada Penjemputan" : "Tidak A
                 </div>
                 <h3 class="text-3xl font-bold text-primary">Rp <?= number_format($saldo, 0, ',', '.'); ?></h3>
             </div>
-
             <div class="<?= $status_aktif == 'Ada Penjemputan' ? 'bg-secondary' : 'bg-primary'; ?> p-6 rounded-2xl shadow-lg text-white">
                 <div class="flex justify-between items-center mb-4">
                     <p class="text-accent/60 text-[10px] font-bold uppercase tracking-[0.2em]">Status Terkini</p>
@@ -120,6 +115,25 @@ $status_aktif = mysqli_num_rows($query_aktif) > 0 ? "Ada Penjemputan" : "Tidak A
                 </span>
             </div>
             
+            <div id="filterContainer" class="px-6 py-3 bg-gray-50/50 flex flex-wrap gap-2 border-b border-gray-100">
+                <button onclick="filterTabel('semua', this)" 
+                        class="btn-filter px-4 py-1.5 bg-primary text-white text-[10px] rounded-full font-bold uppercase transition-all duration-300 shadow-sm border border-primary">
+                    Semua
+                </button>
+                <button onclick="filterTabel('menunggu', this)" 
+                        class="btn-filter px-4 py-1.5 bg-white text-gray-500 text-[10px] rounded-full font-bold uppercase transition-all duration-300 border border-gray-200">
+                    Menunggu
+                </button>
+                <button onclick="filterTabel('dijemput', this)" 
+                        class="btn-filter px-4 py-1.5 bg-white text-gray-500 text-[10px] rounded-full font-bold uppercase transition-all duration-300 border border-gray-200">
+                    Dijemput
+                </button>
+                <button onclick="filterTabel('selesai', this)" 
+                        class="btn-filter px-4 py-1.5 bg-white text-gray-500 text-[10px] rounded-full font-bold uppercase transition-all duration-300 border border-gray-200">
+                    Selesai
+                </button>
+            </div>
+
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
                     <thead class="bg-gray-50/50 text-gray-500 text-[10px] uppercase font-bold tracking-widest">
@@ -134,10 +148,8 @@ $status_aktif = mysqli_num_rows($query_aktif) > 0 ? "Ada Penjemputan" : "Tidak A
                     <tbody class="text-sm text-gray-600">
                         <?php
                         $tampil = mysqli_query($conn, "SELECT * FROM transaksi WHERE id_user = '$id_user' ORDER BY id_transaksi DESC");
-                        
                         if (mysqli_num_rows($tampil) > 0) {
                             while ($row = mysqli_fetch_array($tampil)) {
-                                // Logika Warna Status (Huruf Kecil)
                                 $status_db = strtolower($row['status']);
                                 if($status_db == 'selesai') {
                                     $statusColor = 'bg-green-100 text-green-600';
@@ -147,7 +159,7 @@ $status_aktif = mysqli_num_rows($query_aktif) > 0 ? "Ada Penjemputan" : "Tidak A
                                     $statusColor = 'bg-yellow-100 text-yellow-600';
                                 }
                         ?>
-                            <tr class="border-b border-gray-50 hover:bg-gray-50/50 transition">
+                            <tr class="border-b border-gray-50 hover:bg-gray-50/50 transition row-transaksi" data-status="<?= $status_db; ?>">
                                 <td class="p-5 font-mono text-xs">#TRX-<?= $row['id_transaksi']; ?></td>
                                 <td class="p-5"><?= date('d/m/Y', strtotime($row['tgl_request'])); ?></td>
                                 <td class="p-5 font-bold text-primary"><?= $row['volume']; ?> L</td>
@@ -156,24 +168,18 @@ $status_aktif = mysqli_num_rows($query_aktif) > 0 ? "Ada Penjemputan" : "Tidak A
                                         <?= $row['status']; ?>
                                     </span>
                                 </td>
-                                <td class="p-5 text-center">
-                                    <button class="text-primary hover:text-secondary transition"><i class="fas fa-eye"></i></button>
+                                <td class="p-5 text-center flex justify-center gap-4">
+                                    <a href="detail_transaksi.php?id=<?= $row['id_transaksi']; ?>" class="text-primary hover:text-secondary transition"><i class="fas fa-eye"></i></a>
+                                    <?php if($status_db == 'menunggu'): ?>
+                                        <a href="edit_transaksi.php?id=<?= $row['id_transaksi']; ?>" class="text-orange-400 hover:text-orange-600 transition"><i class="fas fa-edit"></i></a>
+                                        <button onclick="hapusData(<?= $row['id_transaksi']; ?>)" class="text-red-400 hover:text-red-600 transition"><i class="fas fa-trash"></i></button>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         <?php 
                             } 
                         } else { ?>
-                            <tr>
-                                <td colspan="5" class="p-20 text-center">
-                                    <div class="max-w-xs mx-auto">
-                                        <div class="w-16 h-16 bg-lightGreen rounded-full flex items-center justify-center mx-auto mb-4">
-                                            <i class="fas fa-database text-accent text-xl"></i>
-                                        </div>
-                                        <p class="font-bold text-primary text-base">Belum ada data</p>
-                                        <p class="text-xs text-gray-400 mt-2">Database masih kosong. Yuk, setor minyak jelantah pertamamu!</p>
-                                    </div>
-                                </td>
-                            </tr>
+                            <tr><td colspan="5" class="p-20 text-center text-gray-400 italic">Belum ada data</td></tr>
                         <?php } ?>
                     </tbody>
                 </table>
@@ -185,5 +191,37 @@ $status_aktif = mysqli_num_rows($query_aktif) > 0 ? "Ada Penjemputan" : "Tidak A
         Pemrograman Website &copy; 2026 Greasycle — <?= $nama_user; ?>
     </footer>
 
+    <script>
+        function hapusData(id) {
+            if (confirm("Apakah Anda yakin ingin menghapus data setoran #" + id + "?")) {
+                window.location.href = "proses_hapus.php?id=" + id;
+            }
+        }
+
+        function filterTabel(kategori, btn) {
+            // 1. Logika Filter Baris Tabel
+            const rows = document.querySelectorAll('.row-transaksi');
+            rows.forEach(row => {
+                const statusRow = row.getAttribute('data-status');
+                if (kategori === 'semua' || statusRow === kategori) {
+                    row.style.display = ''; 
+                } else {
+                    row.style.display = 'none'; 
+                }
+            });
+
+            // 2. Logika Visual (Respon Klik)
+            const allButtons = document.querySelectorAll('.btn-filter');
+            allButtons.forEach(b => {
+                // Kembalikan semua ke gaya putih
+                b.classList.remove('bg-primary', 'text-white', 'border-primary', 'shadow-sm');
+                b.classList.add('bg-white', 'text-gray-500', 'border-gray-200');
+            });
+
+            // Ubah yang diklik jadi hijau
+            btn.classList.remove('bg-white', 'text-gray-500', 'border-gray-200');
+            btn.classList.add('bg-primary', 'text-white', 'border-primary', 'shadow-sm');
+        }
+    </script>
 </body>
 </html>

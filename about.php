@@ -38,15 +38,14 @@ include 'koneksi.php';
         <li><a href="index.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Beranda</a></li>
         <li><a href="about.php" class="text-primary font-bold border-b-2 border-primary">Tentang</a></li>
         <li><a href="contact.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Kontak</a></li>
-        <li><a href="portofolio.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Portfolio</a></li>
-        <li><button onclick="openLogin()" class="bg-primary text-white px-6 py-2 rounded-full font-bold hover:bg-secondary transition ml-4 shadow-md">Login</button></li>
+        <li><a href="portofolio.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Portofolio</a></li>
     </ul>
 </nav>
 
 <main>
     <!-- 1. Hero Section -->
     <section class="relative bg-cover bg-center text-white text-center py-24 px-5" 
-             style="background-image: linear-gradient(rgba(0,64,48,0.8), rgba(0,64,48,0.8)), url('https://images.unsplash.com/photo-1542601906990-b4d3fb773b09?auto=format&fit=crop&q=80')">
+             style="background-image: linear-gradient(rgba(0,64,48,0.8), rgba(0,64,48,0.8))">
         <h1 class="text-4xl font-bold mb-3 md:text-5xl text-white">Tentang Kami</h1>
         <p class="text-lg opacity-90 text-white">Mengenal lebih jauh visi kami untuk lingkungan yang lebih bersih.</p>
     </section>

@@ -1,3 +1,29 @@
+<?php 
+session_start(); 
+include 'koneksi.php'; 
+
+// 1. AMBIL DATA LOGIN (Untuk Autofill)
+$nama_login = isset($_SESSION['nama']) ? $_SESSION['nama'] : '';
+$email_login = isset($_SESSION['email']) ? $_SESSION['email'] : '';
+
+// 2. PROSES SIMPAN KE DATABASE
+if (isset($_POST['kirim_saran'])) {
+    $nama     = mysqli_real_escape_string($conn, $_POST['nama']);
+    $email    = mysqli_real_escape_string($conn, $_POST['email']);
+    $kategori = mysqli_real_escape_string($conn, $_POST['kategori']);
+    $pesan    = mysqli_real_escape_string($conn, $_POST['pesan']);
+    $tgl      = date('Y-m-d');
+
+    if (!empty($nama) && !empty($pesan)) {
+        $query = "INSERT INTO saran (nama, email, kategori, pesan, tanggal) 
+                  VALUES ('$nama', '$email', '$kategori', '$pesan', '$tgl')";
+        
+        if (mysqli_query($conn, $query)) {
+            $success_msg = "Terima kasih, masukan Anda telah terkirim!";
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -22,129 +48,96 @@
     </script>
     <style>
         body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+        .fade-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="bg-[#f7faf9] text-[#333] leading-relaxed overflow-x-hidden">
 
-<!-- Navbar -->
 <nav class="bg-white flex justify-between items-center py-4 px-[8%] sticky top-0 z-[1000] shadow-md">
-    <div class="text-2xl font-bold text-primary">Greasycle</div>
+    <div class="text-2xl font-bold text-primary tracking-tight">Greasycle</div>
     <ul class="flex list-none gap-6 items-center">
-        <li><a href="index.html" class="text-[#666] font-medium transition duration-300 hover:text-primary">Beranda</a></li>
-        <li><a href="about.html" class="text-[#666] font-medium transition duration-300 hover:text-primary">Tentang</a></li>
-        <li><a href="contact.html" class="text-[#666] font-bold border-b-2 border-primary">Kontak</a></li>
-        <li><a href="portofolio.html" class="text-[#666] font-medium transition duration-300 hover:text-primary">Portfolio</a></li>
-        <li><button onclick="openLogin()" class="bg-primary text-white px-6 py-2 rounded-full font-bold hover:bg-secondary transition ml-4 shadow-md">Login</button></li>
+        <li><a href="index.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Beranda</a></li>
+        <li><a href="about.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Tentang</a></li>
+        <li><a href="contact.php" class="text-primary font-bold border-b-2 border-primary">Kontak</a></li>
+        <li><a href="portofolio.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Portofolio</a></li>
+        
+        <?php if(isset($_SESSION['nama'])): ?>
+            <li class="flex items-center gap-4 bg-accent/30 px-4 py-2 rounded-full border border-accent">
+                <span class="text-primary font-bold text-sm italic">Halo, <?= $_SESSION['nama']; ?></span>
+                <div class="w-px h-4 bg-primary/20"></div>
+                <a href="logout.php" class="text-red-500 text-[10px] font-extrabold uppercase tracking-widest hover:text-red-700 transition">Keluar</a>
+            </li>
+        <?php endif; ?>
     </ul>
 </nav>
 
 <main>
     <section class="relative bg-cover bg-center text-white text-center py-20 px-5" 
-             style="background-image: linear-gradient(rgba(0,64,48,0.85), rgba(0,64,48,0.85)), url('assets/foto-2.jpeg')">
-        
+             style="background-image: linear-gradient(rgba(0,64,48,0.85), rgba(0,64,48,0.85))">
         <h1 class="text-3xl md:text-4xl font-bold mb-3 text-white tracking-tight">Hubungi Kami</h1>
-        <p class="text-base md:text-lg opacity-90 text-white max-w-2xl mx-auto">
+        <p class="text-base md:text-lg opacity-90 text-white max-w-2xl mx-auto font-light">
             Pendapatmu sangat berarti untuk membuat Greasycle lebih baik.
         </p>
     </section>
-</main>
 
-    <!-- Konten Utama -->
     <section class="py-20 px-[8%] bg-white">
         <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-start">
-
-            <!-- Kolom Kiri: Ilustrasi & Info -->
             <div class="space-y-6">
                 <div>
                     <h2 class="text-3xl font-bold text-primary mb-3">Suaramu, Perubahan Nyata</h2>
-                    <p class="text-gray-500 text-sm leading-relaxed">Kami percaya bahwa platform yang baik lahir dari masukan yang jujur. Bagikan pengalamanmu baik pujian, kritik, maupun ide segar dan tim kami akan mempertimbangkannya dengan serius.</p>
+                    <p class="text-gray-500 text-sm leading-relaxed text-justify">Kami percaya bahwa platform yang baik lahir dari masukan yang jujur. Bagikan pengalamanmu baik pujian, kritik, maupun ide segar.</p>
                 </div>
-
-                 <img src="assets/images/foto-2.jpeg" alt="Greasycle"  
-                     class="w-full rounded-[20px] shadow-[8px_8px_0px_0px_#d1e7e0]" alt="Feedback">
-
-                <div class="space-y-3 pt-2">
-                    <div class="flex items-center gap-3 text-sm text-gray-500">
-                        <div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center shrink-0">
-                            <i class="fas fa-envelope text-white text-xs"></i>
-                        </div>
-                        info@greasycle.id
-                    </div>
-                    <div class="flex items-center gap-3 text-sm text-gray-500">
-                        <div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center shrink-0">
-                            <i class="fas fa-phone-alt text-white text-xs"></i>
-                        </div>
-                        +62 812-3456-7890
-                    </div>
-                    <div class="flex items-center gap-3 text-sm text-gray-500">
-                        <div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center shrink-0">
-                            <i class="fas fa-clock text-white text-xs"></i>
-                        </div>
-                        Senin – Jumat, 08.00 – 16.00 WIB
-                    </div>
+                <img src="assets/images/foto-2.jpeg" class="w-full rounded-[20px] shadow-[8px_8px_0px_0px_#d1e7e0]" alt="Feedback">
+                
+                <div class="space-y-4 pt-2">
+                    <div class="flex items-center gap-3 text-sm text-gray-500 italic"><i class="fas fa-envelope text-primary"></i> info@greasycle.id</div>
+                    <div class="flex items-center gap-3 text-sm text-gray-500 italic"><i class="fas fa-phone-alt text-primary"></i> +62 812-3456-7890</div>
+                    <div class="flex items-center gap-3 text-sm text-gray-500 italic"><i class="fas fa-clock text-primary"></i> Senin-Jumat: 08.00 - 16.00 WIB</div>
                 </div>
             </div>
 
-            <!-- Kolom Kanan: Form -->
-            <div class="bg-white p-8 rounded-[25px] shadow-md border border-gray-100 space-y-5">
-                <div class="mb-2">
-                    <h3 class="text-xl font-bold text-primary">Formulir Kritik & Saran</h3>
-                    <p class="text-xs text-gray-400 mt-1">Semua masukan akan dijaga kerahasiaannya.</p>
-                </div>
+            <div class="bg-white p-8 rounded-[25px] shadow-md border border-gray-100">
+                <?php if(isset($success_msg)): ?>
+                    <div class="bg-green-100 text-green-700 p-4 rounded-xl mb-6 text-sm font-bold border border-green-200 fade-in">
+                        <i class="fas fa-check-circle mr-2"></i> <?= $success_msg; ?>
+                    </div>
+                <?php endif; ?>
 
-                <div class="flex flex-col gap-1">
-                    <label class="font-semibold text-primary text-sm">Nama Lengkap</label>
-                    <input type="text" id="nama" placeholder="Contoh: Siti Rahayu"
-                        class="p-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-secondary transition text-sm">
-                </div>
-
-                <div class="flex flex-col gap-1">
-                    <label class="font-semibold text-primary text-sm">Email</label>
-                    <input type="email" id="email" placeholder="email@contoh.com"
-                        class="p-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-secondary transition text-sm">
-                </div>
-
-                <div class="flex flex-col gap-1">
-                    <label class="font-semibold text-primary text-sm">Kategori</label>
-                    <select id="kategori"
-                        class="p-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-secondary transition text-sm text-gray-500">
-                        <option value="" disabled selected>Pilih kategori masukan</option>
-                        <option value="layanan">Layanan Penjemputan</option>
-                        <option value="aplikasi">Tampilan & Fitur Website</option>
-                        <option value="mitra">Kinerja Mitra</option>
-                        <option value="saldo">Sistem Saldo & Insentif</option>
-                        <option value="lainnya">Lainnya</option>
-                    </select>
-                </div>
-
-                <div class="flex flex-col gap-1">
-                    <label class="font-semibold text-primary text-sm">Pesan / Masukan</label>
-                    <textarea id="pesan" rows="4" placeholder="Tuliskan kritik, saran, atau ide kamu di sini..."
-                        class="p-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-secondary transition text-sm resize-none"></textarea>
-                </div>
-
-                <button onclick="submitForm()" id="submitBtn"
-                    class="w-full bg-primary text-white py-4 rounded-2xl font-bold hover:bg-secondary transition duration-300 shadow-md text-sm">
-                    Kirim Masukan
-                </button>
-
-                <div id="statusBox" class="hidden text-sm font-medium text-center py-3 px-4 rounded-2xl"></div>
+                <form id="contactForm" method="POST" action="" class="space-y-5">
+                    <div class="flex flex-col gap-1">
+                        <label class="font-bold text-primary text-xs uppercase tracking-widest ml-1">Nama Lengkap</label>
+                        <input type="text" name="nama" id="nama" required value="<?= $nama_login; ?>" placeholder="Nama Anda"
+                            class="p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-secondary transition text-sm">
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-bold text-primary text-xs uppercase tracking-widest ml-1">Email</label>
+                        <input type="email" name="email" id="email" required value="<?= $email_login; ?>" placeholder="email@contoh.com"
+                            class="p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-secondary transition text-sm">
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-bold text-primary text-xs uppercase tracking-widest ml-1">Kategori</label>
+                        <select name="kategori" id="kategori" required class="p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-secondary transition text-sm text-gray-500">
+                            <option value="" disabled selected>Pilih kategori</option>
+                            <option value="Layanan">Layanan Penjemputan</option>
+                            <option value="Aplikasi">Tampilan Website</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-bold text-primary text-xs uppercase tracking-widest ml-1">Pesan</label>
+                        <textarea name="pesan" id="pesan" rows="4" required placeholder="Tuliskan masukan kamu..."
+                            class="p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-secondary transition text-sm resize-none"></textarea>
+                    </div>
+                    <button type="submit" name="kirim_saran" class="w-full bg-primary text-white py-4 rounded-2xl font-bold hover:bg-secondary transition duration-300 shadow-md text-sm">
+                        Kirim Masukan
+                    </button>
+                </form>
             </div>
-        </div>
-    </section>
-
-    <!-- Riwayat Masukan -->
-    <section class="py-16 px-[8%] bg-[#f0f7f4]">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="text-2xl font-bold text-primary mb-2 text-center">Masukan yang Sudah Dikirim</h2>
-            <p class="text-center text-gray-400 text-xs mb-8 italic">Terima kasih telah meluangkan waktu untuk memberi masukan 🌿</p>
-            <div id="feedbackContainer" class="space-y-4"></div>
-            <p id="emptyMsg" class="text-center text-gray-400 text-sm italic">Belum ada masukan yang dikirim.</p>
         </div>
     </section>
 </main>
 
-<!-- Footer -->
 <footer class="bg-primary pt-24 pb-12 mt-20">
     <div class="container mx-auto px-4">
         <div class="flex flex-wrap">
@@ -161,6 +154,7 @@
                     <p class="text-accent opacity-80 text-sm">Senin-Jumat: 08.00 - 16.00 WIB</p>
                 </div>
             </div>
+            
             <div class="w-full px-4 mb-12 md:w-1/3">
                 <h3 class="font-semibold text-xl text-white mb-8 uppercase tracking-wider">Layanan Kami</h3>
                 <ul class="text-accent opacity-80 space-y-4">
@@ -170,16 +164,18 @@
                     <li><a href="#" class="text-base hover:text-white transition duration-300">Insentif Ekonomi</a></li>
                 </ul>
             </div>
+
             <div class="w-full px-4 mb-12 md:w-1/3">
                 <h3 class="font-semibold text-xl text-white mb-8 uppercase tracking-wider">Tautan</h3>
                 <ul class="text-accent opacity-80 space-y-4">
-                    <li><a href="index.html" class="text-base hover:text-white transition duration-300">Beranda</a></li>
-                    <li><a href="about.html" class="text-base hover:text-white transition duration-300">Tentang Kami</a></li>
-                    <li><a href="contact.html" class="text-base hover:text-white transition duration-300 underline">Kontak</a></li>
-                    <li><a href="portofolio.html" class="text-base hover:text-white transition duration-300">Portofolio</a></li>
+                    <li><a href="index.php" class="text-base hover:text-white transition duration-300">Beranda</a></li>
+                    <li><a href="about.php" class="text-base hover:text-white transition duration-300">Tentang Kami</a></li>
+                    <li><a href="contact.php" class="text-base hover:text-white transition duration-300 underline">Kontak</a></li>
+                    <li><a href="portofolio.php" class="text-base hover:text-white transition duration-300">Portofolio</a></li>
                 </ul>
             </div>
         </div>
+
         <div class="w-full pt-10 border-t border-white/10 mt-10 text-center px-4">
             <div class="flex flex-col items-center">
                 <p class="font-medium text-[11px] sm:text-xs text-white uppercase tracking-[0.25em] mb-2 leading-relaxed">
