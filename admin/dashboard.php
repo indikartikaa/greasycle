@@ -2,17 +2,15 @@
 session_start();
 include '../koneksi.php'; 
 
-<<<<<<< HEAD
 // Proteksi halaman
 if (!isset($_SESSION['nama'])) {
     header("Location: ../index.php");
     exit;
-=======
+
 // Proteksi Admin
 if (!isset($_SESSION['nama']) || $_SESSION['role'] !== 'admin') {
     header("location: ../index.php");
     exit();
->>>>>>> a5668a5e23b7cfb64a34d2ef1868bd205a2ad4fa
 }
 
 // Ganti $koneksi menjadi $conn di semua baris di bawah ini:
