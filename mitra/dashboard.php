@@ -74,10 +74,10 @@ $total_liter = $res_liter['total'] ?? 0;
         <a href="dashboard.php" class="sidebar-link sidebar-active flex items-center gap-3 px-4 py-3 rounded-xl text-white/70 text-sm font-medium">
             <i class="fas fa-th-large w-5 text-center"></i> Dashboard
         </a>
-        <a href="#" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 text-sm font-medium">
+        <a href="tugas-penjemputan.php" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 text-sm font-medium">
             <i class="fas fa-clipboard-list w-5 text-center"></i> Tugas Penjemputan
         </a>
-        <a href="#" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 text-sm font-medium">
+        <a href="riwayat.php" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 text-sm font-medium">
             <i class="fas fa-history w-5 text-center"></i> Riwayat
         </a>
     </nav>
@@ -122,38 +122,45 @@ $total_liter = $res_liter['total'] ?? 0;
             </div>
             <div class="bg-primary rounded-2xl p-6 shadow-sm text-white">
                 <p class="text-xs text-white/60 uppercase tracking-wider">Status Mitra</p>
-                <h3 class="text-lg font-bold mt-1 uppercase italic">Aktif</h3>
+                <h3 class="text-lg font-bold mt-1 uppercase ">Aktif</h3>
             </div>
         </div>
 
-        <div class="grid lg:grid-cols-3 gap-6">
+        <div class="grid lg:grid-cols-1 gap-6">
             <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                 <div class="px-6 py-4 border-b border-gray-50 flex justify-between items-center">
                     <h3 class="font-bold text-primary text-sm">Permintaan Penjemputan Baru</h3>
                 </div>
                 <div class="divide-y divide-gray-50">
                     <?php
+                    // Query tetap sama, mengambil status 'menunggu'
                     $q_tugas = mysqli_query($conn, "SELECT t.*, u.nama FROM transaksi t JOIN users u ON t.id_user = u.id_user WHERE t.status = 'menunggu' ORDER BY t.id_transaksi DESC");
+    
                     if(mysqli_num_rows($q_tugas) > 0){
                         while($row = mysqli_fetch_array($q_tugas)){
                     ?>
-                    <div class="px-6 py-5 flex items-center justify-between">
+                    <div class="px-6 py-5 flex items-center justify-between hover:bg-slate-50 transition">
                         <div>
                             <p class="font-semibold text-gray-700 text-sm"><?= $row['nama']; ?></p>
                             <p class="text-xs text-gray-400"><i class="fas fa-map-marker-alt mr-1"></i><?= $row['alamat_jemput']; ?></p>
                             <p class="text-[11px] text-primary font-bold mt-1"><?= $row['volume']; ?> Liter</p>
                         </div>
-                        <a href="ambil_tugas.php?id=<?= $row['id_transaksi']; ?>" class="bg-primary text-white text-xs px-4 py-2 rounded-xl hover:bg-secondary transition shadow-md inline-block">Ambil Tugas</a>
-                          </div>
-                    <?php } } else { ?>
-                        <p class="p-10 text-center text-gray-400 text-sm italic">Belum ada tugas baru.</p>
+        
+                       <a href="tugas-penjemputan.php?aksi=ambil&id=<?= $row['id_transaksi']; ?>" 
+                            class="bg-primary text-white text-xs px-4 py-2 rounded-xl hover:bg-secondary transition shadow-md inline-block">
+                            Ambil Tugas
+                        </a>
+                    </div>
+                    <?php 
+                        } 
+                    } else { 
+                    ?>
+                        <div class="p-10 text-center">
+                            <i class="fas fa-check-circle text-gray-100 text-4xl mb-2"></i>
+                            <p class="text-gray-400 text-xs italic">Semua tugas sudah terambil.</p>
+                        </div>
                     <?php } ?>
                 </div>
-            </div>
-
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                <h3 class="font-bold text-primary text-sm mb-5">Aktivitas Minggu Ini</h3>
-                <canvas id="weeklyChart" height="200"></canvas>
             </div>
         </div>
 
@@ -187,20 +194,6 @@ $total_liter = $res_liter['total'] ?? 0;
         </div>
     </main>
 </div>
-
-<script>
-    new Chart(document.getElementById('weeklyChart'), {
-        type: 'bar',
-        data: {
-            labels: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'],
-            datasets: [{
-                data: [2, 4, 3, 5, 2, 3, 1],
-                backgroundColor: '#004030',
-                borderRadius: 5,
-            }]
-        },
-        options: { plugins: { legend: { display: false } } }
-    });
 </script>
 </body>
 </html>

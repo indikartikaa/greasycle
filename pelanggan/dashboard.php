@@ -66,7 +66,7 @@ $status_aktif = mysqli_num_rows($query_aktif) > 0 ? "Ada Penjemputan" : "Tidak A
                 <div class="w-8 h-8 bg-accent rounded-full flex items-center justify-center text-primary font-bold uppercase">
                     <?= substr($nama_user, 0, 1); ?>
                 </div>
-                <span class="font-semibold text-gray-700 italic"><?= $nama_user; ?></span>
+                <span class="font-semibold text-gray-700 "><?= $nama_user; ?></span>
             </div>
             <a href="../logout.php" class="text-red-500 font-bold hover:text-red-700 transition">Keluar</a>
         </div>

@@ -25,7 +25,7 @@ if (!isset($_SESSION['nama']) || $_SESSION['role'] !== 'pelanggan') {
     <div class="max-w-md mx-auto bg-white p-8 rounded-[30px] shadow-xl border border-gray-100 mt-10">
         <div class="flex items-center gap-3 mb-8">
             <a href="dashboard.php" class="text-gray-400 hover:text-primary transition"><i class="fas fa-arrow-left text-xl"></i></a>
-            <h2 class="text-2xl font-bold text-primary italic">Setor Minyak</h2>
+            <h2 class="text-2xl font-bold text-primary ">Setor Minyak</h2>
         </div>
 
         <form action="proses_setor.php" method="POST" class="space-y-6">
