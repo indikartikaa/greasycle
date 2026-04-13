@@ -73,7 +73,7 @@ include 'koneksi.php';
         </div>
     </header>
 
-    <section class="container mx-auto px-4 mt-12 max-w-5xl">
+    <section class="container mx-auto px-4 mt-12 max-w-5xl mb-24">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div class="bg-white p-8 shadow-sm rounded-[30px] border border-gray-100 hover:-translate-y-2 transition duration-300">
                 <div class="w-12 h-12 bg-accent rounded-2xl flex items-center justify-center mb-6 text-primary">
@@ -126,23 +126,23 @@ include 'koneksi.php';
         </div>
     </section>
 
-    <section class="mx-auto px-4 mt-16 md:mt-20 max-w-3xl mb-12">
-        <div class="bg-white p-6 md:p-10 rounded-[30px] md:rounded-[40px] shadow-sm border border-gray-100">
+    <section class="mx-auto px-4 mt-20 max-w-3xl mb-12">
+        <div class="bg-white p-10 rounded-[40px] shadow-sm border border-gray-100">
             <h2 class="text-2xl font-bold text-primary text-center mb-8">Feedback Proyek</h2>
             <form id="feedbackForm" class="space-y-5">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div class="flex flex-col">
-                        <label class="text-[10px] font-bold text-primary uppercase tracking-widest mb-2 ml-1">Nama</label>
+                        <label class="text-xs font-bold text-primary uppercase tracking-widest mb-2">Nama</label>
                         <input type="text" id="nama" placeholder="Nama Anda" class="p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-secondary transition text-sm" required>
                     </div>
                     <div class="flex flex-col">
-                        <label class="text-[10px] font-bold text-primary uppercase tracking-widest mb-2 ml-1">Email</label>
+                        <label class="text-xs font-bold text-primary uppercase tracking-widest mb-2">Email</label>
                         <input type="email" id="email" placeholder="Email Anda" class="p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-secondary transition text-sm" required>
                     </div>
                 </div>
                 <div class="flex flex-col">
-                    <label class="text-[10px] font-bold text-primary uppercase tracking-widest mb-2 ml-1">Jenis Feedback</label>
-                    <select id="jenis" class="p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-secondary transition text-sm text-gray-500" required>
+                    <label class="text-xs font-bold text-primary uppercase tracking-widest mb-2">Jenis Feedback</label>
+                    <select id="jenis" class="p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-secondary transition text-sm" required>
                         <option value="">Pilih Kategori</option>
                         <option value="review">Review Proyek</option>
                         <option value="saran">Saran Pengembangan</option>
@@ -150,32 +150,52 @@ include 'koneksi.php';
                     </select>
                 </div>
                 <div class="flex flex-col">
-                    <label class="text-[10px] font-bold text-primary uppercase tracking-widest mb-2 ml-1">Pesan</label>
-                    <textarea id="pesan" rows="4" placeholder="Tulis masukan..." class="p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-secondary transition text-sm resize-none" required></textarea>
+                    <label class="text-xs font-bold text-primary uppercase tracking-widest mb-2">Pesan</label>
+                    <textarea id="pesan" rows="4" placeholder="Tulis masukan..." class="p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-secondary transition text-sm" required></textarea>
                 </div>
-                <button type="submit" class="w-full bg-primary text-white font-bold py-4 rounded-2xl hover:bg-secondary transition shadow-lg text-sm">Kirim Feedback</button>
+                <button type="submit" class="w-full bg-primary text-white font-bold py-4 rounded-2xl hover:bg-secondary transition shadow-lg">Kirim Feedback</button>
             </form>
             <div class="mt-12 space-y-4" id="feedbackList"></div>
         </div>
     </section>
 </main>
 
-<footer class="bg-primary pt-24 pb-12 mt-20 text-white">
-    <div class="container mx-auto px-[8%] grid grid-cols-1 md:grid-cols-3 gap-12">
-        <div>
-            <h3 class="font-bold text-xl mb-4 uppercase tracking-wider">Hubungi Kami</h3>
-            <p class="text-accent opacity-80 text-sm leading-relaxed mb-4">
-                JL. Semampir Tengah VIII Blok B No 18 RT. 10 RW. 01, Surabaya, 60119
-            </p>
-            <p class="text-accent opacity-80 text-sm">info@greasycle.id</p>
-        </div>
-        <div>
-            <h3 class="font-semibold text-xl mb-8 uppercase tracking-wider">Layanan Kami</h3>
-            <ul class="text-accent opacity-80 space-y-4 text-sm">
-                <li>Setor Jelantah</li>
-                <li>Penjemputan Rutin</li>
-                <li>Edukasi Ramah Lingkungan</li>
-            </ul>
+<footer class="bg-primary pt-24 pb-12 mt-20">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-wrap">
+            <div class="w-full px-4 mb-12 md:w-1/3">
+                <h3 class="font-bold text-xl text-white mb-4 uppercase tracking-wider">Hubungi Kami</h3>
+                <div class="space-y-3">
+                    <p class="text-white font-semibold text-lg">PT Greasycle Indonesia</p>
+                    <p class="text-accent opacity-80 leading-relaxed text-sm">
+                        JL. Semampir Tengah VIII Blok B No 18 RT. 10 RW. 01,<br>
+                        Kec. Sukolilo, Kota Surabaya, Prov. Jawa Timur 60119
+                    </p>
+                    <p class="text-accent opacity-80 text-sm">info@greasycle.id</p>
+                    <p class="text-accent opacity-80 text-sm">+62 812-3456-7890</p>
+                    <p class="text-accent opacity-80 text-sm">Senin-Jumat: 08.00 - 16.00 WIB</p>
+                </div>
+            </div>
+            
+            <div class="w-full px-4 mb-12 md:w-1/3">
+                <h3 class="font-semibold text-xl text-white mb-8 uppercase tracking-wider">Layanan Kami</h3>
+                <ul class="text-accent opacity-80 space-y-4">
+                    <li><a href="#" class="text-base hover:text-white transition duration-300">Setor Jelantah</a></li>
+                    <li><a href="#" class="text-base hover:text-white transition duration-300">Penjemputan Rutin</a></li>
+                    <li><a href="#" class="text-base hover:text-white transition duration-300">Edukasi Ramah Lingkungan</a></li>
+                    <li><a href="#" class="text-base hover:text-white transition duration-300">Insentif Ekonomi</a></li>
+                </ul>
+            </div>
+
+            <div class="w-full px-4 mb-12 md:w-1/3">
+                <h3 class="font-semibold text-xl text-white mb-8 uppercase tracking-wider">Tautan</h3>
+                <ul class="text-accent opacity-80 space-y-4">
+                    <li><a href="index.php" class="text-base hover:text-white transition duration-300">Beranda</a></li>
+                    <li><a href="about.php" class="text-base hover:text-white transition duration-300">Tentang Kami</a></li>
+                    <li><a href="contact.php" class="text-base hover:text-white transition duration-300">Kontak</a></li>
+                    <li><a href="portofolio.php" class="text-base hover:text-white transition duration-300 underline">Portofolio</a></li>
+                </ul>
+            </div>
         </div>
         <div>
             <h3 class="font-semibold text-xl mb-8 uppercase tracking-wider">Tautan</h3>
@@ -192,37 +212,24 @@ include 'koneksi.php';
 </footer>
 
 <script>
-    // JS untuk Hamburger Menu
-    const btn = document.getElementById('menu-btn');
-    const menu = document.getElementById('mobile-menu');
-
-    if(btn && menu) {
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-            menu.classList.toggle('flex');
-        });
-    }
-
     // JS Feedback List
     const form = document.getElementById("feedbackForm");
     const list = document.getElementById("feedbackList");
 
-    if(form && list) {
-        form.addEventListener("submit", function(e){
-            e.preventDefault();
-            let nama = document.getElementById("nama").value;
-            let jenis = document.getElementById("jenis").value;
-            let pesan = document.getElementById("pesan").value;
+    form.addEventListener("submit", function(e){
+        e.preventDefault();
+        let nama = document.getElementById("nama").value;
+        let jenis = document.getElementById("jenis").value;
+        let pesan = document.getElementById("pesan").value;
 
-            const data = `
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-l-4 border-primary fade-in">
-                <h4 class="font-bold text-primary text-sm">${nama} <span class="text-[10px] font-normal text-gray-400 uppercase tracking-widest ml-2">${jenis}</span></h4>
-                <p class="text-gray-600 mt-2 text-sm italic">"${pesan}"</p>
-            </div>`;
-            list.insertAdjacentHTML('afterbegin', data);
-            form.reset();
-        });
-    }
+        const data = `
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-l-4 border-primary fade-in">
+            <h4 class="font-bold text-primary text-sm">${nama} <span class="text-[10px] font-normal text-gray-400 uppercase tracking-widest ml-2">${jenis}</span></h4>
+            <p class="text-gray-600 mt-2 text-sm italic">"${pesan}"</p>
+        </div>`;
+        list.insertAdjacentHTML('afterbegin', data);
+        form.reset();
+    });
 </script>
 </body>
 </html>
