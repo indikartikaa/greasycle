@@ -32,26 +32,40 @@ include 'koneksi.php';
 </head>
 <body class="bg-[#f7faf9] text-[#333] leading-relaxed overflow-x-hidden">
 
-<nav class="bg-white flex justify-between items-center py-4 px-[8%] sticky top-0 z-[1000] shadow-md">
-    <div class="text-2xl font-bold text-primary tracking-tight">Greasycle</div>
-    <ul class="flex list-none gap-8 items-center">
-        <li><a href="index.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Beranda</a></li>
-        <li><a href="about.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Tentang</a></li>
-        <li><a href="contact.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Kontak</a></li>
-        <li><a href="portofolio.php" class="text-primary font-bold border-b-2 border-primary pb-1">Portofolio</a></li>
+<nav class="bg-white py-4 px-[8%] sticky top-0 z-[1000] shadow-md">
+    <div class="flex justify-between items-center">
+        <div class="text-2xl font-bold text-primary tracking-tight">Greasycle</div>
         
-        <?php if(isset($_SESSION['nama'])): ?>
-            <li class="flex items-center gap-4 bg-accent/30 px-4 py-2 rounded-full border border-accent">
-                <span class="text-primary font-bold text-sm italic">Halo, <?= $_SESSION['nama']; ?></span>
-                <div class="w-px h-4 bg-primary/20"></div>
-                <a href="logout.php" class="text-red-500 text-[10px] font-extrabold uppercase tracking-widest hover:text-red-700 transition">Keluar</a>
-            </li>
-        <?php endif; ?>
+        <ul class="hidden md:flex list-none gap-8 items-center">
+            <li><a href="index.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Beranda</a></li>
+            <li><a href="about.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Tentang</a></li>
+            <li><a href="contact.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Kontak</a></li>
+            <li><a href="portofolio.php" class="text-primary font-bold border-b-2 border-primary pb-1">Portofolio</a></li>
+            
+            <?php if(isset($_SESSION['nama'])): ?>
+                <li class="flex items-center gap-4 bg-accent/30 px-4 py-2 rounded-full border border-accent">
+                    <span class="text-primary font-bold text-sm italic">Halo, <?= $_SESSION['nama']; ?></span>
+                    <div class="w-px h-4 bg-primary/20"></div>
+                    <a href="logout.php" class="text-red-500 text-[10px] font-extrabold uppercase tracking-widest hover:text-red-700 transition">Keluar</a>
+                </li>
+            <?php endif; ?>
+        </ul>
+
+        <div id="menu-btn" class="md:hidden text-primary text-2xl cursor-pointer p-2">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+
+    <ul id="mobile-menu" class="hidden flex-col absolute top-[100%] left-0 w-full bg-white shadow-lg p-6 space-y-4 md:hidden border-t border-gray-100">
+        <li><a href="index.php" class="block text-[#666]">Beranda</a></li>
+        <li><a href="about.php" class="block text-[#666]">Tentang</a></li>
+        <li><a href="contact.php" class="block text-[#666]">Kontak</a></li>
+        <li><a href="portofolio.php" class="block text-primary font-bold">Portofolio</a></li>
     </ul>
 </nav>
 
 <main>
-    <header class="relative bg-cover bg-center text-white py-20 px-[8%] text-center overflow-hidden"
+    <header class="relative bg-cover bg-center text-white py-16 md:py-20 px-[8%] text-center overflow-hidden"
             style="background-image: linear-gradient(rgba(0,64,48,0.85), rgba(0,64,48,0.85))">
         <div class="max-w-4xl mx-auto relative z-10">
             <h1 class="text-3xl md:text-4xl font-bold mb-3 tracking-tight">Portofolio Proyek</h1>
@@ -59,7 +73,7 @@ include 'koneksi.php';
         </div>
     </header>
 
-    <section class="container mx-auto px-4 mt-12 max-w-5xl">
+    <section class="container mx-auto px-4 mt-12 max-w-5xl mb-24">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div class="bg-white p-8 shadow-sm rounded-[30px] border border-gray-100 hover:-translate-y-2 transition duration-300">
                 <div class="w-12 h-12 bg-accent rounded-2xl flex items-center justify-center mb-6 text-primary">
@@ -183,17 +197,9 @@ include 'koneksi.php';
                 </ul>
             </div>
         </div>
-
-        <div class="w-full pt-10 border-t border-white/10 mt-10 text-center px-4">
-            <div class="flex flex-col items-center">
-                <p class="font-medium text-[11px] sm:text-xs text-white uppercase tracking-[0.25em] mb-2 leading-relaxed">
-                    Masa Depan Bumi yang Lebih Hijau Kini dalam Genggamanmu.
-                </p>
-                <p class="font-normal text-[10px] sm:text-[11px] text-white/40 uppercase tracking-[0.2em]">
-                    Pemrograman Website © 2026 Greasycle
-                </p>
-            </div>
-        </div>
+    </div>
+    <div class="text-center mt-20 border-t border-white/10 pt-10 px-4">
+        <p class="text-[10px] uppercase tracking-[0.2em] opacity-40">Pemrograman Website © 2026 Greasycle</p>
     </div>
 </footer>
 

@@ -2,6 +2,12 @@
 session_start();
 include '../koneksi.php';
 
+// 1. PROTEKSI HALAMAN
+if (!isset($_SESSION['nama']) || $_SESSION['role'] !== 'mitra') {
+    header("location: ../index.php");
+    exit();
+}
+
 if (isset($_POST['update_volume'])) {
     $id_trx = $_POST['id_transaksi'];
     $vol_baru = $_POST['volume_baru'];
@@ -11,12 +17,6 @@ if (isset($_POST['update_volume'])) {
     if($update) {
         echo "<script>alert('Volume berhasil divalidasi!'); window.location='tugas-penjemputan.php';</script>";
     }
-}
-
-// 1. PROTEKSI HALAMAN
-if (!isset($_SESSION['nama']) || $_SESSION['role'] !== 'mitra') {
-    header("location: ../index.php");
-    exit();
 }
 
 $id_mitra = $_SESSION['id_user'];
@@ -30,8 +30,7 @@ if (isset($_GET['aksi']) && isset($_GET['id'])) {
     if ($aksi == 'ambil') {
         mysqli_query($conn, "UPDATE transaksi SET status='dijemput', id_mitra='$id_mitra' WHERE id_transaksi='$id'");
         echo "<script>alert('Tugas berhasil diambil!'); window.location='tugas-penjemputan.php';</script>";
-   } elseif ($aksi == 'selesai') {
-    // Tambahkan WHERE id_mitra agar yang bisa menyelesaikan cuma yang mengambil
+    } elseif ($aksi == 'selesai') {
         mysqli_query($conn, "UPDATE transaksi SET status='selesai' WHERE id_transaksi='$id' AND id_mitra='$id_mitra'");
         echo "<script>alert('Tugas selesai! Cek di menu Riwayat.'); window.location='riwayat.php';</script>";
     } elseif ($aksi == 'batal') {
@@ -59,19 +58,24 @@ if (isset($_GET['aksi']) && isset($_GET['id'])) {
             }
         }
     </script>
-    <style> body { font-family: 'Poppins', sans-serif; } </style>
+    <style> 
+        body { font-family: 'Poppins', sans-serif; } 
+        #sidebar { transition: transform 0.3s ease-in-out; }
+    </style>
 </head>
 <body class="bg-[#f4f7f6] text-[#333]">
 
-<aside class="fixed top-0 left-0 h-screen w-64 bg-primary flex flex-col z-50">
-    <div class="px-6 py-5 border-b border-white/10">
+<div id="overlay" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden"></div>
+
+<aside id="sidebar" class="fixed top-0 left-0 h-screen w-64 bg-primary flex flex-col z-50 -translate-x-full md:translate-x-0">
+    <div class="px-6 py-5 border-b border-white/10 flex justify-between items-center">
         <div class="flex items-center gap-3">
             <div class="w-9 h-9 bg-white/20 rounded-xl flex items-center justify-center">
                 <i class="fas fa-recycle text-white text-sm"></i>
             </div>
             <span class="text-white font-bold text-lg">Greasycle</span>
         </div>
-        <p class="text-white/40 text-[10px] mt-1 ml-12 uppercase tracking-widest">Portal Mitra</p>
+        <button id="close-sidebar" class="text-white md:hidden"><i class="fas fa-times"></i></button>
     </div>
 
     <nav class="flex-1 px-4 py-6 space-y-1">
@@ -99,70 +103,77 @@ if (isset($_GET['aksi']) && isset($_GET['id'])) {
     </div>
 </aside>
 
-<div class="ml-64 min-h-screen">
-    <header class="bg-white border-b border-gray-100 px-8 py-4 flex justify-between items-center sticky top-0 z-40">
-        <div>
-            <h1 class="text-xl font-bold text-primary">Tugas Penjemputan</h1>
-            <p class="text-xs text-gray-400">Daftar tugas yang sedang kamu tangani</p>
-        </div>
-        <div class="text-xs text-gray-400 hidden sm:block">
-            <?= date('l, d F Y'); ?>
+<div class="md:ml-64 min-h-screen">
+    <header class="bg-white border-b border-gray-100 px-6 md:px-8 py-4 flex justify-between items-center sticky top-0 z-40">
+        <div class="flex items-center gap-4">
+            <button id="open-sidebar" class="text-primary md:hidden text-xl"><i class="fas fa-bars"></i></button>
+            <div>
+                <h1 class="text-lg md:text-xl font-bold text-primary">Tugas Aktif</h1>
+                <p class="text-[10px] md:text-xs text-gray-400">Kelola tugas yang sedang berjalan</p>
+            </div>
         </div>
     </header>
 
-    <main class="p-8">
+    <main class="p-4 md:p-8">
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-            <table class="w-full text-sm text-left">
-                <thead class="bg-gray-50 text-gray-400 uppercase text-[10px] font-bold">
-                    <tr>
-                        <th class="px-6 py-4">Aksi</th>
-                        <th class="px-6 py-4">Pelanggan</th>
-                        <th class="px-6 py-4">Alamat & Volume</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-50">
-                    <?php
-                    $q_tugas = mysqli_query($conn, "SELECT t.*, u.nama FROM transaksi t JOIN users u ON t.id_user = u.id_user WHERE t.status = 'dijemput' AND t.id_mitra = '$id_mitra'");
-                    if(mysqli_num_rows($q_tugas) > 0){
-                        while($row = mysqli_fetch_array($q_tugas)){
-                    ?>
-                    <tr class="hover:bg-slate-50 transition">
-                        <td class="px-6 py-4 flex gap-2">
-                            <button onclick="openModal(<?= $row['id_transaksi']; ?>, '<?= $row['volume']; ?>')" 
-                            class="bg-amber-500 text-white px-3 py-2 rounded-lg hover:bg-amber-600 transition flex items-center text-xs font-bold">
-                                <i class="fas fa-edit mr-2"></i> Validasi
-                            </button>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-50 text-gray-400 uppercase text-[9px] md:text-[10px] font-bold">
+                        <tr>
+                            <th class="px-4 md:px-6 py-4">Aksi</th>
+                            <th class="px-4 md:px-6 py-4">Pelanggan</th>
+                            <th class="px-4 md:px-6 py-4">Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-50">
+                        <?php
+                        $q_tugas = mysqli_query($conn, "SELECT t.*, u.nama FROM transaksi t JOIN users u ON t.id_user = u.id_user WHERE t.status = 'dijemput' AND t.id_mitra = '$id_mitra'");
+                        if(mysqli_num_rows($q_tugas) > 0){
+                            while($row = mysqli_fetch_array($q_tugas)){
+                        ?>
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="px-4 md:px-6 py-4">
+                                <div class="flex flex-col gap-2">
+                                    <button onclick="openModal(<?= $row['id_transaksi']; ?>, '<?= $row['volume']; ?>')" 
+                                    class="bg-amber-500 text-white px-3 py-2 rounded-lg text-[10px] md:text-xs font-bold flex items-center justify-center">
+                                        <i class="fas fa-edit mr-1 md:mr-2"></i> Validasi
+                                    </button>
 
-                            <a href="tugas-penjemputan.php?aksi=selesai&id=<?= $row['id_transaksi']; ?>" 
-                                class="bg-primary text-white px-3 py-2 rounded-lg hover:bg-secondary transition flex items-center text-xs font-bold">
-                                    <i class="fas fa-check mr-2"></i> Selesai
-                            </a>
-                
-                            <a href="tugas-penjemputan.php?aksi=batal&id=<?= $row['id_transaksi']; ?>" 
-                               onclick="return confirm('Batalkan penjemputan ini?')"
-                               class="bg-white border border-red-100 text-red-500 w-9 h-9 flex items-center justify-center rounded-lg hover:bg-red-50 transition">
-                                <i class="fas fa-times"></i>
-                            </a>
-                        </td>
-                        <td class="px-6 py-4 font-semibold text-gray-700"><?= $row['nama']; ?></td>
-                        <td class="px-6 py-4 text-xs text-gray-500">
-                            <p><?= $row['alamat_jemput']; ?></p>
-                            <p class="text-primary font-bold mt-1"><?= $row['volume']; ?> L</p>
-                        </td>
-                    </tr>
-                    <?php } } else { ?>
-                    <tr>
-                        <td colspan="3" class="p-10 text-center text-gray-400 italic">Belum ada tugas yang diambil.</td>
-                    </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
+                                    <a href="tugas-penjemputan.php?aksi=selesai&id=<?= $row['id_transaksi']; ?>" 
+                                        class="bg-primary text-white px-3 py-2 rounded-lg text-[10px] md:text-xs font-bold flex items-center justify-center">
+                                            <i class="fas fa-check mr-1 md:mr-2"></i> Selesai
+                                    </a>
+                        
+                                    <a href="tugas-penjemputan.php?aksi=batal&id=<?= $row['id_transaksi']; ?>" 
+                                       onclick="return confirm('Batalkan penjemputan ini?')"
+                                       class="text-red-500 text-[10px] text-center font-bold hover:underline">
+                                        Batalkan
+                                    </a>
+                                </div>
+                            </td>
+                            <td class="px-4 md:px-6 py-4 font-semibold text-gray-700 text-xs md:text-sm">
+                                <?= $row['nama']; ?>
+                            </td>
+                            <td class="px-4 md:px-6 py-4">
+                                <p class="text-[10px] md:text-xs text-gray-500 line-clamp-2"><?= $row['alamat_jemput']; ?></p>
+                                <p class="text-primary font-bold mt-1 text-xs"><?= $row['volume']; ?> L</p>
+                            </td>
+                        </tr>
+                        <?php } } else { ?>
+                        <tr>
+                            <td colspan="3" class="p-10 text-center text-gray-400 italic text-xs">Belum ada tugas yang diambil.</td>
+                        </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </main>
 </div>
+
 <div id="modalValidasi" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-[60]">
-    <div class="bg-white rounded-[32px] p-8 w-full max-w-md shadow-2xl mx-4">
-        <h2 class="text-xl font-bold text-primary mb-6">Validasi Penjemputan</h2>
+    <div class="bg-white rounded-[32px] p-6 md:p-8 w-full max-w-md shadow-2xl mx-4">
+        <h2 class="text-xl font-bold text-primary mb-6">Validasi Volume</h2>
         
         <form action="tugas-penjemputan.php" method="POST">
             <input type="hidden" name="id_transaksi" id="modal_id">
@@ -175,18 +186,35 @@ if (isset($_GET['aksi']) && isset($_GET['id'])) {
 
             <div class="flex gap-3">
                 <button type="button" onclick="closeModal()" 
-                        class="flex-1 py-3 border border-gray-100 rounded-xl font-bold text-gray-400 hover:bg-gray-50 transition">
+                        class="flex-1 py-3 border border-gray-100 rounded-xl font-bold text-gray-400">
                     Batal
                 </button>
                 <button type="submit" name="update_volume" 
-                        class="flex-1 py-3 bg-primary text-white rounded-xl font-bold hover:bg-secondary transition shadow-lg shadow-primary/20">
+                        class="flex-1 py-3 bg-primary text-white rounded-xl font-bold shadow-lg shadow-primary/20">
                     Simpan
                 </button>
             </div>
         </form>
     </div>
 </div>
+
 <script>
+    // Sidebar Logic
+    const sidebar = document.getElementById('sidebar');
+    const openBtn = document.getElementById('open-sidebar');
+    const closeBtn = document.getElementById('close-sidebar');
+    const overlay = document.getElementById('overlay');
+
+    function toggleSidebar() {
+        sidebar.classList.toggle('-translate-x-full');
+        overlay.classList.toggle('hidden');
+    }
+
+    openBtn.addEventListener('click', toggleSidebar);
+    closeBtn.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', toggleSidebar);
+
+    // Modal Logic
     function openModal(id, volume) {
         document.getElementById('modal_id').value = id;
         document.getElementById('modal_volume').value = volume;

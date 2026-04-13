@@ -3,7 +3,7 @@ session_start();
 include '../koneksi.php';
 
 // Ambil data mitra + users
-$query = mysqli_query($koneksi, "
+$query = mysqli_query($conn, "
     SELECT 
         mitra.id,
         users.nama,
@@ -24,38 +24,34 @@ if (isset($_POST['tambah'])) {
     $kendaraan = $_POST['kendaraan'];
     $status = $_POST['status'];
 
-    // Insert ke users dulu
-    mysqli_query($koneksi, "
+    mysqli_query($conn, "
         INSERT INTO users (nama, email, role)
         VALUES ('$nama','$email','mitra')
     ");
 
-    $user_id = mysqli_insert_id($koneksi);
+    $user_id = mysqli_insert_id($conn);
 
-    // Insert ke mitra
-    mysqli_query($koneksi, "
+    mysqli_query($conn, "
         INSERT INTO mitra (user_id, wilayah, kendaraan, status)
         VALUES ('$user_id','$wilayah','$kendaraan','$status')
     ");
 
     header("Location: mitra.php");
+    exit;
 }
 
 // Hapus mitra
 if (isset($_GET['hapus'])) {
     $id = $_GET['hapus'];
 
-    // Ambil user_id dulu
-    $get = mysqli_query($koneksi, "SELECT user_id FROM mitra WHERE id=$id");
+    $get = mysqli_query($conn, "SELECT user_id FROM mitra WHERE id=$id");
     $d = mysqli_fetch_assoc($get);
 
-    // Hapus dari mitra
-    mysqli_query($koneksi, "DELETE FROM mitra WHERE id=$id");
-
-    // Hapus dari users
-    mysqli_query($koneksi, "DELETE FROM users WHERE id=".$d['user_id']);
+    mysqli_query($conn, "DELETE FROM mitra WHERE id=$id");
+    mysqli_query($conn, "DELETE FROM users WHERE id=".$d['user_id']);
 
     header("Location: mitra.php");
+    exit;
 }
 ?>
 
@@ -64,98 +60,135 @@ if (isset($_GET['hapus'])) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kelola Mitra - Admin Greasycle</title>
+<title>Mitra - Greasycle</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <style>
 body { font-family: 'Poppins', sans-serif; }
 </style>
 </head>
 
-<body class="bg-gray-50 flex">
+<body class="bg-gray-50">
 
-<!-- Sidebar -->
-<aside class="w-64 bg-green-900 min-h-screen p-6 text-white">
+<!-- HEADER MOBILE -->
+<div class="md:hidden flex justify-between items-center p-4 bg-primary text-white">
+    <h1 class="font-bold">Greasycle</h1>
+    <button onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+</div>
+
+<!-- OVERLAY -->
+<div id="overlay" onclick="toggleSidebar()" 
+     class="fixed inset-0 bg-black/50 hidden z-40"></div>
+
+<div class="flex">
+
+<!-- SIDEBAR -->
+<aside id="sidebar"
+    class="fixed md:static z-50 top-0 left-0 h-full w-64 bg-green-900 text-white p-6 transform -translate-x-full md:translate-x-0 transition duration-300">
+
     <h2 class="text-2xl font-bold mb-10">Greasycle</h2>
 
-    <a href="dashboard.php" class="block mb-3">Dashboard</a>
-    <a href="pelanggan.php" class="block mb-3">Pelanggan</a>
-    <a href="mitra.php" class="block font-bold">Mitra</a>
+    <nav class="space-y-4">
+        <a href="dashboard.php" class="block">Dashboard</a>
+        <a href="pelanggan.php" class="block">Pelanggan</a>
+        <a href="mitra.php" class="block font-bold">Mitra</a>
+    </nav>
 </aside>
 
-<!-- Main -->
-<main class="flex-1 p-8">
+<!-- MAIN -->
+<main class="flex-1 p-6 md:p-8">
 
-<div class="flex justify-between mb-6">
-    <h2 class="text-2xl font-bold">Data Mitra</h2>
-    <button onclick="openModal()" class="bg-green-800 text-white px-4 py-2 rounded">
+<!-- HEADER -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+    <h2 class="text-xl md:text-2xl font-bold">Data Mitra</h2>
+
+    <button onclick="openModal()" 
+        class="bg-green-800 text-white px-4 py-2 rounded-lg text-sm">
         + Tambah
     </button>
 </div>
 
-<!-- Table -->
-<div class="bg-white rounded shadow">
-<table class="w-full text-sm">
+<!-- TABLE -->
+<div class="bg-white rounded-xl shadow overflow-x-auto">
+<table class="w-full text-sm min-w-[600px]">
+
 <thead class="bg-gray-100">
 <tr>
-    <th class="p-3">Nama</th>
+    <th class="p-3 text-left">Nama</th>
     <th>Email</th>
     <th>Wilayah</th>
     <th>Kendaraan</th>
     <th>Status</th>
-    <th>Aksi</th>
+    <th class="text-center">Aksi</th>
 </tr>
 </thead>
 
 <tbody>
 <?php while($m = mysqli_fetch_assoc($query)) : ?>
-<tr class="border-t">
-    <td class="p-3"><?= $m['nama'] ?></td>
+<tr class="border-t hover:bg-gray-50">
+    <td class="p-3 font-semibold"><?= $m['nama'] ?></td>
     <td><?= $m['email'] ?></td>
     <td><?= $m['wilayah'] ?></td>
     <td><?= $m['kendaraan'] ?></td>
-    <td><?= $m['status'] ?></td>
+
     <td>
+        <span class="px-2 py-1 text-xs rounded 
+        <?= $m['status'] == 'Aktif' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600' ?>">
+        <?= $m['status'] ?>
+        </span>
+    </td>
+
+    <td class="text-center">
         <a href="mitra.php?hapus=<?= $m['id'] ?>" 
-           onclick="return confirm('Hapus?')" 
-           class="text-red-500">Hapus</a>
+           onclick="return confirm('Hapus data?')" 
+           class="text-red-500 text-xs">
+           Hapus
+        </a>
     </td>
 </tr>
 <?php endwhile; ?>
 </tbody>
+
 </table>
 </div>
 
 </main>
+</div>
 
-<!-- Modal -->
-<div id="modal" class="fixed inset-0 bg-black/50 hidden justify-center items-center">
-<div class="bg-white p-6 rounded w-96">
+<!-- MODAL -->
+<div id="modal" class="fixed inset-0 bg-black/50 hidden justify-center items-center z-50">
+<div class="bg-white p-6 rounded-xl w-80">
 
 <h3 class="font-bold mb-4">Tambah Mitra</h3>
 
-<form method="POST">
-<input name="nama" placeholder="Nama" class="w-full mb-2 p-2 border">
-<input name="email" placeholder="Email" class="w-full mb-2 p-2 border">
-<input name="wilayah" placeholder="Wilayah" class="w-full mb-2 p-2 border">
-<input name="kendaraan" placeholder="Kendaraan" class="w-full mb-2 p-2 border">
+<form method="POST" class="space-y-2">
 
-<select name="status" class="w-full mb-3 p-2 border">
+<input name="nama" placeholder="Nama" class="w-full p-2 border rounded">
+<input name="email" placeholder="Email" class="w-full p-2 border rounded">
+<input name="wilayah" placeholder="Wilayah" class="w-full p-2 border rounded">
+<input name="kendaraan" placeholder="Kendaraan" class="w-full p-2 border rounded">
+
+<select name="status" class="w-full p-2 border rounded">
 <option value="Aktif">Aktif</option>
 <option value="Nonaktif">Nonaktif</option>
 </select>
 
-<div class="flex gap-2">
-<button type="button" onclick="closeModal()" class="flex-1 border">Batal</button>
-<button type="submit" name="tambah" class="flex-1 bg-green-800 text-white">Simpan</button>
+<div class="flex gap-2 pt-2">
+<button type="button" onclick="closeModal()" class="flex-1 border rounded">Batal</button>
+<button type="submit" name="tambah" class="flex-1 bg-green-800 text-white rounded">Simpan</button>
 </div>
+
 </form>
 
 </div>
 </div>
 
+<!-- SCRIPT -->
 <script>
 function openModal(){
     document.getElementById('modal').classList.remove('hidden');
@@ -164,6 +197,14 @@ function openModal(){
 
 function closeModal(){
     document.getElementById('modal').classList.add('hidden');
+}
+
+function toggleSidebar(){
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+
+    sidebar.classList.toggle('-translate-x-full');
+    overlay.classList.toggle('hidden');
 }
 </script>
 
