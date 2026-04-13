@@ -36,22 +36,24 @@ $nama_mitra = $_SESSION['nama'];
     </script>
     <style>
         body { font-family: 'Poppins', sans-serif; }
-        .sidebar-link { transition: all 0.2s; }
+        #sidebar { transition: transform 0.3s ease-in-out; }
         .sidebar-link:hover { background: rgba(255,255,255,0.1); color: white; }
         .sidebar-active { background: rgba(255,255,255,0.15); color: white !important; }
     </style>
 </head>
 <body class="bg-[#f4f7f6] text-[#333]">
 
-<aside class="fixed top-0 left-0 h-screen w-64 bg-primary flex flex-col z-50">
-    <div class="px-6 py-5 border-b border-white/10">
+<div id="overlay" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden"></div>
+
+<aside id="sidebar" class="fixed top-0 left-0 h-screen w-64 bg-primary flex flex-col z-50 -translate-x-full md:translate-x-0">
+    <div class="px-6 py-5 border-b border-white/10 flex justify-between items-center">
         <div class="flex items-center gap-3">
             <div class="w-9 h-9 bg-white/20 rounded-xl flex items-center justify-center">
                 <i class="fas fa-recycle text-white text-sm"></i>
             </div>
             <span class="text-white font-bold text-lg">Greasycle</span>
         </div>
-        <p class="text-white/40 text-[10px] mt-1 ml-12 uppercase tracking-widest">Portal Mitra</p>
+        <button id="close-sidebar" class="text-white md:hidden"><i class="fas fa-times"></i></button>
     </div>
 
     <nav class="flex-1 px-4 py-6 space-y-1">
@@ -79,72 +81,90 @@ $nama_mitra = $_SESSION['nama'];
     </div>
 </aside>
 
-<div class="ml-64 min-h-screen">
-    <header class="bg-white border-b border-gray-100 px-8 py-4 flex justify-between items-center sticky top-0 z-40">
-        <div>
-            <h1 class="text-xl font-bold text-primary">Riwayat Penjemputan</h1>
-            <p class="text-xs text-gray-400">Daftar semua tugas yang telah berhasil diselesaikan.</p>
+<div class="md:ml-64 min-h-screen">
+    <header class="bg-white border-b border-gray-100 px-6 md:px-8 py-4 flex justify-between items-center sticky top-0 z-40">
+        <div class="flex items-center gap-4">
+            <button id="open-sidebar" class="text-primary md:hidden text-xl"><i class="fas fa-bars"></i></button>
+            <div>
+                <h1 class="text-lg md:text-xl font-bold text-primary">Riwayat</h1>
+                <p class="text-[10px] md:text-xs text-gray-400">Daftar tugas yang telah diselesaikan</p>
+            </div>
         </div>
-        <div class="text-xs text-gray-400 hidden sm:block">
+        <div class="text-[10px] md:text-xs text-gray-400 hidden sm:block">
             <?= date('l, d F Y'); ?>
         </div>
     </header>
 
-    <main class="p-8">
+    <main class="p-4 md:p-8">
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-            <div class="px-6 py-4 border-b border-gray-50 flex justify-between items-center">
+            <div class="px-6 py-4 border-b border-gray-50 flex justify-between items-center bg-gray-50/30">
                 <h3 class="font-bold text-primary text-sm">Data Selesai</h3>
-                <span class="bg-accent text-primary text-[10px] px-3 py-1 rounded-full font-bold uppercase">Total Terdata</span>
+                <span class="bg-accent text-primary text-[9px] md:text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">Arsip Digital</span>
             </div>
             
-            <table class="w-full text-sm text-left">
-                <thead class="bg-gray-50 text-gray-400 uppercase text-[10px] font-bold">
-                    <tr>
-                        <th class="px-6 py-4">Pelanggan</th>
-                        <th class="px-6 py-4">Volume</th>
-                        <th class="px-6 py-4">Tanggal Request</th>
-                        <th class="px-6 py-4">Status</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-50">
-                    <?php
-                    // Ambil riwayat penjemputan milik mitra yang sedang login
-                    $q_riwayat = mysqli_query($conn, "SELECT t.*, u.nama FROM transaksi t JOIN users u ON t.id_user = u.id_user WHERE t.status = 'selesai' AND t.id_mitra = '$id_mitra' ORDER BY t.id_transaksi DESC");
-                    
-                    if(mysqli_num_rows($q_riwayat) > 0){
-                        while($row = mysqli_fetch_array($q_riwayat)){
-                    ?>
-                    <tr class="hover:bg-slate-50 transition">
-                        <td class="px-6 py-4 font-semibold text-gray-700">
-                            <?= $row['nama']; ?>
-                            <p class="text-[10px] font-normal text-gray-400 mt-1 italic"><?= $row['alamat_jemput']; ?></p>
-                        </td>
-                        <td class="px-6 py-4 text-primary font-bold"><?= $row['volume']; ?> L</td>
-                        <td class="px-6 py-4 text-gray-500 text-xs">
-                            <?= date('d M Y', strtotime($row['tgl_request'])); ?>
-                        </td>
-                        <td class="px-6 py-4">
-                            <span class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-[10px] font-bold uppercase">
-                                <i class="fas fa-check-double mr-1"></i> Berhasil
-                            </span>
-                        </td>
-                    </tr>
-                    <?php 
-                        } 
-                    } else { 
-                    ?>
-                    <tr>
-                        <td colspan="4" class="p-10 text-center text-gray-400 italic text-sm">
-                            <i class="fas fa-history text-3xl mb-3 block opacity-20"></i>
-                            Belum ada riwayat penjemputan.
-                        </td>
-                    </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-50 text-gray-400 uppercase text-[9px] md:text-[10px] font-bold">
+                        <tr>
+                            <th class="px-6 py-4">Pelanggan & Alamat</th>
+                            <th class="px-6 py-4">Volume</th>
+                            <th class="px-6 py-4">Tanggal</th>
+                            <th class="px-6 py-4">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-50">
+                        <?php
+                        $q_riwayat = mysqli_query($conn, "SELECT t.*, u.nama FROM transaksi t JOIN users u ON t.id_user = u.id_user WHERE t.status = 'selesai' AND t.id_mitra = '$id_mitra' ORDER BY t.id_transaksi DESC");
+                        
+                        if(mysqli_num_rows($q_riwayat) > 0){
+                            while($row = mysqli_fetch_array($q_riwayat)){
+                        ?>
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="px-6 py-4">
+                                <p class="font-semibold text-gray-700 text-xs md:text-sm"><?= $row['nama']; ?></p>
+                                <p class="text-[9px] md:text-[10px] text-gray-400 italic line-clamp-1"><?= $row['alamat_jemput']; ?></p>
+                            </td>
+                            <td class="px-6 py-4 text-primary font-bold text-xs md:text-sm"><?= $row['volume']; ?> L</td>
+                            <td class="px-6 py-4 text-gray-500 text-[10px] md:text-xs whitespace-nowrap">
+                                <?= date('d M Y', strtotime($row['tgl_request'])); ?>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="bg-green-100 text-green-600 px-2 md:px-3 py-1 rounded-full text-[8px] md:text-[10px] font-bold uppercase flex items-center w-fit">
+                                    <i class="fas fa-check-double mr-1 md:mr-2"></i> Berhasil
+                                </span>
+                            </td>
+                        </tr>
+                        <?php } } else { ?>
+                        <tr>
+                            <td colspan="4" class="p-10 text-center text-gray-400 italic text-xs">
+                                <i class="fas fa-history text-3xl mb-3 block opacity-10"></i>
+                                Belum ada riwayat penjemputan.
+                            </td>
+                        </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </main>
 </div>
+
+<script>
+    // Logic Sidebar Mobile
+    const sidebar = document.getElementById('sidebar');
+    const openBtn = document.getElementById('open-sidebar');
+    const closeBtn = document.getElementById('close-sidebar');
+    const overlay = document.getElementById('overlay');
+
+    function toggleSidebar() {
+        sidebar.classList.toggle('-translate-x-full');
+        overlay.classList.toggle('hidden');
+    }
+
+    openBtn.addEventListener('click', toggleSidebar);
+    closeBtn.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', toggleSidebar);
+</script>
 
 </body>
 </html>
