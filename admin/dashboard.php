@@ -66,7 +66,10 @@ class="fixed inset-0 bg-black/50 hidden z-40 md:hidden"></div>
 
 <!-- Sidebar -->
 <aside id="sidebar"
-class="fixed top-16 md:top-0 left-[-100%] md:left-0 w-64 h-[calc(100%-4rem)] md:h-full bg-primary text-white p-6 transition-all duration-300 ease-in-out z-40">
+class="fixed md:fixed top-16 md:top-0 left-[-100%] md:left-0 
+w-64 h-[calc(100%-4rem)] md:h-screen 
+bg-primary text-white p-6 
+transition-all duration-300 ease-in-out z-50">
 
     <h2 class="text-2xl font-bold mb-10 flex items-center gap-2">
         <i class="fas fa-recycle"></i> Greasycle
@@ -94,7 +97,7 @@ class="fixed top-16 md:top-0 left-[-100%] md:left-0 w-64 h-[calc(100%-4rem)] md:
 </aside>
 
 <!-- Main -->
-<main class="flex-1 w-full overflow-x-hidden">
+<main class="flex-1 w-full overflow-x-hidden md:ml-64">
 
 <!-- Header Mobile -->
 <div class="md:hidden flex justify-between items-center h-16 px-4 bg-white shadow fixed top-0 left-0 right-0 z-[60]">
@@ -168,11 +171,16 @@ function toggleSidebar(){
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('overlay');
 
-    sidebar.classList.toggle('left-[-100%]');
-    sidebar.classList.toggle('left-0');
-    overlay.classList.toggle('hidden');
+    if(sidebar.classList.contains('left-0')){
+        sidebar.classList.remove('left-0');
+        sidebar.classList.add('left-[-100%]');
+        overlay.classList.add('hidden');
+    } else {
+        sidebar.classList.remove('left-[-100%]');
+        sidebar.classList.add('left-0');
+        overlay.classList.remove('hidden');
+    }
 }
-
 // Tanggal
 document.getElementById('currentDate').textContent =
     new Date().toLocaleDateString('id-ID', {
