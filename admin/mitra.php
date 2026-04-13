@@ -2,53 +2,70 @@
 session_start();
 include '../koneksi.php';
 
-// Ambil data mitra + users
+// ================== QUERY ==================
 $query = mysqli_query($conn, "
     SELECT 
-        mitra.id,
+        mitra.id_mitra,
         users.nama,
         users.email,
         mitra.wilayah,
-        mitra.kendaraan,
+        mitra.no_kendaraan,
         mitra.status
     FROM mitra
-    JOIN users ON mitra.user_id = users.id
-    ORDER BY mitra.id DESC
+    INNER JOIN users ON mitra.id_user = id_user
+    ORDER BY mitra.id_mitra DESC
 ");
 
-// Tambah mitra
-if (isset($_POST['tambah'])) {
-    $nama = $_POST['nama'];
-    $email = $_POST['email'];
-    $wilayah = $_POST['wilayah'];
-    $kendaraan = $_POST['kendaraan'];
-    $status = $_POST['status'];
+// DEBUG (WAJIB BIAR TAU ERROR)
+if (!$query) {
+    die("Query Error: " . mysqli_error($conn));
+}
 
-    mysqli_query($conn, "
+// ================== TAMBAH ==================
+if (isset($_POST['tambah'])) {
+    $nama = mysqli_real_escape_string($conn, $_POST['nama']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $wilayah = mysqli_real_escape_string($conn, $_POST['wilayah']);
+    $kendaraan = mysqli_real_escape_string($conn, $_POST['kendaraan']);
+    $status = mysqli_real_escape_string($conn, $_POST['status']);
+
+    // Insert user
+    $insertUser = mysqli_query($conn, "
         INSERT INTO users (nama, email, role)
         VALUES ('$nama','$email','mitra')
     ");
 
+    if (!$insertUser) {
+        die("Insert User Error: " . mysqli_error($conn));
+    }
+
     $user_id = mysqli_insert_id($conn);
 
-    mysqli_query($conn, "
+    // Insert mitra
+    $insertMitra = mysqli_query($conn, "
         INSERT INTO mitra (user_id, wilayah, kendaraan, status)
         VALUES ('$user_id','$wilayah','$kendaraan','$status')
     ");
+
+    if (!$insertMitra) {
+        die("Insert Mitra Error: " . mysqli_error($conn));
+    }
 
     header("Location: mitra.php");
     exit;
 }
 
-// Hapus mitra
+// ================== HAPUS ==================
 if (isset($_GET['hapus'])) {
-    $id = $_GET['hapus'];
+    $id = (int) $_GET['hapus'];
 
     $get = mysqli_query($conn, "SELECT user_id FROM mitra WHERE id=$id");
     $d = mysqli_fetch_assoc($get);
 
-    mysqli_query($conn, "DELETE FROM mitra WHERE id=$id");
-    mysqli_query($conn, "DELETE FROM users WHERE id=".$d['user_id']);
+    if ($d) {
+        mysqli_query($conn, "DELETE FROM mitra WHERE id=$id");
+        mysqli_query($conn, "DELETE FROM users WHERE id=".$d['user_id']);
+    }
 
     header("Location: mitra.php");
     exit;
