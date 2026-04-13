@@ -16,20 +16,16 @@ if (!isset($_SESSION['nama']) || $_SESSION['role'] !== 'admin') {
 // Ganti $koneksi menjadi $conn di semua baris di bawah ini:
 
 // Total liter
-<<<<<<< HEAD
+
 $qLiter = mysqli_query($conn, "SELECT SUM(volume) as total FROM transaksi");
-=======
+
 $qLiter = mysqli_query($conn, "SELECT SUM(volume) as total FROM transaksi WHERE status = 'selesai'");
->>>>>>> a5668a5e23b7cfb64a34d2ef1868bd205a2ad4fa
 $dLiter = mysqli_fetch_assoc($qLiter);
 $totalLiter = $dLiter['total'] ?? 0;
 
 // Total pelanggan
-<<<<<<< HEAD
 $qUser = mysqli_query($conn, "SELECT COUNT(*) as total FROM users WHERE role != 'mitra'");
-=======
 $qUser = mysqli_query($conn, "SELECT COUNT(*) as total FROM users WHERE role = 'pelanggan'");
->>>>>>> a5668a5e23b7cfb64a34d2ef1868bd205a2ad4fa
 $dUser = mysqli_fetch_assoc($qUser);
 $totalPelanggan = $dUser['total'] ?? 0;
 
