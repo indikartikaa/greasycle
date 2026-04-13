@@ -197,14 +197,6 @@ include 'koneksi.php';
                 </ul>
             </div>
         </div>
-        <div>
-            <h3 class="font-semibold text-xl mb-8 uppercase tracking-wider">Tautan</h3>
-            <ul class="text-accent opacity-80 space-y-4 text-sm">
-                <li><a href="index.php">Beranda</a></li>
-                <li><a href="about.php">Tentang Kami</a></li>
-                <li><a href="portofolio.php" class="underline">Portofolio</a></li>
-            </ul>
-        </div>
     </div>
     <div class="text-center mt-20 border-t border-white/10 pt-10 px-4">
         <p class="text-[10px] uppercase tracking-[0.2em] opacity-40">Pemrograman Website © 2026 Greasycle</p>

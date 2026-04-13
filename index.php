@@ -192,34 +192,46 @@ include 'koneksi.php';
     </div>
 </div>
 
-<footer class="bg-primary pt-24 pb-12 mt-20 text-white">
-    <div class="container mx-auto px-[8%] grid grid-cols-1 md:grid-cols-3 gap-12">
-        <div>
-            <h3 class="font-bold text-xl mb-4 uppercase tracking-wider">Hubungi Kami</h3>
-            <p class="font-semibold text-lg mb-2">PT Greasycle Indonesia</p>
-            <p class="text-accent opacity-80 text-sm leading-relaxed mb-4">
-                JL. Semampir Tengah VIII Blok B No 18 RT. 10 RW. 01, Surabaya, 60119
-            </p>
-            <p class="text-accent opacity-80 text-sm">info@greasycle.id</p>
-        </div>
-        <div>
-            <h3 class="font-semibold text-xl mb-4 uppercase tracking-wider">Layanan</h3>
-            <ul class="text-accent opacity-80 space-y-2">
-                <li>Setor Jelantah</li>
-                <li>Penjemputan Rutin</li>
-                <li>Edukasi Lingkungan</li>
-            </ul>
-        </div>
-        <div>
-            <h3 class="font-semibold text-xl mb-4 uppercase tracking-wider">Tautan</h3>
-            <ul class="text-accent opacity-80 space-y-2">
-                <li><a href="index.php" class="underline">Beranda</a></li>
-                <li><a href="about.php">Tentang Kami</a></li>
-            </ul>
+<footer class="bg-primary pt-24 pb-12 mt-20">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-wrap">
+            <div class="w-full px-4 mb-12 md:w-1/3">
+                <h3 class="font-bold text-xl text-white mb-4 uppercase tracking-wider">Hubungi Kami</h3>
+                <div class="space-y-3">
+                    <p class="text-white font-semibold text-lg">PT Greasycle Indonesia</p>
+                    <p class="text-accent opacity-80 leading-relaxed text-sm">
+                        JL. Semampir Tengah VIII Blok B No 18 RT. 10 RW. 01,<br>
+                        Kec. Sukolilo, Kota Surabaya, Prov. Jawa Timur 60119
+                    </p>
+                    <p class="text-accent opacity-80 text-sm">info@greasycle.id</p>
+                    <p class="text-accent opacity-80 text-sm">+62 812-3456-7890</p>
+                    <p class="text-accent opacity-80 text-sm">Senin-Jumat: 08.00 - 16.00 WIB</p>
+                </div>
+            </div>
+            
+            <div class="w-full px-4 mb-12 md:w-1/3">
+                <h3 class="font-semibold text-xl text-white mb-8 uppercase tracking-wider">Layanan Kami</h3>
+                <ul class="text-accent opacity-80 space-y-4">
+                    <li><a href="#" class="text-base hover:text-white transition duration-300">Setor Jelantah</a></li>
+                    <li><a href="#" class="text-base hover:text-white transition duration-300">Penjemputan Rutin</a></li>
+                    <li><a href="#" class="text-base hover:text-white transition duration-300">Edukasi Ramah Lingkungan</a></li>
+                    <li><a href="#" class="text-base hover:text-white transition duration-300">Insentif Ekonomi</a></li>
+                </ul>
+            </div>
+
+            <div class="w-full px-4 mb-12 md:w-1/3">
+                <h3 class="font-semibold text-xl text-white mb-8 uppercase tracking-wider">Tautan</h3>
+                <ul class="text-accent opacity-80 space-y-4">
+                    <li><a href="index.php" class="text-base hover:text-white transition duration-300">Beranda</a></li>
+                    <li><a href="about.php" class="text-base hover:text-white transition duration-300">Tentang Kami</a></li>
+                    <li><a href="contact.php" class="text-base hover:text-white transition duration-300">Kontak</a></li>
+                    <li><a href="portofolio.php" class="text-base hover:text-white transition duration-300 underline">Portofolio</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-    <div class="text-center mt-20 border-t border-white/10 pt-10">
-        <p class="text-[10px] uppercase tracking-[0.2em] opacity-60">Pemrograman Website © 2026 Greasycle</p>
+    <div class="text-center mt-20 border-t border-white/10 pt-10 px-4">
+        <p class="text-[10px] uppercase tracking-[0.2em] opacity-40">Pemrograman Website © 2026 Greasycle</p>
     </div>
 </footer>
 

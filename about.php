@@ -147,24 +147,33 @@ include 'koneksi.php';
                     <p class="text-gray-500 text-sm italic mb-8">Pelajari mengapa pengelolaan jelantah sangat penting bagi bumi kita.</p>
                 </div>
                 
-                <div class="space-y-3">
-                    <?php 
-                    $faqs = [
-                        ["Apa itu minyak jelantah?", "Minyak goreng yang sudah digunakan berulang kali. Biasanya warna menjadi lebih gelap, berbau, dan kualitasnya sudah menurun."],
-                        ["Mengapa tidak boleh dibuang sembarangan?", "Dapat menyebabkan penyumbatan saluran air, pencemaran tanah, dan kerusakan ekosistem air."],
-                        ["Bolehkah digunakan kembali untuk memasak?", "Tidak disarankan. Menggunakan minyak jelantah berulang kali menghasilkan zat berbahaya yang memicu radikal bebas."],
-                        ["Bagaimana cara menyimpan sebelum disetor?", "Tunggu dingin, saring kotoran, dan simpan dalam wadah tertutup rapat."]
-                    ];
-                    foreach($faqs as $i => $faq): ?>
-                    <div class="faq-item border border-gray-200 rounded-2xl bg-[#fcfdfd]">
-                        <button class="w-full p-5 flex justify-between items-center text-left" onclick="toggleFaq(<?= $i ?>)">
-                            <span class="font-bold text-primary text-sm"><?= ($i+1) . ". " . $faq[0] ?></span>
-                            <i class="faq-chevron fas fa-chevron-down text-secondary text-xs transition-transform duration-300"></i>
-                        </button>
-                        <div class="faq-answer px-5"><p class="pb-5 text-gray-500 text-sm italic"><?= $faq[1] ?></p></div>
+               <div class="space-y-3">
+                <?php 
+                $faqs = [
+                    ["Apa itu minyak jelantah?", "Minyak goreng yang sudah digunakan berulang kali. Biasanya warna menjadi lebih gelap, berbau, dan kualitasnya sudah menurun."],
+                    ["Mengapa tidak boleh dibuang sembarangan?", "Dapat menyebabkan penyumbatan saluran air (clogging), pencemaran tanah, dan merusak ekosistem air bersih."],
+                    ["Bolehkah digunakan kembali untuk memasak?", "Sangat tidak disarankan. Penggunaan berulang memicu zat karsinogenik yang berbahaya bagi kesehatan jantung dan pembuluh darah."],
+                    ["Bagaimana cara menyimpan sebelum disetor?", "Tunggu minyak hingga dingin, saring dari sisa kotoran, lalu simpan dalam wadah plastik atau jerigen yang tertutup rapat."],
+                    ["Apa syarat minimal volume penjemputan?", "Untuk layanan penjemputan langsung ke rumah, minimal volume adalah 5 liter. Jika kurang, Anda bisa menyetorkannya ke drop point terdekat."],
+                    ["Apakah saya akan mendapatkan uang dari setoran ini?", "Ya, setiap liter minyak jelantah yang divalidasi akan dikonversi menjadi saldo digital di dashboard akun Greasycle Anda."],
+                    ["Bagaimana cara mencairkan saldo Greasycle?", "Saldo dapat dicairkan melalui menu 'Tarik Saldo' di dashboard ke berbagai e-wallet atau transfer bank yang tersedia."],
+                    ["Berapa lama waktu penjemputan setelah saya request?", "Mitra kurir kami akan menjemput dalam waktu 1-2 hari kerja sesuai dengan jadwal yang Anda pilih di aplikasi."],
+                    ["Minyak jelantah ini akan diolah menjadi apa?", "Greasycle bekerja sama dengan pengolah limbah untuk mengubah jelantah menjadi Biodiesel (Energi Terbarukan) yang ramah lingkungan."],
+                    ["Apakah layanan penjemputan ini dipungut biaya?", "Tidak, layanan penjemputan Greasycle sepenuhnya gratis. Anda justru mendapatkan insentif dari limbah yang Anda salurkan."]
+                ];
+
+                foreach($faqs as $i => $faq): ?>
+                <div class="faq-item border border-gray-200 rounded-2xl bg-[#fcfdfd] transition duration-300">
+                    <button class="w-full p-5 flex justify-between items-center text-left focus:outline-none" onclick="toggleFaq(<?= $i ?>)">
+                        <span class="font-bold text-primary text-sm"><?= ($i+1) . ". " . $faq[0] ?></span>
+                        <i class="faq-chevron fas fa-chevron-down text-secondary text-xs transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer px-5">
+                        <p class="pb-5 text-gray-500 text-sm italic text-left"><?= $faq[1] ?></p>
                     </div>
-                    <?php endforeach; ?>
                 </div>
+                <?php endforeach; ?>
+            </div>
             </div>
 
             <div class="sticky top-32 hidden md:block">
@@ -174,29 +183,42 @@ include 'koneksi.php';
     </section>
 </main>
 
-<footer class="bg-primary pt-24 pb-12 mt-20 text-white">
-    <div class="container mx-auto px-[8%] grid grid-cols-1 md:grid-cols-3 gap-12">
-        <div>
-            <h3 class="font-bold text-xl mb-4 uppercase tracking-wider">Hubungi Kami</h3>
-            <p class="text-accent opacity-80 text-sm leading-relaxed">
-                JL. Semampir Tengah VIII Blok B No 18, Surabaya.<br>
-                info@greasycle.id | +62 812-3456-7890
-            </p>
-        </div>
-        <div>
-            <h3 class="font-semibold text-xl mb-4 uppercase tracking-wider">Layanan</h3>
-            <ul class="text-accent opacity-80 space-y-2 text-sm">
-                <li>Setor Jelantah</li>
-                <li>Penjemputan Rutin</li>
-                <li>Edukasi Lingkungan</li>
-            </ul>
-        </div>
-        <div>
-            <h3 class="font-semibold text-xl mb-4 uppercase tracking-wider">Tautan</h3>
-            <ul class="text-accent opacity-80 space-y-2 text-sm">
-                <li><a href="index.php">Beranda</a></li>
-                <li><a href="about.php" class="underline">Tentang Kami</a></li>
-            </ul>
+<footer class="bg-primary pt-24 pb-12 mt-20">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-wrap">
+            <div class="w-full px-4 mb-12 md:w-1/3">
+                <h3 class="font-bold text-xl text-white mb-4 uppercase tracking-wider">Hubungi Kami</h3>
+                <div class="space-y-3">
+                    <p class="text-white font-semibold text-lg">PT Greasycle Indonesia</p>
+                    <p class="text-accent opacity-80 leading-relaxed text-sm">
+                        JL. Semampir Tengah VIII Blok B No 18 RT. 10 RW. 01,<br>
+                        Kec. Sukolilo, Kota Surabaya, Prov. Jawa Timur 60119
+                    </p>
+                    <p class="text-accent opacity-80 text-sm">info@greasycle.id</p>
+                    <p class="text-accent opacity-80 text-sm">+62 812-3456-7890</p>
+                    <p class="text-accent opacity-80 text-sm">Senin-Jumat: 08.00 - 16.00 WIB</p>
+                </div>
+            </div>
+            
+            <div class="w-full px-4 mb-12 md:w-1/3">
+                <h3 class="font-semibold text-xl text-white mb-8 uppercase tracking-wider">Layanan Kami</h3>
+                <ul class="text-accent opacity-80 space-y-4">
+                    <li><a href="#" class="text-base hover:text-white transition duration-300">Setor Jelantah</a></li>
+                    <li><a href="#" class="text-base hover:text-white transition duration-300">Penjemputan Rutin</a></li>
+                    <li><a href="#" class="text-base hover:text-white transition duration-300">Edukasi Ramah Lingkungan</a></li>
+                    <li><a href="#" class="text-base hover:text-white transition duration-300">Insentif Ekonomi</a></li>
+                </ul>
+            </div>
+
+            <div class="w-full px-4 mb-12 md:w-1/3">
+                <h3 class="font-semibold text-xl text-white mb-8 uppercase tracking-wider">Tautan</h3>
+                <ul class="text-accent opacity-80 space-y-4">
+                    <li><a href="index.php" class="text-base hover:text-white transition duration-300">Beranda</a></li>
+                    <li><a href="about.php" class="text-base hover:text-white transition duration-300">Tentang Kami</a></li>
+                    <li><a href="contact.php" class="text-base hover:text-white transition duration-300">Kontak</a></li>
+                    <li><a href="portofolio.php" class="text-base hover:text-white transition duration-300 underline">Portofolio</a></li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="text-center mt-20 border-t border-white/10 pt-10 px-4">
