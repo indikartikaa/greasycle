@@ -12,22 +12,23 @@ if (isset($_POST['login'])) {
     $cek = mysqli_num_rows($query);
 
     if ($cek > 0) {
-        // Simpan data penting ke SESSION
+        // Simpan data ke SESSION agar bisa dipanggil di halaman lain
         $_SESSION['id_user'] = $data['id_user'];
-        $_SESSION['nama'] = $data['nama'];
-        $_SESSION['role'] = $data['role'];
+        $_SESSION['nama']    = $data['nama'];
+        $_SESSION['role']    = $data['role'];
 
         // LOGIKA PENGALIHAN BERDASARKAN ROLE
         if ($data['role'] == "admin") {
-            header("location:admin/dashboard.php");
+            header("location: admin/dashboard.php");
         } else if ($data['role'] == "mitra") {
-            header("location:mitra/dashboard.php");
-        } else if ($data['role'] == "usaha") {
-            header("location:pelanggan/dashboard_usaha.php"); // Atau folder khusus usaha jika ada
+            header("location: mitra/dashboard.php");
+        } else if ($data['role'] == "pelanggan") {
+            header("location: pelanggan/dashboard.php");
         } else {
-            header("location:pelanggan/dashboard.php");
+            // Jika ada role lain atau darurat
+            header("location: index.php?pesan=role_tidak_dikenal");
         }
-        exit(); // Wajib ada exit setelah header
+        exit(); 
     } else {
         echo "<script>alert('Login Gagal! Email atau Password salah.'); window.location='index.php';</script>";
     }
