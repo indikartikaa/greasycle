@@ -1,5 +1,5 @@
 <?php
-$host = "192.168.110.115";
+$host = "localhost";
 $user = "root";
 $pass = "";
 $db   = "greasycle"; // Nama database yang kamu buat tadi
