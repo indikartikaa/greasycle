@@ -2,13 +2,11 @@
 session_start();
 include '../koneksi.php'; 
 
-// Proteksi halaman
 if (!isset($_SESSION['nama']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../index.php");
     exit();
 }
 
-// ================== DATA ==================
 $qLiter = mysqli_query($conn, "SELECT SUM(volume) as total FROM transaksi WHERE status='selesai'");
 $dLiter = mysqli_fetch_assoc($qLiter);
 $totalLiter = $dLiter['total'] ?? 0;
@@ -60,11 +58,9 @@ body { font-family: 'Poppins', sans-serif; }
 
 <body class="bg-gray-50 flex">
 
-<!-- Overlay -->
 <div id="overlay" onclick="toggleSidebar()" 
 class="fixed inset-0 bg-black/50 hidden z-40 md:hidden"></div>
 
-<!-- Sidebar -->
 <aside id="sidebar"
 class="fixed md:fixed top-16 md:top-0 left-[-100%] md:left-0 
 w-64 h-[calc(100%-4rem)] md:h-screen 
@@ -96,10 +92,8 @@ transition-all duration-300 ease-in-out z-50">
     </div>
 </aside>
 
-<!-- Main -->
 <main class="flex-1 w-full overflow-x-hidden md:ml-64">
 
-<!-- Header Mobile -->
 <div class="md:hidden flex justify-between items-center h-16 px-4 bg-white shadow fixed top-0 left-0 right-0 z-[60]">
     <button onclick="toggleSidebar()" class="text-xl">
         <i class="fas fa-bars"></i>
@@ -109,7 +103,6 @@ transition-all duration-300 ease-in-out z-50">
 
 <div class="p-4 md:p-8 mt-16 md:mt-0">
 
-<!-- Header -->
 <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
     <div>
         <h1 class="text-xl md:text-2xl font-bold text-primary">Ringkasan Sistem</h1>
@@ -117,7 +110,6 @@ transition-all duration-300 ease-in-out z-50">
     </div>
 </header>
 
-<!-- Cards -->
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6 mb-8">
 
     <div class="bg-white p-6 rounded-2xl shadow border-l-4 border-primary">
@@ -147,7 +139,6 @@ transition-all duration-300 ease-in-out z-50">
 
 </div>
 
-<!-- Charts -->
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
     <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow">
@@ -166,7 +157,6 @@ transition-all duration-300 ease-in-out z-50">
 </main>
 
 <script>
-// Toggle Sidebar
 function toggleSidebar(){
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('overlay');
@@ -181,7 +171,7 @@ function toggleSidebar(){
         overlay.classList.remove('hidden');
     }
 }
-// Tanggal
+
 document.getElementById('currentDate').textContent =
     new Date().toLocaleDateString('id-ID', {
         weekday: 'long',
@@ -190,7 +180,6 @@ document.getElementById('currentDate').textContent =
         day: 'numeric'
     });
 
-// Chart Line
 new Chart(document.getElementById('lineChart'), {
     type: 'line',
     data: {
@@ -205,7 +194,6 @@ new Chart(document.getElementById('lineChart'), {
     }
 });
 
-// Chart Donut
 new Chart(document.getElementById('donutChart'), {
     type: 'doughnut',
     data: {

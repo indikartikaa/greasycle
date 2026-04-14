@@ -184,8 +184,8 @@ if (isset($_POST['kirim_saran'])) {
                 <ul class="text-accent opacity-80 space-y-4">
                     <li><a href="index.php" class="text-base hover:text-white transition duration-300">Beranda</a></li>
                     <li><a href="about.php" class="text-base hover:text-white transition duration-300">Tentang Kami</a></li>
-                    <li><a href="contact.php" class="text-base hover:text-white transition duration-300">Kontak</a></li>
-                    <li><a href="portofolio.php" class="text-base hover:text-white transition duration-300 underline">Portofolio</a></li>
+                    <li><a href="contact.php" class="text-base hover:text-white transition duration-300 underline">Kontak</a></li>
+                    <li><a href="portofolio.php" class="text-base hover:text-white transition duration-300">Portofolio</a></li>
                 </ul>
             </div>
         </div>

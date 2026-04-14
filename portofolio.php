@@ -55,13 +55,6 @@ include 'koneksi.php';
             <i class="fas fa-bars"></i>
         </div>
     </div>
-
-    <ul id="mobile-menu" class="hidden flex-col absolute top-[100%] left-0 w-full bg-white shadow-lg p-6 space-y-4 md:hidden border-t border-gray-100">
-        <li><a href="index.php" class="block text-[#666]">Beranda</a></li>
-        <li><a href="about.php" class="block text-[#666]">Tentang</a></li>
-        <li><a href="contact.php" class="block text-[#666]">Kontak</a></li>
-        <li><a href="portofolio.php" class="block text-primary font-bold">Portofolio</a></li>
-    </ul>
 </nav>
 
 <main>
@@ -125,39 +118,6 @@ include 'koneksi.php';
             </div>
         </div>
     </section>
-
-    <section class="mx-auto px-4 mt-20 max-w-3xl mb-12">
-        <div class="bg-white p-10 rounded-[40px] shadow-sm border border-gray-100">
-            <h2 class="text-2xl font-bold text-primary text-center mb-8">Feedback Proyek</h2>
-            <form id="feedbackForm" class="space-y-5">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <div class="flex flex-col">
-                        <label class="text-xs font-bold text-primary uppercase tracking-widest mb-2">Nama</label>
-                        <input type="text" id="nama" placeholder="Nama Anda" class="p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-secondary transition text-sm" required>
-                    </div>
-                    <div class="flex flex-col">
-                        <label class="text-xs font-bold text-primary uppercase tracking-widest mb-2">Email</label>
-                        <input type="email" id="email" placeholder="Email Anda" class="p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-secondary transition text-sm" required>
-                    </div>
-                </div>
-                <div class="flex flex-col">
-                    <label class="text-xs font-bold text-primary uppercase tracking-widest mb-2">Jenis Feedback</label>
-                    <select id="jenis" class="p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-secondary transition text-sm" required>
-                        <option value="">Pilih Kategori</option>
-                        <option value="review">Review Proyek</option>
-                        <option value="saran">Saran Pengembangan</option>
-                        <option value="kolaborasi">Kolaborasi</option>
-                    </select>
-                </div>
-                <div class="flex flex-col">
-                    <label class="text-xs font-bold text-primary uppercase tracking-widest mb-2">Pesan</label>
-                    <textarea id="pesan" rows="4" placeholder="Tulis masukan..." class="p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-secondary transition text-sm" required></textarea>
-                </div>
-                <button type="submit" class="w-full bg-primary text-white font-bold py-4 rounded-2xl hover:bg-secondary transition shadow-lg">Kirim Feedback</button>
-            </form>
-            <div class="mt-12 space-y-4" id="feedbackList"></div>
-        </div>
-    </section>
 </main>
 
 <footer class="bg-primary pt-24 pb-12 mt-20">
@@ -203,25 +163,5 @@ include 'koneksi.php';
     </div>
 </footer>
 
-<script>
-    // JS Feedback List
-    const form = document.getElementById("feedbackForm");
-    const list = document.getElementById("feedbackList");
-
-    form.addEventListener("submit", function(e){
-        e.preventDefault();
-        let nama = document.getElementById("nama").value;
-        let jenis = document.getElementById("jenis").value;
-        let pesan = document.getElementById("pesan").value;
-
-        const data = `
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-l-4 border-primary fade-in">
-            <h4 class="font-bold text-primary text-sm">${nama} <span class="text-[10px] font-normal text-gray-400 uppercase tracking-widest ml-2">${jenis}</span></h4>
-            <p class="text-gray-600 mt-2 text-sm italic">"${pesan}"</p>
-        </div>`;
-        list.insertAdjacentHTML('afterbegin', data);
-        form.reset();
-    });
-</script>
 </body>
 </html>

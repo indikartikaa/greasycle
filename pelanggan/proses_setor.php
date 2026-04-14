@@ -2,16 +2,18 @@
 session_start();
 include '../koneksi.php';
 
-// Supaya kalau error muncul tulisannya, tidak putih polos
+// Supaya kalau error muncul tulisannya (Penting buat demo di depan dosen)
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 if (isset($_POST['submit_setor'])) {
-    // Cek apakah session id_user ada
+    // 1. Cek keamanan session
     if (!isset($_SESSION['id_user'])) {
-        die("Error: Session kamu hilang. Silakan Login ulang di index.php");
+        echo "<script>alert('Sesi habis, silakan login ulang'); window.location='../index.php';</script>";
+        exit();
     }
 
+    // 2. Ambil data dari Form transaksi.php
     $id_user        = $_SESSION['id_user'];
     $volume         = mysqli_real_escape_string($conn, $_POST['volume']);
     $alamat_jemput  = mysqli_real_escape_string($conn, $_POST['alamat_jemput']);
@@ -19,17 +21,26 @@ if (isset($_POST['submit_setor'])) {
     $tgl_request    = date('Y-m-d');
     $status         = 'menunggu';
 
-    // Query INSERT (Urutan kolom harus pas dengan gambar phpMyAdmin kamu)
+    // 3. Query INSERT (Sudah tanpa id_kategori sesuai update database kita tadi)
+    // Pastikan nama kolom 'alamat_jemput' di tabel transaksi sudah sesuai di phpMyAdmin
     $sql = "INSERT INTO transaksi (id_user, volume, alamat_jemput, tgl_request, catatan, status) 
             VALUES ('$id_user', '$volume', '$alamat_jemput', '$tgl_request', '$catatan', '$status')";
 
     if (mysqli_query($conn, $sql)) {
-        echo "<script>alert('Berhasil! Setoran minyak telah dicatat.'); window.location='dashboard.php';</script>";
+        // Jika berhasil, langsung lempar ke dashboard
+        echo "<script>
+                alert('Berhasil! Setoran minyak telah dicatat. Tim Greasycle akan segera menuju lokasi.'); 
+                window.location='dashboard.php';
+              </script>";
     } else {
-        // Tampilkan error MySQL kalau gagal
-        echo "Gagal Simpan: " . mysqli_error($conn);
+        // Jika gagal, tampilkan pesan error yang jelas untuk debugging
+        echo "<h3>Waduh, ada masalah teknis:</h3>";
+        echo "Error: " . mysqli_error($conn);
+        echo "<br><br><a href='transaksi.php'>Kembali ke Form</a>";
     }
 } else {
-    echo "Tombol konfirmasi belum diklik!";
+    // Jika mencoba akses file ini tanpa lewat form
+    header("location: transaksi.php");
+    exit();
 }
 ?>

@@ -2,7 +2,7 @@
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db   = "greasycle"; // Nama database yang kamu buat tadi
+$db   = "greasycle";
 
 $conn = mysqli_connect($host, $user, $pass, $db);
 

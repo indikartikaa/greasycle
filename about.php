@@ -59,7 +59,7 @@ include 'koneksi.php';
 
 <main>
     <section class="relative bg-cover bg-center text-white text-center py-20 md:py-32 px-5" 
-             style="background-image: linear-gradient(rgba(0,64,48,0.8), rgba(0,64,48,0.8)), url('assets/images/foto-2.jpeg')">
+             style="background-image: linear-gradient(rgba(0,64,48,0.8), rgba(0,64,48,0.8))">
         <h1 class="text-3xl md:text-5xl font-bold mb-3">Tentang Kami</h1>
         <p class="text-base md:text-lg opacity-90 max-w-2xl mx-auto">Mengenal lebih jauh visi kami untuk lingkungan yang lebih bersih melalui pengelolaan limbah minyak.</p>
     </section>
@@ -214,9 +214,9 @@ include 'koneksi.php';
                 <h3 class="font-semibold text-xl text-white mb-8 uppercase tracking-wider">Tautan</h3>
                 <ul class="text-accent opacity-80 space-y-4">
                     <li><a href="index.php" class="text-base hover:text-white transition duration-300">Beranda</a></li>
-                    <li><a href="about.php" class="text-base hover:text-white transition duration-300">Tentang Kami</a></li>
+                    <li><a href="about.php" class="text-base hover:text-white transition duration-300 underline">Tentang Kami</a></li>
                     <li><a href="contact.php" class="text-base hover:text-white transition duration-300">Kontak</a></li>
-                    <li><a href="portofolio.php" class="text-base hover:text-white transition duration-300 underline">Portofolio</a></li>
+                    <li><a href="portofolio.php" class="text-base hover:text-white transition duration-300">Portofolio</a></li>
                 </ul>
             </div>
         </div>

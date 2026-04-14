@@ -2,17 +2,14 @@
 session_start();
 include '../koneksi.php';
 
-// 1. PROTEKSI HALAMAN
 if (!isset($_SESSION['nama']) || $_SESSION['role'] !== 'pelanggan') {
     header("location: ../index.php");
     exit();
 }
 
-// 2. AMBIL DATA USER
 $id_user = $_SESSION['id_user'];
 $nama_user = $_SESSION['nama'];
 
-// 3. HITUNG RINGKASAN DATA
 $query_vol = mysqli_query($conn, "SELECT SUM(volume) as total FROM transaksi WHERE id_user = '$id_user' AND status = 'selesai'");
 $data_vol = mysqli_fetch_assoc($query_vol);
 $total_volume = $data_vol['total'] ?? 0;
@@ -199,7 +196,6 @@ $status_aktif = mysqli_num_rows($query_aktif) > 0 ? "Ada Penjemputan" : "Tidak A
         }
 
         function filterTabel(kategori, btn) {
-            // 1. Logika Filter Baris Tabel
             const rows = document.querySelectorAll('.row-transaksi');
             rows.forEach(row => {
                 const statusRow = row.getAttribute('data-status');
@@ -210,15 +206,12 @@ $status_aktif = mysqli_num_rows($query_aktif) > 0 ? "Ada Penjemputan" : "Tidak A
                 }
             });
 
-            // 2. Logika Visual (Respon Klik)
             const allButtons = document.querySelectorAll('.btn-filter');
             allButtons.forEach(b => {
-                // Kembalikan semua ke gaya putih
                 b.classList.remove('bg-primary', 'text-white', 'border-primary', 'shadow-sm');
                 b.classList.add('bg-white', 'text-gray-500', 'border-gray-200');
             });
 
-            // Ubah yang diklik jadi hijau
             btn.classList.remove('bg-white', 'text-gray-500', 'border-gray-200');
             btn.classList.add('bg-primary', 'text-white', 'border-primary', 'shadow-sm');
         }
