@@ -226,7 +226,6 @@ include 'koneksi.php';
                     <li><a href="about.php" class="text-base hover:text-white transition duration-300">Tentang Kami</a></li>
                     <li><a href="contact.php" class="text-base hover:text-white transition duration-300">Kontak</a></li>
                     <li><a href="portofolio.php" class="text-base hover:text-white transition duration-300 ">Portofolio</a></li>
-                    <li><a href="portofolio.php" class="text-base hover:text-white transition duration-300">Portofolio</a></li>
                 </ul>
             </div>
         </div>
