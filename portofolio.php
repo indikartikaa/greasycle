@@ -26,8 +26,9 @@ include 'koneksi.php';
     </script>
     <style>
         body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
-        .fade-in { animation: fadeIn 0.4s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .modal-auth { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); }
+        .modal-content { background: white; padding: 40px; width: 90%; max-width: 450px; border-radius: 30px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .hidden-form { display: none; }
     </style>
 </head>
 <body class="bg-[#f7faf9] text-[#333] leading-relaxed overflow-x-hidden">
@@ -42,13 +43,19 @@ include 'koneksi.php';
             <li><a href="contact.php" class="text-[#666] font-medium transition duration-300 hover:text-primary">Kontak</a></li>
             <li><a href="portofolio.php" class="text-primary font-bold border-b-2 border-primary pb-1">Portofolio</a></li>
             
-            <?php if(isset($_SESSION['nama'])): ?>
-                <li class="flex items-center gap-4 bg-accent/30 px-4 py-2 rounded-full border border-accent">
-                    <span class="text-primary font-bold text-sm italic">Halo, <?= $_SESSION['nama']; ?></span>
-                    <div class="w-px h-4 bg-primary/20"></div>
-                    <a href="logout.php" class="text-red-500 text-[10px] font-extrabold uppercase tracking-widest hover:text-red-700 transition">Keluar</a>
-                </li>
-            <?php endif; ?>
+            <li>
+                <?php if(isset($_SESSION['nama'])): ?>
+                    <div class="flex items-center gap-4 bg-accent/30 px-4 py-2 rounded-full border border-accent">
+                        <span class="text-primary font-bold text-sm italic">Halo, <?= $_SESSION['nama']; ?></span>
+                        <div class="w-px h-4 bg-primary/20"></div>
+                        <a href="logout.php" class="text-red-500 text-[10px] font-extrabold uppercase tracking-widest hover:text-red-700 transition">Keluar</a>
+                    </div>
+                <?php else: ?>
+                    <button onclick="openAuth()" class="bg-primary text-white px-8 py-2.5 rounded-full font-bold hover:bg-secondary transition shadow-lg transform hover:scale-105 active:scale-95">
+                        Login
+                    </button>
+                <?php endif; ?>
+            </li>
         </ul>
 
         <div id="menu-btn" class="md:hidden text-primary text-2xl cursor-pointer p-2">
@@ -102,7 +109,6 @@ include 'koneksi.php';
                     <span class="bg-gray-100 px-4 py-2 rounded-xl text-xs font-bold text-primary border border-gray-200">PHP 8.2</span>
                     <span class="bg-gray-100 px-4 py-2 rounded-xl text-xs font-bold text-primary border border-gray-200">Tailwind CSS</span>
                     <span class="bg-gray-100 px-4 py-2 rounded-xl text-xs font-bold text-primary border border-gray-200">MySQL</span>
-                    <span class="bg-gray-100 px-4 py-2 rounded-xl text-xs font-bold text-primary border border-gray-200">XAMPP</span>
                 </div>
             </div>
 
@@ -113,55 +119,13 @@ include 'koneksi.php';
                 <h2 class="text-xl font-bold text-primary mb-4">Tujuan Proyek</h2>
                 <p class="text-gray-600 text-sm leading-relaxed text-justify">
                     Proyek ini bertujuan untuk mengurangi pencemaran lingkungan akibat pembuangan 
-                    minyak jelantah sembarangan serta mendukung konsep ekonomi sirkular melalui konversi limbah menjadi saldo digital.
+                    minyak jelantah sembarangan serta mendukung konsep ekonomi sirkular.
                 </p>
             </div>
         </div>
     </section>
 </main>
 
-<footer class="bg-primary pt-24 pb-12 mt-20">
-    <div class="container mx-auto px-4">
-        <div class="flex flex-wrap">
-            <div class="w-full px-4 mb-12 md:w-1/3">
-                <h3 class="font-bold text-xl text-white mb-4 uppercase tracking-wider">Hubungi Kami</h3>
-                <div class="space-y-3">
-                    <p class="text-white font-semibold text-lg">PT Greasycle Indonesia</p>
-                    <p class="text-accent opacity-80 leading-relaxed text-sm">
-                        JL. Semampir Tengah VIII Blok B No 18 RT. 10 RW. 01,<br>
-                        Kec. Sukolilo, Kota Surabaya, Prov. Jawa Timur 60119
-                    </p>
-                    <p class="text-accent opacity-80 text-sm">info@greasycle.id</p>
-                    <p class="text-accent opacity-80 text-sm">+62 812-3456-7890</p>
-                    <p class="text-accent opacity-80 text-sm">Senin-Jumat: 08.00 - 16.00 WIB</p>
-                </div>
-            </div>
-            
-            <div class="w-full px-4 mb-12 md:w-1/3">
-                <h3 class="font-semibold text-xl text-white mb-8 uppercase tracking-wider">Layanan Kami</h3>
-                <ul class="text-accent opacity-80 space-y-4">
-                    <li><a href="#" class="text-base hover:text-white transition duration-300">Setor Jelantah</a></li>
-                    <li><a href="#" class="text-base hover:text-white transition duration-300">Penjemputan Rutin</a></li>
-                    <li><a href="#" class="text-base hover:text-white transition duration-300">Edukasi Ramah Lingkungan</a></li>
-                    <li><a href="#" class="text-base hover:text-white transition duration-300">Insentif Ekonomi</a></li>
-                </ul>
-            </div>
-
-            <div class="w-full px-4 mb-12 md:w-1/3">
-                <h3 class="font-semibold text-xl text-white mb-8 uppercase tracking-wider">Tautan</h3>
-                <ul class="text-accent opacity-80 space-y-4">
-                    <li><a href="index.php" class="text-base hover:text-white transition duration-300">Beranda</a></li>
-                    <li><a href="about.php" class="text-base hover:text-white transition duration-300">Tentang Kami</a></li>
-                    <li><a href="contact.php" class="text-base hover:text-white transition duration-300">Kontak</a></li>
-                    <li><a href="portofolio.php" class="text-base hover:text-white transition duration-300 underline">Portofolio</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="text-center mt-20 border-t border-white/10 pt-10 px-4">
-        <p class="text-[10px] uppercase tracking-[0.2em] opacity-40">Pemrograman Website © 2026 Greasycle</p>
-    </div>
-</footer>
-
+<?php include 'footer.php'; ?>
 </body>
 </html>

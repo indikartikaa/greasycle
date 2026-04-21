@@ -2,7 +2,6 @@
 session_start();
 include '../koneksi.php';
 
-// 1. PROTEKSI HALAMAN
 if (!isset($_SESSION['nama']) || $_SESSION['role'] !== 'mitra') {
     header("location: ../index.php");
     exit();
@@ -150,7 +149,6 @@ $nama_mitra = $_SESSION['nama'];
 </div>
 
 <script>
-    // Logic Sidebar Mobile
     const sidebar = document.getElementById('sidebar');
     const openBtn = document.getElementById('open-sidebar');
     const closeBtn = document.getElementById('close-sidebar');

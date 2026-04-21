@@ -2,7 +2,6 @@
 session_start();
 include '../koneksi.php';
 
-// ================== QUERY ==================
 $query = mysqli_query($conn, "
     SELECT id_user, nama, email, role 
     FROM users 
@@ -14,7 +13,6 @@ if (!$query) {
     die("Query error: " . mysqli_error($conn));
 }
 
-// ================== TAMBAH ==================
 if (isset($_POST['tambah'])) {
     $nama  = mysqli_real_escape_string($conn, $_POST['nama']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -28,7 +26,6 @@ if (isset($_POST['tambah'])) {
     exit;
 }
 
-// ================== HAPUS ==================
 if (isset($_GET['hapus'])) {
     $id = (int) $_GET['hapus'];
 
@@ -108,10 +105,8 @@ transition-all duration-300 z-50">
     </div>
 </aside>
 
-<!-- MAIN -->
 <main class="flex-1 w-full overflow-x-hidden md:ml-64">
 
-<!-- HEADER MOBILE -->
 <div class="md:hidden flex justify-between items-center h-16 px-4 bg-white shadow fixed top-0 left-0 right-0 z-[60]">
     <button onclick="toggleSidebar()" class="text-xl">
         <i class="fas fa-bars"></i>
@@ -121,7 +116,6 @@ transition-all duration-300 z-50">
 
 <div class="p-4 md:p-8 mt-16 md:mt-0">
 
-<!-- HEADER -->
 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
     <div>
         <h2 class="text-xl md:text-2xl font-bold text-primary">Data Pelanggan</h2>
@@ -134,7 +128,6 @@ transition-all duration-300 z-50">
     </button>
 </div>
 
-<!-- TABLE -->
 <div class="bg-white rounded-2xl shadow overflow-x-auto">
 <table class="w-full text-sm min-w-[500px]">
 
@@ -212,7 +205,6 @@ Simpan
 </div>
 </div>
 
-<!-- SCRIPT -->
 <script>
 function toggleSidebar(){
     const sidebar = document.getElementById('sidebar');

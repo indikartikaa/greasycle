@@ -2,7 +2,6 @@
 session_start();
 include '../koneksi.php';
 
-// ================== QUERY ==================
 $query = mysqli_query($conn, "
     SELECT 
         mitra.id_mitra,
@@ -20,7 +19,6 @@ if (!$query) {
     die("Query Error: " . mysqli_error($conn));
 }
 
-// ================== TAMBAH ==================
 if (isset($_POST['tambah'])) {
     $nama = mysqli_real_escape_string($conn, $_POST['nama']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -44,7 +42,6 @@ if (isset($_POST['tambah'])) {
     exit;
 }
 
-// ================== HAPUS ==================
 if (isset($_GET['hapus'])) {
     $id = (int) $_GET['hapus'];
 

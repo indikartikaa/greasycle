@@ -1,7 +1,5 @@
 <?php 
 session_start(); 
-// Kita tidak wajib include koneksi di sini jika hanya menampilkan data statis profil, 
-// tapi tetap disarankan jika nanti ingin mengambil data dari database.
 include 'koneksi.php'; 
 ?>
 
@@ -12,7 +10,7 @@ include 'koneksi.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil - Masyito Indi Kartika</title>
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
@@ -75,7 +73,7 @@ include 'koneksi.php';
                     <span class="inline-block bg-accent text-primary px-4 py-1.5 rounded-full text-sm font-bold mb-6">
                         Sistem Informasi | System Analyst Enthusiast
                     </span>
-                    <p class="text-lg text-gray-600 leading-relaxed max-w-2xl italic">
+                    <p class="text-lg text-gray-600 leading-relaxed max-w-2xl">
                         Saya memiliki ketertarikan dalam menganalisis sistem, memahami kebutuhan bisnis, serta merancang solusi teknologi yang efektif. Dengan mempelajari proses bisnis, saya berusaha mengubah permasalahan kompleks menjadi solusi yang terstruktur.
                     </p>
                 </div>
